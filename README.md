@@ -13,7 +13,7 @@
      ...一些传入插槽的内容
     </GeneralBasicForm>
 
-![image-20210820173037871](D:\work2\npm\GeneralBasicForm\src\assets\image-20210820173037871.png)
+![image-20210820173738506](README.assets/image-20210820173738506.png)
 
 数据示例:
 
