@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-08-20 17:16:55
+ * @LastEditTime: 2021-08-21 18:53:47
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -18,6 +18,7 @@
     inline
     label-position="left"
     :label-width="labelWidth"
+    v-bind="$attrs"
   >
     <el-form-item
       v-for="item in formItem"
@@ -96,6 +97,11 @@ export default {
       type: String,
       default: "medium",
     },
+    labelWidth: {
+      // 表单文字宽度
+      type: String,
+      default: "90px",
+    },
   },
   data() {
     return {
@@ -116,7 +122,6 @@ export default {
         "end-placeholder": "结束日期",
         type: "daterange",
       },
-      labelWidth: "90px",
     };
   },
   // setup(props) {
