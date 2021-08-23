@@ -18,7 +18,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alan1034/VueNpmFrame.git"
+    "url": "https://github.com/Alan1034/GeneralBasicForm"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
