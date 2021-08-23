@@ -14,7 +14,7 @@
      ...一些传入插槽的内容
     </GeneralBasicForm>
 
-<img src="https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202108231116464.png?token=AICSKHR24QKLMFAQEEQ6BWDBEMJWC" alt="image-20210823111652312"  />
+![img](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202108231121814.png)
 
 数据示例:
 
