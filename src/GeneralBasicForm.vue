@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-08-21 18:53:47
+ * @LastEditTime: 2021-08-25 19:25:39
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -105,7 +105,7 @@ export default {
   },
   data() {
     return {
-      queryParams: {},
+      queryParams: { ...this.$route?.query },
       selectSetting: {
         placeholder: "请选择",
         clearable: true,
