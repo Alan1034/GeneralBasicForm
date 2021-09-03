@@ -14,14 +14,14 @@
      ...一些传入插槽的内容
     </GeneralBasicForm>
 
-![img](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202108231121814.png?token=AICSKHXPYQQHXZJ6QDJD56TBENAY2)
+![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
 数据示例:
 
     showSearch: true, // 显示搜索条件
     getList(); //请求数据的函数
     formItem: [ 
-        { label: "款式名称", prop: "bsName", type: "input" },
+        { label: "款式名称", prop: "bsName", type: "input", placeholder: "请输入图片名称/分类名称/图片标签", },
         {
           label: "二次工艺",
           prop: "spName",
@@ -103,6 +103,7 @@
         },
       ],
       //分别支持input输入框，select单选框，date-picker日期选择器，cascader层级选择器 四种组件
+      //date-picker可以传入'start-placeholder'和'end-placeholder'，其他组件支持placeholder传入
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form

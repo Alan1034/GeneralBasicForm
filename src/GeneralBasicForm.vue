@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-08-31 15:45:36
+ * @LastEditTime: 2021-09-03 16:58:34
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -32,12 +32,14 @@
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="inputSetting"
+        :placeholder="item.placeholder || inputSetting.placeholder"
       ></el-input>
       <el-select
         v-else-if="item.type === 'select'"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="selectSetting"
+        :placeholder="item.placeholder || selectSetting.placeholder"
       >
         <el-option
           v-for="dict in item.option || []"
@@ -52,12 +54,15 @@
         :size="size"
         v-bind="selectSetting"
         :options="item.options || []"
+        :placeholder="item.placeholder || selectSetting.placeholder"
       ></el-cascader>
       <el-date-picker
         v-else-if="item.type === 'date-picker'"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="datePackerSetting"
+        :start-placeholder="item['start-placeholder'] || datePackerSetting['start-placeholder']"
+        :end-placeholder="item['end-placeholder'] || datePackerSetting['end-placeholder']"
       ></el-date-picker>
     </el-form-item>
     <el-form-item>
