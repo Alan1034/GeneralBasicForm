@@ -35,6 +35,7 @@
         :placeholder="item.placeholder || inputSetting.placeholder"
       ></el-input>
       <el-select
+        filterable
         v-else-if="item.type === 'select'"
         v-model="queryParams[item.prop]"
         :size="size"
@@ -49,6 +50,7 @@
         />
       </el-select>
       <el-cascader
+        filterable
         v-else-if="item.type === 'cascader'"
         v-model="queryParams[item.prop]"
         :size="size"
@@ -61,8 +63,12 @@
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="datePackerSetting"
-        :start-placeholder="item['start-placeholder'] || datePackerSetting['start-placeholder']"
-        :end-placeholder="item['end-placeholder'] || datePackerSetting['end-placeholder']"
+        :start-placeholder="
+          item['start-placeholder'] || datePackerSetting['start-placeholder']
+        "
+        :end-placeholder="
+          item['end-placeholder'] || datePackerSetting['end-placeholder']
+        "
       ></el-date-picker>
     </el-form-item>
     <el-form-item>
