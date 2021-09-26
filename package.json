@@ -1,6 +1,6 @@
 {
   "name": "general-basic-form",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -28,6 +28,5 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^7.14.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
