@@ -1,6 +1,6 @@
 # GeneralBasicForm
 
-一个Vue3表单组件 <br/>
+一个兼容Vue2和Vue3的表单组件 <br/>
 示例:
 
     <GeneralBasicForm
