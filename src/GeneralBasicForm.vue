@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-09-03 16:58:34
+ * @LastEditTime: 2021-09-30 18:21:47
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -25,6 +25,7 @@
       :label="item.label"
       :prop="item.prop"
       :key="item.prop"
+      :rules="item.rules"
     >
       <el-input
         v-if="item.type === 'input'"
@@ -33,6 +34,7 @@
         :size="size"
         v-bind="inputSetting"
         :placeholder="item.placeholder || inputSetting.placeholder"
+        :maxlength="item.maxlength"
       ></el-input>
       <el-select
         filterable
@@ -69,6 +71,7 @@
         :end-placeholder="
           item['end-placeholder'] || datePackerSetting['end-placeholder']
         "
+        :value-format="item['value-format']"
       ></el-date-picker>
     </el-form-item>
     <el-form-item>

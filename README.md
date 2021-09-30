@@ -1,6 +1,6 @@
 # GeneralBasicForm
 
-一个兼容Vue2和Vue3的表单组件 <br/>
+一个兼容 Vue2 和 Vue3 的表单组件 <br/>
 示例:
 
     <GeneralBasicForm
@@ -20,8 +20,21 @@
 
     showSearch: true, // 显示搜索条件
     getList(); //请求数据的函数
-    formItem: [ 
-        { label: "款式名称", prop: "bsName", type: "input", placeholder: "请输入图片名称/分类名称/图片标签", },
+    formItem: [
+        { label: "款式名称",
+          prop: "bsName",
+          type: "input",
+          placeholder: "请输入图片名称/分类名称/图片标签",
+          rules: [
+            {
+              message: "请输入信息"
+            },
+            {
+              pattern: /^\w+[\,\，\-\w' '#]+$/,
+              message: "请输入正确的Invoice单号"
+            }
+          ],
+          maxlength: "3000"},
         {
           label: "二次工艺",
           prop: "spName",
@@ -32,7 +45,11 @@
             { value: "2", desc: "绣花" },
           ],
         },
-        { label: "创建时间", prop: "create_time", type: "date-picker"
+        { 
+          label: "创建时间",
+          prop: "create_time",
+          type: "date-picker",
+          "value-format": "yyyyMMdd"
         },
         {
           label: "分类",
@@ -104,6 +121,7 @@
       ],
       //分别支持input输入框，select单选框，date-picker日期选择器，cascader层级选择器 四种组件
       //date-picker可以传入'start-placeholder'和'end-placeholder'，其他组件支持placeholder传入
+      //rules为表单校验规则，每个组件都可以传入
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
