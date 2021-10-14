@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-10-13 16:35:02
+ * @LastEditTime: 2021-10-14 19:06:22
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -74,7 +74,7 @@
         :value-format="item['value-format']"
       ></el-date-picker>
     </el-form-item>
-    <el-form-item>
+    <el-form-item v-if="!formOnly">
       <el-button
         type="primary"
         icon="el-icon-search"
@@ -95,8 +95,14 @@ export default {
   name: "GeneralBasicForm",
   props: {
     showSearch: {
+      // 是否展示所有元素
       type: Boolean,
       default: true,
+    },
+    formOnly: {
+      // 是否只展示表单不展示按钮
+      type: Boolean,
+      default: false,
     },
     getList: {
       type: Function,
@@ -116,10 +122,15 @@ export default {
       type: String,
       default: "90px",
     },
+    noUrlParameters: {
+      // 不接受和不改变url的参数
+      type: Boolean,
+      default: () => false,
+    },
   },
   data() {
     return {
-      queryParams: { ...this.$route?.query },
+      queryParams: { ...(this.noUrlParameters ? {} : this.$route?.query) }, // form表单数据
       selectSetting: {
         placeholder: "请选择",
         clearable: true,
@@ -161,9 +172,11 @@ export default {
         ...this.queryParams,
         ...params,
       };
-      this.$router.push({
-        query: { ...searchParams },
-      });
+      if (!this.noUrlParameters) {
+        this.$router.push({
+          query: { ...searchParams },
+        });
+      }
       this.getList({
         ...searchParams,
       });
@@ -172,9 +185,11 @@ export default {
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { page: 1 };
-      await this.$router.push({
-        query: { ...params },
-      });
+      if (!this.noUrlParameters) {
+        await this.$router.push({
+          query: { ...params },
+        });
+      }
       this.handleQuery();
     },
   },

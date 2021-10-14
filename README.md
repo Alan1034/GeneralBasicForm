@@ -16,10 +16,33 @@
 
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
+在单纯作为表单的时候可以这样使用：
+
+    <GeneralBasicForm
+        formOnly
+        :formItem="formItem"
+        size="small"
+        ref="generalBasicForm"
+        :labelWidth="formLabelWidth"
+        noUrlParameters
+      />
+
+      <style lang="scss" scoped>
+      :deep {
+        .el-form-item {
+          margin-bottom: 22px;
+        }
+      }
+      </style>
+
+![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
+
 数据示例:
 
     showSearch: true, // 显示搜索条件
-    getList(); //请求数据的函数
+    getList(); // 请求数据的函数
+    formOnly:true // 只展示表单不展示按钮
+    noUrlParameters:true // 不接受和不改变url的参数
     formItem: [
         { label: "款式名称",
           prop: "bsName",
