@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-09-30 18:21:47
+ * @LastEditTime: 2021-10-13 16:35:02
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -169,10 +169,10 @@ export default {
       });
     },
     /** 重置按钮操作 */
-    resetQuery() {
+    async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { page: 1 };
-      this.$router.push({
+      await this.$router.push({
         query: { ...params },
       });
       this.handleQuery();
