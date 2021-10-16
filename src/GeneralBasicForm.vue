@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-10-14 19:06:22
+ * @LastEditTime: 2021-10-16 15:06:06
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -105,10 +105,12 @@ export default {
       default: false,
     },
     getList: {
+      // 查找数据调用的函数
       type: Function,
       default: () => {},
     },
     formItem: {
+      // 定义表单的数据
       type: Array,
       default: [],
     },
@@ -127,10 +129,17 @@ export default {
       type: Boolean,
       default: () => false,
     },
+    formData: {
+      // 外部传入的表单数据，用于回填
+      type: Object,
+      default: {},
+    },
   },
   data() {
     return {
-      queryParams: { ...(this.noUrlParameters ? {} : this.$route?.query) }, // form表单数据
+      queryParams: {
+        ...(this.noUrlParameters ? {} : this.$route?.query),
+      }, // form表单数据
       selectSetting: {
         placeholder: "请选择",
         clearable: true,
@@ -163,6 +172,14 @@ export default {
   //     queryParams,
   //   };
   // },
+  watch: {
+    formData(val) {
+      this.queryParams = {
+        ...(this.noUrlParameters ? {} : this.queryParams),
+        ...val,
+      };
+    },
+  },
   methods: {
     /** 搜索按钮操作 */
     handleQuery() {
