@@ -57,6 +57,11 @@
               message: "请输入正确的Invoice单号"
             }
           ],
+          template: {
+            suffix: () => {
+              return <svg-icon icon-class="baifenbi" />;
+            },
+          },
           maxlength: "3000"},
         {
           label: "二次工艺",
@@ -143,8 +148,15 @@
         },
       ],
       //分别支持input输入框，select单选框，date-picker日期选择器，cascader层级选择器 四种组件
+      
       //date-picker可以传入'start-placeholder'和'end-placeholder'，其他组件支持placeholder传入
+
       //rules为表单校验规则，每个组件都可以传入
 
+      //input支持template,支持以下几个属性：
+      //prefix	输入框头部内容，只对 type="text"（默认） 有效
+      //suffix	输入框尾部内容，只对 type="text" 有效
+      //prepend	输入框前置内容，只对 type="text" 有效
+      //append	输入框后置内容，只对 type="text" 有效
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form

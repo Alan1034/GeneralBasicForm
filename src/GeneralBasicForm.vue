@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-10-16 15:06:06
+ * @LastEditTime: 2021-10-19 19:23:15
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -35,7 +35,19 @@
         v-bind="inputSetting"
         :placeholder="item.placeholder || inputSetting.placeholder"
         :maxlength="item.maxlength"
-      ></el-input>
+      >
+        <template
+          v-for="(templateEle, name) in item.template"
+          :key="name"
+          #[name]
+        >
+          <component
+            v-if="templateEle"
+            :is="currentInputComponent()"
+            :templateEle="templateEle"
+          />
+        </template>
+      </el-input>
       <el-select
         filterable
         v-else-if="item.type === 'select'"
@@ -93,6 +105,12 @@
 <script>
 export default {
   name: "GeneralBasicForm",
+  components: {
+    InputArchive: (props) => {
+      const { templateEle } = props;
+      return templateEle();
+    },
+  },
   props: {
     showSearch: {
       // 是否展示所有元素
@@ -208,6 +226,9 @@ export default {
         });
       }
       this.handleQuery();
+    },
+    currentInputComponent() {
+      return "input-archive";
     },
   },
 };
