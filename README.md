@@ -35,6 +35,15 @@
       }
       </style>
 
+表单数据校验需要拿到内部表单的ref
+
+    this.$refs["generalBasicForm"].$["queryFormRef"]    
+      .validate(
+        async (valid) => {
+          if (valid) { ...}
+        }
+      );
+      
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
 
 数据示例:
