@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-10-19 19:23:15
+ * @LastEditTime: 2021-10-28 16:25:24
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -85,6 +85,15 @@
         "
         :value-format="item['value-format']"
       ></el-date-picker>
+      <el-input-number
+        v-if="item.type === 'input-number'"
+        v-model="queryParams[item.prop]"
+        :size="size"
+        v-bind="inputSetting"
+        :min="item.min"
+        :max="item.max"
+        :controls-position="item['controls-position']"
+      />
     </el-form-item>
     <el-form-item v-if="!formOnly">
       <el-button
