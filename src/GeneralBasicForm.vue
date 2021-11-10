@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-10-28 16:25:24
+ * @LastEditTime: 2021-11-10 11:40:00
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -95,6 +95,7 @@
         :controls-position="item['controls-position']"
       />
     </el-form-item>
+    <slot></slot>
     <el-form-item v-if="!formOnly">
       <el-button
         type="primary"
@@ -107,7 +108,6 @@
         >重置</el-button
       >
     </el-form-item>
-    <slot></slot>
   </el-form>
 </template>
 
