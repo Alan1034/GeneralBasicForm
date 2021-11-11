@@ -10,7 +10,7 @@
       :size="size"
       ref="generalBasicForm"
       labelWidth="90px"
-    />
+    >
      ...一些传入插槽的内容
     </GeneralBasicForm>
 
