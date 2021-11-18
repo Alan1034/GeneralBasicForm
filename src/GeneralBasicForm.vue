@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-18 15:05:32
+ * @LastEditTime: 2021-11-18 16:23:02
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -243,10 +243,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-:deep {
-  .el-form-item {
-    margin-bottom: 3px;
-  }
+<style scoped>
+.el-form-item {
+  margin-bottom: 2px !important;
 }
 </style>
