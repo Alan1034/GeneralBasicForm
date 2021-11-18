@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-18 14:48:23
+ * @LastEditTime: 2021-11-18 15:05:32
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -231,6 +231,9 @@ export default {
           query: { ...params },
         });
       }
+      this.queryParams = {
+        ...(this.noUrlParameters ? {} : this.$route?.query),
+      };
       this.handleQuery();
     },
     currentInputComponent() {
