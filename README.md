@@ -24,9 +24,12 @@
         size="small"
         ref="generalBasicForm"
         :labelWidth="formLabelWidth"
+        :formData: {
+          // 外部传入的表单数据，用于回填
+        }
         noUrlParameters
       />
-
+    
       <style lang="scss" scoped>
       :deep {
         .el-form-item {
@@ -43,7 +46,7 @@
           if (valid) { ...}
         }
       );
-      
+
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
 
 数据示例:
@@ -159,9 +162,9 @@
       //分别支持input输入框，select单选框，date-picker日期选择器，cascader层级选择器 四种组件
       
       //date-picker可以传入'start-placeholder'和'end-placeholder'，其他组件支持placeholder传入
-
+    
       //rules为表单校验规则，每个组件都可以传入
-
+    
       //input支持template,支持以下几个属性：
       //prefix	输入框头部内容，只对 type="text"（默认） 有效
       //suffix	输入框尾部内容，只对 type="text" 有效

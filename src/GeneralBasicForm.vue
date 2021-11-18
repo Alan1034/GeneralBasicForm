@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-10 11:49:15
+ * @LastEditTime: 2021-11-18 14:48:23
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -156,7 +156,7 @@ export default {
     formData: {
       // 外部传入的表单数据，用于回填
       type: Object,
-      default: {},
+      default: () => {},
     },
   },
   data() {
