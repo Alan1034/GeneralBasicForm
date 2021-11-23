@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-18 16:23:02
+ * @LastEditTime: 2021-11-23 17:49:55
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -90,6 +90,7 @@
         :min="item.min"
         :max="item.max"
         :controls-position="item['controls-position']"
+        :step-strictly="item['step-strictly']"
       />
     </el-form-item>
     <slot></slot>
