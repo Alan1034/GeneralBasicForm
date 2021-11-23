@@ -92,6 +92,20 @@
           "value-format": "yyyyMMdd"
         },
         {
+          label: "二次工艺成本价格（人民币分）",
+          prop: "spCost",
+          type: "input-number",
+          "controls-position": "right",
+          min: 0,
+          rules: [
+            {
+              required: true,
+              message: "请输入二次工艺成本价格",
+              trigger: "blur",
+            },
+          ],
+        },
+        {
           label: "分类",
           prop: "分类",
           type: "cascader",
