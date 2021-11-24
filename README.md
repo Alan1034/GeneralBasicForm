@@ -81,6 +81,7 @@
           label: "二次工艺",
           prop: "spName",
           type: "select",
+          multiple:true, //多选
           option: [
             { value: "3", desc: "满印" },
             { value: "1", desc: "区域印花" },

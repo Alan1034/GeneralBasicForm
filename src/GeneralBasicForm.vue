@@ -51,6 +51,7 @@
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="selectSetting"
+        :multiple="item.multiple"
         :placeholder="item.placeholder || selectSetting.placeholder"
       >
         <el-option
