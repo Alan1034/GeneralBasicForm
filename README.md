@@ -40,10 +40,12 @@
 
 表单数据校验需要拿到内部表单的ref
 
-    this.$refs["generalBasicForm"].$["queryFormRef"]    
+    this.$refs["generalBasicForm"].$refs["queryFormRef"]    
       .validate(
         async (valid) => {
-          if (valid) { ...}
+          if (valid) { 
+            console.log(this.$refs["generalBasicForm"]["queryParams"]);
+          }
         }
       );
 
