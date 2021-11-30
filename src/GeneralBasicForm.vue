@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-23 17:49:55
+ * @LastEditTime: 2021-11-30 17:27:27
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -135,6 +135,11 @@ export default {
       type: Function,
       default: () => {},
     },
+    afterReset: {
+      // 在重置按钮点击完后但还没重新请求时触发的的函数
+      type: Function,
+      default: () => {},
+    },
     formItem: {
       // 定义表单的数据
       type: Array,
@@ -236,6 +241,7 @@ export default {
       this.queryParams = {
         ...(this.noUrlParameters ? {} : this.$route?.query),
       };
+      this.afterReset();
       this.handleQuery();
     },
     currentInputComponent() {

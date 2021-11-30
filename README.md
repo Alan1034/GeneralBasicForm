@@ -28,6 +28,7 @@
           // 外部传入的表单数据，用于回填
         }
         noUrlParameters
+        :afterReset="afterReset"
       />
     
       <style lang="scss" scoped>
@@ -37,6 +38,15 @@
         }
       }
       </style>
+
+getList会传出默认的参数,首次请求时会有页数和分页大小,重置后会传出默认页数1
+
+    async getList(
+       params = {
+         page: Number(this.$route.query.page) || 1,
+         limit: Number(this.$route.query.limit) || 10,
+       }
+     ) {}
 
 表单数据校验需要拿到内部表单的ref
 
@@ -49,12 +59,14 @@
         }
       );
 
+
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
 
 数据示例:
 
     showSearch: true, // 显示搜索条件
     getList(); // 请求数据的函数
+    afterReset(); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
     noUrlParameters:true // 不接受和不改变url的参数
     formItem: [
