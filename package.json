@@ -14,7 +14,6 @@
     "vue",
     "vue2",
     "vue3",
-    "element-plus",
     "element-plus"
   ],
   "author": "chendeli419287484@qq.com",
@@ -24,9 +23,6 @@
     "url": "https://github.com/Alan1034/GeneralBasicForm"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^7.14.0"
   },
   "dependencies": {}
 }

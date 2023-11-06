@@ -1,7 +1,20 @@
 # GeneralBasicForm
 
 一个兼容 Vue2 和 Vue3 的表单组件 <br/>
+
 示例:
+
+因为兼容性问题，目前只能使用完整引入
+
+```
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+app.use(ElementPlus)
+```
+
+```
+import GeneralBasicForm from 'general-basic-form'
+```
 
     <GeneralBasicForm
       :showSearch="showSearch"
