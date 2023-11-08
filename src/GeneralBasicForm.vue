@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-30 17:27:27
+ * @LastEditTime: 2023-11-08 16:35:39
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -27,32 +27,19 @@
       :key="item.prop"
       :rules="item.rules"
     >
-      <el-input
+      <Input
         v-if="item.type === 'input'"
-        @keydown.enter="getList"
-        v-model="queryParams[item.prop]"
+        :item="item"
+        :queryParams="queryParams"
         :size="size"
-        v-bind="inputSetting"
-        :placeholder="item.placeholder || inputSetting.placeholder"
-        :maxlength="item.maxlength"
-      >
-        <template v-for="(templateEle, name) in item.template" #[name]>
-          <component
-            :key="name"
-            v-if="templateEle"
-            :is="currentInputComponent()"
-            :templateEle="templateEle"
-          />
-        </template>
-      </el-input>
+        :getList="getList"
+      />
       <el-select
         filterable
         v-else-if="item.type === 'select'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="selectSetting"
-        :multiple="item.multiple"
-        :placeholder="item.placeholder || selectSetting.placeholder"
+        v-bind="item.selectSetting || selectSetting"
       >
         <el-option
           v-for="dict in item.option || []"
@@ -66,32 +53,20 @@
         v-else-if="item.type === 'cascader'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="selectSetting"
         :options="item.options || []"
-        :placeholder="item.placeholder || selectSetting.placeholder"
+        v-bind="item.selectSetting || selectSetting"
       ></el-cascader>
       <el-date-picker
         v-else-if="item.type === 'date-picker'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="datePackerSetting"
-        :start-placeholder="
-          item['start-placeholder'] || datePackerSetting['start-placeholder']
-        "
-        :end-placeholder="
-          item['end-placeholder'] || datePackerSetting['end-placeholder']
-        "
-        :value-format="item['value-format']"
+        v-bind="item.datePackerSetting || datePackerSetting"
       ></el-date-picker>
-      <el-input-number
+      <InputNumber
         v-if="item.type === 'input-number'"
-        v-model="queryParams[item.prop]"
+        :item="item"
+        :queryParams="queryParams"
         :size="size"
-        v-bind="inputSetting"
-        :min="item.min"
-        :max="item.max"
-        :controls-position="item['controls-position']"
-        :step-strictly="item['step-strictly']"
       />
     </el-form-item>
     <slot></slot>
@@ -111,13 +86,13 @@
 </template>
 
 <script>
+import Input from "./components/VBasic/input";
+import InputNumber from "./components/VBasic/input-number";
 export default {
   name: "GeneralBasicForm",
   components: {
-    InputArchive: (props) => {
-      const { templateEle } = props;
-      return templateEle();
-    },
+    Input,
+    InputNumber,
   },
   props: {
     showSearch: {
@@ -175,11 +150,6 @@ export default {
         placeholder: "请选择",
         clearable: true,
         style: "width: 200px",
-      },
-      inputSetting: {
-        placeholder: "请输入",
-        style: "width: 200px",
-        clearable: true,
       },
       datePackerSetting: {
         style: "width: 227px",
@@ -244,15 +214,9 @@ export default {
       this.afterReset();
       this.handleQuery();
     },
-    currentInputComponent() {
-      return "input-archive";
-    },
   },
 };
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 2px !important;
-}
 </style>

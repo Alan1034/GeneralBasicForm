@@ -2,18 +2,7 @@
   "name": "general-basic-form",
   "version": "2.0.1",
   "description": "",
-  "files": [
-    "/dist"
-  ],
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.mjs",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.umd.js"
-    }
-  },
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
   "scripts": {
     "build": "cross-env CURRENT_ENV=prod run-p type-check build-only",
     "test:e2e": "playwright test",
