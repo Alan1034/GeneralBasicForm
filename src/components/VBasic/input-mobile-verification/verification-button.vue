@@ -12,8 +12,9 @@ const buttonClick = () => {
   }
   buttonText.value = restTime;
   timer.value = setInterval(() => {
-    if (buttonText.value === 0) {
-      clearInterval(timer);
+    if (Number(buttonText.value) <= 0 || !buttonText.value) {
+      clearInterval(timer.value);
+      timer.value = null;
       buttonText.value = defaultText;
       return;
     } else {
@@ -22,7 +23,8 @@ const buttonClick = () => {
   }, 1000);
 };
 onBeforeUnmount(() => {
-  clearInterval(timer);
+  clearInterval(timer.value);
+  timer.value = null;
 });
 </script>
 

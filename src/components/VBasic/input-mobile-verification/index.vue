@@ -15,8 +15,6 @@ import { ref, h } from "vue";
 import type { componentsProps } from "../../../types/componentsProps";
 import verificationButton from "./verification-button.vue";
 const { item } = defineProps<componentsProps>();
-// console.log(item);
-let buttonText = ref("获取验证码");
 item.template = {
   append: () => {
     return h(verificationButton);
