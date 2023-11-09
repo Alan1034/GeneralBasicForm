@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 import { inputDefaultSetting } from "../../setting";
 export default defineComponent({
   components: {
@@ -28,9 +28,12 @@ export default defineComponent({
   },
   props: {
     item: null, // null就是any
-    queryParams: { type: [Object, String], required: true },
-    getList: { type: Function, required: true },
-    size: { type: String, required: true },
+  },
+  setup() {
+    const queryParams = inject("queryParams", {});
+    const getList = inject("getList");
+    const size = inject("size");
+    return { queryParams, getList, size };
   },
   data() {
     return {
@@ -40,23 +43,23 @@ export default defineComponent({
       },
     };
   },
-  created() {
-    console.log("new", this.item);
-    console.log("new", this.inputSetting);
-  },
+  // created() {
+  //   console.log("new", this.item);
+  //   console.log("new", this.inputSetting);
+  // },
   methods: {
     currentInputComponent() {
       return "input-archive";
     },
   },
-  watch: {
-    item(val) {
-      console.log("item", val);
-    },
-    size(val) {
-      console.log(val);
-    },
-  },
+  // watch: {
+  //   item(val) {
+  //     console.log("item", val);
+  //   },
+  //   size(val) {
+  //     console.log(val);
+  //   },
+  // },
 });
 </script>
 

@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-11-08 16:35:39
+ * @LastEditTime: 2023-11-09 16:58:47
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -27,12 +27,14 @@
       :key="item.prop"
       :rules="item.rules"
     >
-      <Input
-        v-if="item.type === 'input'"
+      <Input v-if="item.type === 'input'" :item="item" />
+      <InputGraphicVerification
+        v-if="item.type === 'input-graphic-verification'"
         :item="item"
-        :queryParams="queryParams"
-        :size="size"
-        :getList="getList"
+      />
+      <InputMobileVerification
+        v-if="item.type === 'input-mobile-verification'"
+        :item="item"
       />
       <el-select
         filterable
@@ -62,12 +64,7 @@
         :size="size"
         v-bind="item.datePackerSetting || datePackerSetting"
       ></el-date-picker>
-      <InputNumber
-        v-if="item.type === 'input-number'"
-        :item="item"
-        :queryParams="queryParams"
-        :size="size"
-      />
+      <InputNumber v-if="item.type === 'input-number'" :item="item" />
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
@@ -85,14 +82,22 @@
   </el-form>
 </template>
 
-<script>
+<script lang="ts">
+import { provide, ref, PropType, defineComponent } from "vue";
+import type { itemType, formType } from "./types/basicFrom";
+import { useRoute } from "vue-router";
 import Input from "./components/VBasic/input";
 import InputNumber from "./components/VBasic/input-number";
-export default {
+import InputGraphicVerification from "./components/VBasic/input-graphic-verification";
+import InputMobileVerification from "./components/VBasic/input-mobile-verification";
+
+export default defineComponent({
   name: "GeneralBasicForm",
   components: {
     Input,
     InputNumber,
+    InputGraphicVerification,
+    InputMobileVerification,
   },
   props: {
     showSearch: {
@@ -117,7 +122,7 @@ export default {
     },
     formItem: {
       // 定义表单的数据
-      type: Array,
+      type: Array as unknown as PropType<itemType[]>,
       default: [],
     },
     size: {
@@ -143,9 +148,6 @@ export default {
   },
   data() {
     return {
-      queryParams: {
-        ...(this.noUrlParameters ? {} : this.$route?.query),
-      }, // form表单数据
       selectSetting: {
         placeholder: "请选择",
         clearable: true,
@@ -159,20 +161,26 @@ export default {
       },
     };
   },
-  // setup(props) {
-  //设置默认值
-  //   console.log(props);
-  //   // const { formItem } = toRefs(props);
-  //   const { formItem } = props;
-  //   console.log(formItem);
-  //   const queryParams = {};
-  //   formItem.forEach((item) => {
-  //     queryParams[item.prop] = "";
-  //   });
-  //   return {
-  //     queryParams,
-  //   };
-  // },
+  setup(props) {
+    const { size, noUrlParameters, getList } = props;
+    const route = useRoute();
+    const queryParams = ref({
+      ...(noUrlParameters ? {} : route?.query),
+    }); // form表单数据
+    provide(/* 注入名 */ "queryParams", /* 值 */ queryParams);
+    provide(/* 注入名 */ "size", /* 值 */ size);
+    provide(/* 注入名 */ "getList", /* 值 */ getList);
+    // const { formItem } = toRefs(props);
+    // const { formItem } = props;
+    // console.log(formItem);
+    // const queryParams = {};
+    // formItem.forEach((item) => {
+    //   queryParams[item.prop] = "";
+    // });
+    return {
+      queryParams,
+    };
+  },
   watch: {
     formData(val) {
       this.queryParams = {
@@ -215,7 +223,7 @@ export default {
       this.handleQuery();
     },
   },
-};
+});
 </script>
 
 <style scoped>

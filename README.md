@@ -1,6 +1,6 @@
 # GeneralBasicForm
 
-一个兼容 Vue2 和 Vue3 的表单组件 <br/>
+一个兼容 Vue3 和 React(未来实现) 的表单组件 <br/>
 
 示例:
 
