@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, h, onBeforeUnmount, Ref } from "vue";
+import { ref, computed, onBeforeUnmount, Ref } from "vue";
 
 const defaultText = "获取验证码";
 const restTime = 60;
 const buttonText: Ref<string | number> = ref(defaultText);
 const timer = ref(null);
-
+const buttonType = computed(() => buttonText.value === defaultText);
 const buttonClick = () => {
   if (buttonText.value !== defaultText) {
     return;
@@ -32,15 +32,13 @@ onBeforeUnmount(() => {
   <el-button
     class="verifiaction-button"
     :style="{
-      color:
-        buttonText === defaultText
-          ? 'var(--color-primary, #409EFF)'
-          : 'var(--text-color-placeholder, #A8ABB2)',
+      color: buttonType
+        ? 'var(--color-primary, #409EFF)'
+        : 'var(--text-color-placeholder, #A8ABB2)',
+      cursor: buttonType ? 'pointer' : 'default',
     }"
     @click="buttonClick"
-    >{{
-      buttonText === defaultText ? defaultText : buttonText + "s"
-    }}</el-button
+    >{{ buttonType ? defaultText : buttonText + "s" }}</el-button
   >
 </template>
 
