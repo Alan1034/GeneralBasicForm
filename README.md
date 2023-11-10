@@ -45,10 +45,11 @@ import GeneralBasicForm from 'general-basic-form'
       />
     
       <style lang="scss" scoped>
-      :deep {
-        .el-form-item {
-          margin-bottom: 22px;
-        }
+      :deep(.el-form-item) {
+        margin-bottom: 16px;
+      }
+      :deep(.el-divider--horizontal) {
+        margin: 8px 0px;
       }
       </style>
 
@@ -83,10 +84,25 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
     formOnly:true // 只展示表单不展示按钮
     noUrlParameters:true // 不接受和不改变url的参数
     formItem: [
+    	{
+          label: '',
+          prop: 'bsName35',
+          type: 'divider',
+          dividerSetting: {
+          },
+          template: {
+            default: () => {
+              return "123123123";
+            },
+          },
+        },
         { label: "款式名称",
           prop: "bsName",
           type: "input",
-          placeholder: "请输入图片名称/分类名称/图片标签",
+       	  inputSetting: {
+            placeholder: '请输入手机验证码',
+            style: 'width: 100%'
+          },
           rules: [
             {
               message: "请输入信息"
@@ -101,7 +117,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               return <svg-icon icon-class="baifenbi" />;
             },
           },
-          maxlength: "3000"},
+    	},
         {
           label: "二次工艺",
           prop: "spName",
@@ -201,9 +217,6 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ],
         },
       ],
-      //分别支持input输入框，select单选框，date-picker日期选择器，cascader层级选择器 四种组件
-      
-      //date-picker可以传入'start-placeholder'和'end-placeholder'，其他组件支持placeholder传入
     
       //rules为表单校验规则，每个组件都可以传入
     
@@ -212,5 +225,74 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       //suffix	输入框尾部内容，只对 type="text" 有效
       //prepend	输入框前置内容，只对 type="text" 有效
       //append	输入框后置内容，只对 type="text" 有效
+      
+      //divider支持template：
+      //default
+支持组件:
+
+ /**
+
+  \* @description: 输入框
+
+  */
+
+ 'input' = 'input',
+
+ /**
+
+  \* @description: 输入框/图像验证码
+
+  */
+
+ 'input-graphic-verification' = 'input-graphic-verification',
+
+ /**
+
+  \* @description: 输入框/手机验证码
+
+  */
+
+ 'input-mobile-verification' = 'input-mobile-verification',
+
+ /**
+
+  \* @description: 分割线
+
+  */
+
+ 'divider' = 'divider',
+
+ /**
+
+  \* @description: 选择器
+
+  */
+
+ 'select' = 'select',
+
+ /**
+
+  \* @description: 级联选择器
+
+  */
+
+ 'cascader' = 'cascader',
+
+ /**
+
+  \* @description: 日期选择器
+
+  */
+
+ 'date-picker' = 'date-picker',
+
+ /**
+
+  \* @description: 数字输入框
+
+  */
+
+ 'input-number' = 'input-number',
+
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form

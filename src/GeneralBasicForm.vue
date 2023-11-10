@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-11-09 16:58:47
+ * @LastEditTime: 2023-11-10 16:22:01
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -36,6 +36,7 @@
         v-if="item.type === 'input-mobile-verification'"
         :item="item"
       />
+      <Divider v-if="item.type === 'divider'" :item="item" />
       <el-select
         filterable
         v-else-if="item.type === 'select'"
@@ -90,6 +91,7 @@ import Input from "./components/VBasic/input";
 import InputNumber from "./components/VBasic/input-number";
 import InputGraphicVerification from "./components/VBasic/input-graphic-verification";
 import InputMobileVerification from "./components/VBasic/input-mobile-verification";
+import Divider from "./components/VBasic/divider";
 
 export default defineComponent({
   name: "GeneralBasicForm",
@@ -98,6 +100,7 @@ export default defineComponent({
     InputNumber,
     InputGraphicVerification,
     InputMobileVerification,
+    Divider,
   },
   props: {
     showSearch: {

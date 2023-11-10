@@ -15,6 +15,11 @@ export enum formType {
    */
   'input-mobile-verification' = 'input-mobile-verification',
   /**
+   * @description: 分割线
+   * @return {*}
+   */
+  'divider' = 'divider',
+  /**
    * @description: 选择器
    * @return {*}
    */
