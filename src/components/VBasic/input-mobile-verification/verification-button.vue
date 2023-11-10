@@ -29,9 +29,19 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <el-button class="verifiaction-button" @click="buttonClick">{{
-    buttonText
-  }}</el-button>
+  <el-button
+    class="verifiaction-button"
+    :style="{
+      color:
+        buttonText === defaultText
+          ? 'var(--color-primary, #409EFF)'
+          : 'var(--text-color-placeholder, #A8ABB2)',
+    }"
+    @click="buttonClick"
+    >{{
+      buttonText === defaultText ? defaultText : buttonText + "s"
+    }}</el-button
+  >
 </template>
 
 <style lang="less" scoped>
