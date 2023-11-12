@@ -26,7 +26,7 @@ const updateMain = () => {
         "require": umdDir
       }
     }
-    packageJson.module = "./dist/index.d.ts"
+    packageJson.typings = "./dist/index.d.ts"
     packageJson.files = [
       "/dist"
     ]
