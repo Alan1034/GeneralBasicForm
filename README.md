@@ -150,6 +150,39 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ],
         },
         {
+          label: '',
+          prop: 'bsName2',
+          type: 'input-graphic-verification',
+          inputSetting: {
+            placeholder: '请输入图形验证码',
+            style: 'width: 100%'
+          },
+          rules: [
+            {
+              message: '请输入图形验证码',
+              trigger: 'blur'
+            }
+          ],
+          graphicUrl, // 请求图像的URL
+          getGraphic, // 重新请求图像的函数
+          key:Math.random(),  // 必传，图像更新后必须更新
+        },
+        {
+          label: '',
+          prop: 'bsName3',
+          type: 'input-mobile-verification',
+          inputSetting: {
+            placeholder: '请输入手机验证码',
+            style: 'width: 100%'
+          },
+          rules: [
+            {
+              message: '请输入手机验证码',
+              trigger: 'blur'
+            }
+          ]
+        },
+        {
           label: "分类",
           prop: "分类",
           type: "cascader",

@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-09 10:01:20
- * @LastEditTime: 2023-11-09 16:50:16
+ * @LastEditTime: 2023-11-14 11:07:20
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 图形验证码组件
@@ -11,13 +11,16 @@
 
 <script setup lang="ts">
 import Input from "../input/index.vue";
-import { ref } from "vue";
-import type { componentsProps } from "../../../types/componentsProps";
+// import { ref, computed, PropType, toRefs } from "vue";
+import type {
+  componentsProps,
+  inputGraphicVerification,
+} from "../../../types/componentsProps";
 const { item } = defineProps<componentsProps>();
-
-let url = ref(
-  "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-);
+const {
+  graphicUrl = "",
+  getGraphic = () => {},
+}: inputGraphicVerification = item;
 </script>
 
 <template>
@@ -27,12 +30,13 @@ let url = ref(
       class="graphic"
       @click="
         () => {
-          url =
-            'https://img2.baidu.com/it/u=935733873,1141828557&fm=253&fmt=auto&app=120&f=JPEG?w=679&h=500';
+          if (getGraphic) {
+            getGraphic();
+          }
         }
       "
       loading="lazy"
-      :src="url"
+      :src="graphicUrl"
       fit="fill"
     />
   </div>

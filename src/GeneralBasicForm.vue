@@ -31,6 +31,7 @@
       <InputGraphicVerification
         v-if="item.type === 'input-graphic-verification'"
         :item="item"
+        :key="item.key"
       />
       <InputMobileVerification
         v-if="item.type === 'input-mobile-verification'"
