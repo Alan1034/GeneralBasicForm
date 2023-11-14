@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-09 10:01:20
- * @LastEditTime: 2023-11-14 15:36:26
+ * @LastEditTime: 2023-11-14 19:24:32
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 图形验证码组件
@@ -17,7 +17,7 @@ import type {
   InputGraphicVerification,
 } from "../../../types/componentsProps";
 const { item } = defineProps<{ item: any }>();
-const { graphicUrl = "", getGraphic = () => {} }: InputGraphicVerification =
+const { graphicSrc = "", getGraphic = () => {} }: InputGraphicVerification =
   item;
 </script>
 
@@ -34,7 +34,7 @@ const { graphicUrl = "", getGraphic = () => {} }: InputGraphicVerification =
         }
       "
       loading="lazy"
-      :src="graphicUrl"
+      :src="graphicSrc"
       fit="fill"
     />
   </div>

@@ -178,9 +178,9 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               trigger: 'blur'
             }
           ],
-          graphicUrl, // 请求图像的URL
+          graphicSrc, // 请求图像的URL
           getGraphic, // 重新请求图像的函数
-          key:Math.random(),  // 必传，图像更新后必须更新
+          key:Math.random(),  // 必传，图像更新后必须更新。如果URL会变化也可以用URL代替
         },
         {
           label: '',
