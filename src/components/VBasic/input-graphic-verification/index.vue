@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-09 10:01:20
- * @LastEditTime: 2023-11-14 11:07:20
+ * @LastEditTime: 2023-11-14 15:36:26
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 图形验证码组件
@@ -13,14 +13,12 @@
 import Input from "../input/index.vue";
 // import { ref, computed, PropType, toRefs } from "vue";
 import type {
-  componentsProps,
-  inputGraphicVerification,
+  BasicFormComponentsProps,
+  InputGraphicVerification,
 } from "../../../types/componentsProps";
-const { item } = defineProps<componentsProps>();
-const {
-  graphicUrl = "",
-  getGraphic = () => {},
-}: inputGraphicVerification = item;
+const { item } = defineProps<{ item: any }>();
+const { graphicUrl = "", getGraphic = () => {} }: InputGraphicVerification =
+  item;
 </script>
 
 <template>

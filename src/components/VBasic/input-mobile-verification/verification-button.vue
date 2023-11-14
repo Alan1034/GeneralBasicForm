@@ -1,30 +1,45 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeUnmount, Ref } from "vue";
+import type { InputMobileVerification } from "../../../types/componentsProps";
+const { getSmscode } = defineProps<{ getSmscode: Function }>();
 
 const defaultText = "获取验证码";
 const restTime = 60;
 const buttonText: Ref<string | number> = ref(defaultText);
 const timer = ref(null);
 const buttonType = computed(() => buttonText.value === defaultText);
-const buttonClick = () => {
+const reset = () => {
+  if (!timer) {
+    return;
+  }
+  clearInterval(timer.value);
+  timer.value = null;
+  buttonText.value = defaultText;
+};
+const buttonClick = async () => {
   if (buttonText.value !== defaultText) {
     return;
   }
   buttonText.value = restTime;
   timer.value = setInterval(() => {
     if (Number(buttonText.value) <= 0 || !buttonText.value) {
-      clearInterval(timer.value);
-      timer.value = null;
-      buttonText.value = defaultText;
+      reset();
       return;
     } else {
       buttonText.value = Number(buttonText.value) - 1;
     }
   }, 1000);
+  if (!getSmscode) {
+    return;
+  } else {
+    const statue = await getSmscode();
+    if (statue === false) {
+      reset();
+    }
+  }
 };
 onBeforeUnmount(() => {
-  clearInterval(timer.value);
-  timer.value = null;
+  reset();
 });
 </script>
 

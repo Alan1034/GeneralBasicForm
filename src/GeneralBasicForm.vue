@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-11-10 16:22:01
+ * @LastEditTime: 2023-11-14 15:18:20
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -86,7 +86,7 @@
 
 <script lang="ts">
 import { provide, ref, PropType, defineComponent } from "vue";
-import type { itemType, formType } from "./types/basicFrom";
+import type { ItemType } from "./types/basicFrom";
 import { useRoute } from "vue-router";
 import Input from "./components/VBasic/input";
 import InputNumber from "./components/VBasic/input-number";
@@ -126,7 +126,7 @@ export default defineComponent({
     },
     formItem: {
       // 定义表单的数据
-      type: Array as unknown as PropType<itemType[]>,
+      type: Array as unknown as PropType<ItemType[]>,
       default: [],
     },
     size: {

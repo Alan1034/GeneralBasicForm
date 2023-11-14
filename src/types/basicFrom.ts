@@ -1,4 +1,4 @@
-export enum formType {
+export enum FormType {
   /**
    * @description: 输入框
    * @return {*}
@@ -41,8 +41,8 @@ export enum formType {
   'input-number' = 'input-number',
 }
 
-export interface itemType {
-  type: formType;
+export interface ItemType {
+  type: FormType;
   // 扩展属性
   [key: string]: any
 };

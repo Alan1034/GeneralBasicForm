@@ -1,4 +1,5 @@
-export interface componentsProps {
+
+export interface BasicFormComponentsProps {
   item: any;
   // queryParams: Object | String;
   // size:String;
@@ -6,8 +7,11 @@ export interface componentsProps {
 }
 
 
-export interface inputGraphicVerification {
+export interface InputGraphicVerification {
   graphicUrl?: string
   getGraphic?: Function
   key: string | number
+};
+export interface InputMobileVerification {
+  getSmscode: Function
 };
