@@ -64,14 +64,29 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 
 表单数据校验需要拿到内部表单的ref
 
-    this.$refs["generalBasicForm"].$refs["queryFormRef"]    
-      .validate(
-        async (valid) => {
-          if (valid) { 
-            console.log(this.$refs["generalBasicForm"]["queryParams"]);
+    async getSmscode() {
+      const VGeneralBasicFormRef = this.$refs['VGeneralBasicFormRef'] as any
+      const state = await new Promise<boolean>((resolve, reject) => {
+        VGeneralBasicFormRef.$refs['queryFormRef']?.validateField(
+          'user_phone',
+          async (valid: FormValidateCallback | undefined) => {
+            if (valid) {
+              const { user_phone } = VGeneralBasicFormRef['queryParams']
+              const res: any = await SmscodeList({ user_phone })
+              if (res) {
+                console.log(res)
+                resolve(true)
+              } else {
+                resolve(false)
+              }
+            } else {
+              resolve(false)
+            }
           }
-        }
-      );
+        )
+      })
+      return state
+    },
 
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
