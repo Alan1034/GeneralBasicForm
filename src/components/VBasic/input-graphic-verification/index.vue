@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-09 10:01:20
- * @LastEditTime: 2023-11-14 19:24:32
+ * @LastEditTime: 2023-11-15 10:15:28
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 图形验证码组件
@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import Input from "../input/index.vue";
-// import { ref, computed, PropType, toRefs } from "vue";
+import { ref, computed, PropType, toRefs } from "vue";
 import type {
   BasicFormComponentsProps,
   InputGraphicVerification,
@@ -19,24 +19,22 @@ import type {
 const { item } = defineProps<{ item: any }>();
 const { graphicSrc = "", getGraphic = () => {} }: InputGraphicVerification =
   item;
+const loading = ref(false);
+
+const graphicClick = async () => {
+  // console.log('click', getGraphic);
+  if (getGraphic && !loading.value) {
+    loading.value = true;
+    await getGraphic();
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
-  <div class="input-graphic-verification">
+  <div class="input-graphic-verification" v-loading="loading">
     <Input :item="item" class="input" />
-    <el-image
-      class="graphic"
-      @click="
-        () => {
-          if (getGraphic) {
-            getGraphic();
-          }
-        }
-      "
-      loading="lazy"
-      :src="graphicSrc"
-      fit="fill"
-    />
+    <img class="graphic" @click="graphicClick" :src="graphicSrc" />
   </div>
 </template>
 
@@ -51,6 +49,7 @@ const { graphicSrc = "", getGraphic = () => {} }: InputGraphicVerification =
   .graphic {
     width: 109px;
     height: 43px;
+    object-fit: fill;
     flex: none;
   }
 }
