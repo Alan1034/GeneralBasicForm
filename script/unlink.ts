@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-10 09:39:59
- * @LastEditTime: 2023-11-15 18:11:20
+ * @LastEditTime: 2023-11-15 18:32:05
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: unlink处理流程
@@ -18,8 +18,8 @@ const updateMain = () => {
   try {
     const packageTxt = fs.readFileSync(path.join(__dirnameNew, '../package.json'), 'utf8');
     const packageJson = JSON.parse(packageTxt);
-    const umdDir = "./dist/index.umd.js"
-    const esDir = "./dist/index.mjs"
+    const umdDir = "./dist/index.umd.cjs"
+    const esDir = "./dist/index.js"
     packageJson.main = umdDir
     packageJson.module = esDir
     packageJson.exports = {
