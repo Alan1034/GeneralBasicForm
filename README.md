@@ -42,6 +42,7 @@ import GeneralBasicForm from 'general-basic-form'
         }
         noUrlParameters
         :afterReset="afterReset"
+        v-model:loading="loading"
       />
     
       <style lang="scss" scoped>
@@ -98,6 +99,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
     afterReset(); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
     noUrlParameters:true // 不接受和不改变url的参数
+    loading:false // 加载动画
     formItem: [
     	{
           label: '',

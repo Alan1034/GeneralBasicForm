@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-11-14 15:18:20
+ * @LastEditTime: 2023-11-16 10:51:02
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -75,6 +75,7 @@
         icon="el-icon-search"
         :size="size"
         @click="handleQuery"
+        v-loading="formLoading"
         >查询</el-button
       >
       <el-button icon="el-icon-refresh" :size="size" @click="resetQuery"
@@ -85,7 +86,7 @@
 </template>
 
 <script lang="ts">
-import { provide, ref, PropType, defineComponent } from "vue";
+import { provide, ref, PropType, defineComponent, computed } from "vue";
 import type { ItemType } from "./types/basicFrom";
 import { useRoute } from "vue-router";
 import Input from "./components/VBasic/input";
@@ -93,6 +94,7 @@ import InputNumber from "./components/VBasic/input-number";
 import InputGraphicVerification from "./components/VBasic/input-graphic-verification";
 import InputMobileVerification from "./components/VBasic/input-mobile-verification";
 import Divider from "./components/VBasic/divider";
+import { formLoadingKey } from "./injectKey";
 
 export default defineComponent({
   name: "GeneralBasicForm",
@@ -108,6 +110,11 @@ export default defineComponent({
       // 是否展示所有元素
       type: Boolean,
       default: true,
+    },
+    loading: {
+      // 加载动画
+      type: Boolean,
+      default: false,
     },
     formOnly: {
       // 是否只展示表单不展示按钮
@@ -152,6 +159,7 @@ export default defineComponent({
   },
   data() {
     return {
+      formLoading: this.loading || false,
       selectSetting: {
         placeholder: "请选择",
         clearable: true,
@@ -192,6 +200,31 @@ export default defineComponent({
         ...val,
       };
     },
+    loading(val) {
+      // console.log("loading", val);
+      if (this.formLoading === val) {
+        return;
+      }
+      this.formLoading = val;
+    },
+    formLoading(val) {
+      // console.log("formLoading", val);
+      if (this.loading === val) {
+        return;
+      }
+      this.$emit("update:loading", val);
+    },
+  },
+  provide() {
+    return {
+      // 显式提供一个计算属性
+      [formLoadingKey]: {
+        formLoading: computed(() => this.formLoading),
+        updateFormLoading: (val) => {
+          this.formLoading = val;
+        },
+      },
+    };
   },
   methods: {
     /** 搜索按钮操作 */
