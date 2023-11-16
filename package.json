@@ -10,7 +10,8 @@
     "build-only": "vite build",
     "type-check": "tsc --noEmit -p tsconfig.json --composite false",
     "link": "tsx script/link.ts && yarn link",
-    "unlink": "tsx script/unlink.ts && yarn unlink && run-p build"
+    "unlink": "tsx script/unlink.ts && yarn unlink && run-p build",
+    "unlinkSetting": "tsx script/unlink.ts"
   },
   "keywords": [
     "general-basic-form",
@@ -51,7 +52,8 @@
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.umd.cjs"
-    }
+    },
+    "./style": "./dist/style.css"
   },
   "files": [
     "/dist"

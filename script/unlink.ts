@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-10 09:39:59
- * @LastEditTime: 2023-11-15 18:32:05
+ * @LastEditTime: 2023-11-16 15:09:53
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: unlink处理流程
@@ -26,7 +26,8 @@ const updateMain = () => {
       ".": {
         "import": esDir,
         "require": umdDir
-      }
+      },
+      "./style": "./dist/style.css"
     }
     packageJson.typings = "./dist/index.d.ts"
     packageJson.files = [

@@ -14,6 +14,7 @@ app.use(ElementPlus)
 
 ```
 import GeneralBasicForm from 'general-basic-form'
+import 'general-basic-form/style'
 ```
 
     <GeneralBasicForm
