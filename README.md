@@ -71,7 +71,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       const state = await new Promise<boolean>((resolve, reject) => {
         VGeneralBasicFormRef.$refs['queryFormRef']?.validateField(
           'user_phone',
-          async (valid: FormValidateCallback | undefined) => {
+          async (valid: boolean, props?: FormItemProp[] | undefined) => {
             if (valid) {
               const { user_phone } = VGeneralBasicFormRef['queryParams']
               const res: any = await SmscodeList({ user_phone })
@@ -142,9 +142,9 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           type: "select",
           multiple:true, //多选
           option: [
-            { value: "3", desc: "满印" },
-            { value: "1", desc: "区域印花" },
-            { value: "2", desc: "绣花" },
+            { value: "3", label: "满印" },
+            { value: "1", label: "区域印花" },
+            { value: "2", label: "绣花" },
           ],
         },
         { 
@@ -200,6 +200,28 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
             }
           ]
           getSmscode,// 获取验证码的回调函数,获取失败必须返回false,否则计时器不会重新计算
+        },
+        {
+          label: '是否必填',
+          prop: 'is_optional',
+          type: 'radio',
+          radioGroupSetting: {
+            disabled: true
+          },
+          radioSetting: {
+            border: true
+          },
+          option: [
+            { value: '是', label: 'true' },
+            { value: '否', label: 'false' }
+          ],
+          rules: [
+            {
+              required: true,
+              message: '请输入标签项名称',
+              trigger: 'blur'
+            }
+          ]
         },
         {
           label: "分类",

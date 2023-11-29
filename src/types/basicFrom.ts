@@ -39,6 +39,11 @@ export enum FormType {
    * @return {*}
    */
   'input-number' = 'input-number',
+  /**
+   * @description: 单选框
+   * @return {*}
+   */
+  'radio' = 'radio',
 }
 
 export interface ItemType {

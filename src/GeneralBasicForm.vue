@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-11-16 10:51:02
+ * @LastEditTime: 2023-11-29 09:52:47
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -38,9 +38,10 @@
         :item="item"
       />
       <Divider v-if="item.type === 'divider'" :item="item" />
+      <Radio v-if="item.type === 'radio'" :item="item" />
       <el-select
         filterable
-        v-else-if="item.type === 'select'"
+        v-if="item.type === 'select'"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="item.selectSetting || selectSetting"
@@ -48,20 +49,20 @@
         <el-option
           v-for="dict in item.option || []"
           :key="dict.value"
-          :label="dict.desc"
+          :label="dict.label"
           :value="dict.value"
         />
       </el-select>
       <el-cascader
         filterable
-        v-else-if="item.type === 'cascader'"
+        v-if="item.type === 'cascader'"
         v-model="queryParams[item.prop]"
         :size="size"
         :options="item.options || []"
         v-bind="item.selectSetting || selectSetting"
       ></el-cascader>
       <el-date-picker
-        v-else-if="item.type === 'date-picker'"
+        v-if="item.type === 'date-picker'"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="item.datePackerSetting || datePackerSetting"
@@ -89,11 +90,12 @@
 import { provide, ref, PropType, defineComponent, computed } from "vue";
 import type { ItemType } from "./types/basicFrom";
 import { useRoute } from "vue-router";
-import Input from "./components/VBasic/input";
-import InputNumber from "./components/VBasic/input-number";
-import InputGraphicVerification from "./components/VBasic/input-graphic-verification";
-import InputMobileVerification from "./components/VBasic/input-mobile-verification";
-import Divider from "./components/VBasic/divider";
+import Input from "./components/VBasic/input/index.vue";
+import InputNumber from "./components/VBasic/input-number/index.vue";
+import InputGraphicVerification from "./components/VBasic/input-graphic-verification/index.vue";
+import InputMobileVerification from "./components/VBasic/input-mobile-verification/index.vue";
+import Divider from "./components/VBasic/divider/index.vue";
+import Radio from "./components/VBasic/radio/index.vue";
 import { formLoadingKey } from "./injectKey";
 
 export default defineComponent({
@@ -104,6 +106,7 @@ export default defineComponent({
     InputGraphicVerification,
     InputMobileVerification,
     Divider,
+    Radio,
   },
   props: {
     showSearch: {
@@ -139,7 +142,7 @@ export default defineComponent({
     size: {
       // 控制按钮大小
       type: String,
-      default: "medium",
+      default: "default",
     },
     labelWidth: {
       // 表单文字宽度
