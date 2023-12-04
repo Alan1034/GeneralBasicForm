@@ -13,7 +13,7 @@ app.use(ElementPlus)
 ```
 
 ```
-import GeneralBasicForm from 'general-basic-form'
+import { VGeneralBasicForm } from 'general-basic-form'
 import 'general-basic-form/style'
 ```
 
@@ -25,7 +25,14 @@ import 'general-basic-form/style'
       ref="generalBasicForm"
       labelWidth="90px"
     >
-     ...一些传入插槽的内容
+      <template v-slot:default>
+        ...一些传入插槽的内容
+      </template>
+      <template v-slot:behind-the-button>
+        <el-form-item>
+          <div>上次同步时间：</div>
+        </el-form-item>
+      </template>
     </GeneralBasicForm>
 
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
@@ -89,6 +96,21 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       })
       return state
     },
+    
+    setup写法：
+    const VGeneralBasicFormRef = ref()
+    const params = await new Promise<boolean>((resolve, reject) => {
+      VGeneralBasicFormRef.value.$refs['queryFormRef']?.validate(
+        async (valid: boolean, props?: FormItemProp[] | undefined) => {
+          if (valid) {
+            const params = VGeneralBasicFormRef.value['queryParams']
+            resolve(params)
+          } else {
+            reject(false)
+          }
+        }
+      )
+    })
 
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
