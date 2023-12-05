@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-12-04 14:24:10
+ * @LastEditTime: 2023-12-05 09:35:38
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -78,7 +78,7 @@
         v-loading="formLoading"
         >查询</el-button
       >
-      <el-button   :size="size" @click="resetQuery">重置</el-button>
+      <el-button :size="size" @click="resetQuery">重置</el-button>
     </el-form-item>
     <slot name="behind-the-button" />
   </el-form>
@@ -195,11 +195,19 @@ export default defineComponent({
     };
   },
   watch: {
-    formData(val) {
-      this.queryParams = {
-        ...(this.noUrlParameters ? {} : this.queryParams),
-        ...val,
-      };
+    formData: {
+      handler(val) {
+        // console.log(val);
+        this.queryParams = {
+          ...(this.noUrlParameters ? {} : this.queryParams),
+          ...val,
+        };
+        // console.log(this.queryParams);
+      },
+      // watch 默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
+      // https://cn.vuejs.org/guide/essentials/watchers.html#deep-watchers
+      immediate: true,
+      // deep: true,
     },
     loading(val) {
       // console.log("loading", val);
