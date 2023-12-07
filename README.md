@@ -163,6 +163,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           prop: "spName",
           type: "select",
           multiple:true, //多选
+          selectSetting:{},
           option: [
             { value: "3", label: "满印" },
             { value: "1", label: "区域印花" },
@@ -173,7 +174,9 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "创建时间",
           prop: "create_time",
           type: "date-picker",
-          "value-format": "yyyyMMdd"
+          datePackerSetting: {
+            "range-separator": "至",
+          }
         },
         {
           label: "二次工艺成本价格（人民币分）",
@@ -249,6 +252,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "分类",
           prop: "分类",
           type: "cascader",
+          selectSetting:{},
           options: [
             {
               value: "zhinan",

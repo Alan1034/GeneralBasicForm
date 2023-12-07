@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-12-05 09:35:38
+ * @LastEditTime: 2023-12-07 17:07:44
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -28,46 +28,21 @@
       :rules="item.rules"
     >
       <Input v-if="item.type === 'input'" :item="item" />
+      <Radio v-if="item.type === 'radio'" :item="item" />
+      <Select v-if="item.type === 'select'" :item="item" />
+      <Divider v-if="item.type === 'divider'" :item="item" />
+      <Cascader v-if="item.type === 'cascader'" :item="item" />
+      <DatePicker v-if="item.type === 'date-picker'" :item="item" />
+      <InputNumber v-if="item.type === 'input-number'" :item="item" />
+      <InputMobileVerification
+        v-if="item.type === 'input-mobile-verification'"
+        :item="item"
+      />
       <InputGraphicVerification
         v-if="item.type === 'input-graphic-verification'"
         :item="item"
         :key="item.key"
       />
-      <InputMobileVerification
-        v-if="item.type === 'input-mobile-verification'"
-        :item="item"
-      />
-      <Divider v-if="item.type === 'divider'" :item="item" />
-      <Radio v-if="item.type === 'radio'" :item="item" />
-      <el-select
-        filterable
-        v-if="item.type === 'select'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="item.selectSetting || selectSetting"
-      >
-        <el-option
-          v-for="dict in item.option || []"
-          :key="dict.value"
-          :label="dict.label"
-          :value="dict.value"
-        />
-      </el-select>
-      <el-cascader
-        filterable
-        v-if="item.type === 'cascader'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        :options="item.options || []"
-        v-bind="item.selectSetting || selectSetting"
-      ></el-cascader>
-      <el-date-picker
-        v-if="item.type === 'date-picker'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="item.datePackerSetting || datePackerSetting"
-      ></el-date-picker>
-      <InputNumber v-if="item.type === 'input-number'" :item="item" />
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
@@ -94,6 +69,9 @@ import InputGraphicVerification from "./components/VBasic/input-graphic-verifica
 import InputMobileVerification from "./components/VBasic/input-mobile-verification/index.vue";
 import Divider from "./components/VBasic/divider/index.vue";
 import Radio from "./components/VBasic/radio/index.vue";
+import DatePicker from "./components/VBasic/date-picker/index.vue";
+import Select from "./components/VBasic/select/index.vue";
+import Cascader from "./components/VBasic/cascader/index.vue";
 import { formLoadingKey } from "./injectKey";
 
 export default defineComponent({
@@ -105,6 +83,9 @@ export default defineComponent({
     InputMobileVerification,
     Divider,
     Radio,
+    DatePicker,
+    Select,
+    Cascader,
   },
   props: {
     showSearch: {
@@ -161,17 +142,6 @@ export default defineComponent({
   data() {
     return {
       formLoading: this.loading || false,
-      selectSetting: {
-        placeholder: "请选择",
-        clearable: true,
-        style: "width: 200px",
-      },
-      datePackerSetting: {
-        style: "width: 227px",
-        "start-placeholder": "开始日期",
-        "end-placeholder": "结束日期",
-        type: "daterange",
-      },
     };
   },
   setup(props) {
