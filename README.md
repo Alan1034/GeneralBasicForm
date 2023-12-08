@@ -1,6 +1,6 @@
 # GeneralBasicForm
 
-一个兼容 Vue3 和 React(未来实现) 的表单组件 <br/>
+## 一个兼容 Vue3 和 React(未来实现) 的表单组件
 
 示例:
 
@@ -393,6 +393,75 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
   */
 
  'input-number' = 'input-number',
+
+
+
+## 对虚拟滚动列表+接口的封装
+
+
+
+![image-20231208165229296](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081652392.png)
+
+```
+import { VInfiniteScrollList } from 'general-basic-form'
+<VInfiniteScrollList
+  :search="search"
+  id="user_id"
+  name="name"
+  ref="InfiniteScrollListRef"
+  :extra="extraRender"
+  :max="1"
+ />
+```
+
+```
+search：数据接口 (page: Number) => Promise<[]>
+id：数据key值（唯一和选择值）
+name：显示名字
+extra：同行额外显示的内容，(item: any) => Node|String
+```
+
+```
+ defineExpose({ reset, loadList, selectInfo });
+ InfiniteScrollListRef.value.reset()：重置列表内容
+ InfiniteScrollListRef.value.loadList()：重新请求列表内容
+ InfiniteScrollListRef?.value?.selectInfo：选择的内容
+```
+
+## 对展示描述列表的封装
+
+![image-20231208182455415](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081824708.png)
+
+```
+import { VDescriptions } from 'general-basic-form'
+ <VDescriptions
+  :formData="props.formData"
+  :formItem="formItem"
+  :descriptionsItemProps="{
+    'label-class-name': 'label-class-name'
+  }"
+  ...其他el-descriptions的配置
+ />
+```
+
+```
+formData：Object
+formItem：[ {
+      label: '受访人',
+      prop: 'contactors',
+      render: (scope: any) => {
+        const { $index, row = {} } = scope
+        const { contactors = [] } = row
+        const ele = (contactors.length > 0 ? <span>{contactors.map((item: any) => item.name).join("，")} </span> : null)
+        return ele
+      }
+    },
+    {
+      label: '拜访详情',
+      prop: 'detail',
+  }]
+descriptionsItemProps:el-descriptions-item的配置
+```
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
