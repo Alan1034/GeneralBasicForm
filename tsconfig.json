@@ -1,6 +1,6 @@
 {
   "include": [
-    "public/index.d.tsex.d.ts",
+    "public/index.d.ts",
     "src/**/*",
     "src/**/*.vue",
     "public/*",
