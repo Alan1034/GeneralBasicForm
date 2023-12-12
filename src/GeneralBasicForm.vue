@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2023-12-07 17:07:44
+ * @LastEditTime: 2023-12-12 11:17:42
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -34,6 +34,7 @@
       <Cascader v-if="item.type === 'cascader'" :item="item" />
       <DatePicker v-if="item.type === 'date-picker'" :item="item" />
       <InputNumber v-if="item.type === 'input-number'" :item="item" />
+      <slot v-if="item.type === 'form-item-slot'" :name="item.name"></slot>
       <InputMobileVerification
         v-if="item.type === 'input-mobile-verification'"
         :item="item"

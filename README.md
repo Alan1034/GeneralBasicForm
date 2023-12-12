@@ -249,6 +249,16 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ]
         },
         {
+          label: '受访人',
+          prop: 'contactors',
+          type: 'form-item-slot',
+          name: "contactors"
+          // 插槽组件使用：
+          // <VGeneralBasicForm ...>
+          // 	<template #contactors> <div>一些组件</div></template>
+      	  // </VGeneralBasicForm>
+        },
+        {
           label: "分类",
           prop: "分类",
           type: "cascader",

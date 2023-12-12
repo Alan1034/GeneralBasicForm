@@ -44,6 +44,11 @@ export enum FormType {
    * @return {*}
    */
   'radio' = 'radio',
+  /**
+   * @description: 自定义元素，插槽组件
+   * @return {*}
+   */
+  'form-item-slot'='form-item-slot',
 }
 
 export interface ItemType {
