@@ -428,7 +428,7 @@ import { VInfiniteScrollList } from 'general-basic-form'
 search：数据接口 (page: Number) => Promise<[]>
 id：数据key值（唯一和选择值）
 name：显示名字
-extra：同行额外显示的内容，(item: any) => Node|String
+extra：同行额外显示的内容，(item: any) => VNode | String;
 ```
 
 ```

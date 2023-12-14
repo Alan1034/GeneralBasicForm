@@ -1,11 +1,11 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2023-12-05 17:09:42
+ * @LastEditTime: 2023-12-14 10:30:34
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
- * @FilePath: \deal-front-end\src\components\InfiniteScrollList.vue
+ * @FilePath: \GeneralBasicForm\src\InfiniteScrollList.vue
  * 
 -->
 <template>
@@ -18,7 +18,7 @@
       <li v-for="i in list" :key="i[id]" class="list-item">
         <el-checkbox :label="i[id]" class="checkbox"
           >{{ i[name] }}
-          {{ extra && extra(i) }}
+          <ExtraComponent :i="i"></ExtraComponent>
         </el-checkbox>
       </li>
     </ul>
@@ -26,10 +26,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick, computed, defineExpose } from "vue";
-import type { PropType } from "vue";
+import { ref, computed, defineExpose } from "vue";
+import type { PropType, FunctionalComponent, VNode } from "vue";
 type SearchFunction = (page: Number) => Promise<[]>;
-type ExtraFunction = (item: any) => Node | String;
+type ExtraFunction = (item: any) => VNode | String;
 const props = defineProps({
   search: {
     type: Function as unknown as PropType<SearchFunction>,
@@ -54,6 +54,18 @@ const page = ref(1);
 const ifbottom = ref(false); //判断是否到底部，是的话就不再请求
 const checkedList = ref<any[]>([]);
 const loading = ref(false);
+type ExtraComponentProps = {
+  i: any;
+};
+type Events = {};
+// 函数直接返回VNode模板会识别成[object Promise]，因此需要转换成函数式组件
+const ExtraComponent: FunctionalComponent<ExtraComponentProps, Events> = (
+  props,
+  context
+) => {
+  const { i } = props;
+  return extra(i);
+};
 const reset = () => {
   page.value = 1;
   list.value = [];
