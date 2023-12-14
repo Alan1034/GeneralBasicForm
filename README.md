@@ -432,10 +432,12 @@ extra：同行额外显示的内容，(item: any) => VNode | String;
 ```
 
 ```
- defineExpose({ reset, loadList, selectInfo });
+ defineExpose({ reset, loadList, selectInfo, list, ifbottom });
  InfiniteScrollListRef.value.reset()：重置列表内容
  InfiniteScrollListRef.value.loadList()：重新请求列表内容
  InfiniteScrollListRef?.value?.selectInfo：选择的内容
+ InfiniteScrollListRef?.value?.list：列表的内容
+ InfiniteScrollListRef?.value?.ifbottom：是否到底部
 ```
 
 ## 对展示描述列表的封装

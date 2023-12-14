@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2023-12-14 10:30:34
+ * @LastEditTime: 2023-12-14 11:19:12
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -93,7 +93,7 @@ const selectInfo =
   computed(() =>
     list.value.filter((item) => checkedList.value.includes(item[id]))
   ) || {};
-defineExpose({ reset, loadList, selectInfo });
+defineExpose({ reset, loadList, selectInfo, list, ifbottom });
 </script>
 
 <style lang="less" scoped>
