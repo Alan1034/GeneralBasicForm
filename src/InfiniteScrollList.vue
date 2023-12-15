@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2023-12-14 11:19:12
+ * @LastEditTime: 2023-12-15 09:45:41
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineExpose } from "vue";
+import { ref, computed, watch } from "vue";
 import type { PropType, FunctionalComponent, VNode } from "vue";
 type SearchFunction = (page: Number) => Promise<[]>;
 type ExtraFunction = (item: any) => VNode | String;
@@ -45,6 +45,10 @@ const props = defineProps({
   },
   extra: {
     type: Function as unknown as PropType<ExtraFunction>,
+    required: false,
+  },
+  defaultSelection: {
+    type: Array,
     required: false,
   },
 });
@@ -66,6 +70,15 @@ const ExtraComponent: FunctionalComponent<ExtraComponentProps, Events> = (
   const { i } = props;
   return extra(i);
 };
+watch(
+  () => props.defaultSelection,
+  (NewVal = [], oldVal = []) => {
+    checkedList.value = NewVal.map((item) => {
+      return typeof item === "object" ? item[id] : item;
+    });
+  },
+  { immediate: true }
+);
 const reset = () => {
   page.value = 1;
   list.value = [];

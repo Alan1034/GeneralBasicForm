@@ -429,6 +429,7 @@ search：数据接口 (page: Number) => Promise<[]>
 id：数据key值（唯一和选择值）
 name：显示名字
 extra：同行额外显示的内容，(item: any) => VNode | String;
+defaultSelection：包含数据key值的对象数组或者直接传入key值数组
 ```
 
 ```
