@@ -18,7 +18,7 @@
       <li v-for="i in list" :key="i[id]" class="list-item">
         <el-checkbox :label="i[id]" class="checkbox"
           >{{ i[name] }}
-          <ExtraComponent :i="i"></ExtraComponent>
+          <ExtraComponent :i="i" v-if="i.extra"></ExtraComponent>
         </el-checkbox>
       </li>
     </ul>
