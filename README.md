@@ -99,7 +99,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
     
     setup写法：
     const VGeneralBasicFormRef = ref()
-    const params = await new Promise<boolean>((resolve, reject) => {
+    const params = await new Promise<any>((resolve, reject) => {
       VGeneralBasicFormRef.value.$refs['queryFormRef']?.validate(
         async (valid: boolean, props?: FormItemProp[] | undefined) => {
           if (valid) {
@@ -123,6 +123,8 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
     formOnly:true // 只展示表单不展示按钮
     noUrlParameters:true // 不接受和不改变url的参数
     loading:false // 加载动画
+    formData:{} // 注意，因为可能出现的性能问题在组件watch formData的变化时没有使用deep，所以有时候深度的修改会不生效，导致表单数据不完整
+    //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
     formItem: [
     	{
           label: '',
@@ -255,7 +257,12 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           name: "contactors"
           // 插槽组件使用：
           // <VGeneralBasicForm ...>
-          // 	<template #contactors> <div>一些组件</div></template>
+          // 	<template #contactors>
+          //		<div>一些组件
+          //			一些组件
+          //			<el-form-item prop="contactors">...</el-form-item>
+          //		</div>
+          //	</template>
       	  // </VGeneralBasicForm>
         },
         {
