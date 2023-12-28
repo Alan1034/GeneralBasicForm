@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2023-12-27 18:55:14
+ * @LastEditTime: 2023-12-28 10:32:35
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -9,7 +9,12 @@
  * 
 -->
 <template>
-  <el-checkbox-group v-model="checkedList" v-loading="loading" v-bind="props">
+  <el-checkbox-group
+    v-model="checkedList"
+    v-loading="loading"
+    v-bind="props"
+    v-if="props.checkbox"
+  >
     <ul
       v-infinite-scroll="loadList"
       class="list"
@@ -23,6 +28,20 @@
       </li>
     </ul>
   </el-checkbox-group>
+  <ul
+    v-infinite-scroll="loadList"
+    class="list"
+    :infinite-scroll-disabled="ifbottom"
+    v-else
+    v-bind="props"
+  >
+    <li v-for="i in list" :key="i[id]" class="list-item">
+      <div class="checkbox">
+        {{ i[name] }}
+        <ExtraComponent :i="i" v-if="props.extra"></ExtraComponent>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
@@ -34,6 +53,10 @@ const props = defineProps({
   search: {
     type: Function as unknown as PropType<SearchFunction>,
     required: true,
+  },
+  checkbox: {
+    type: Boolean,
+    required: false,
   },
   id: {
     type: String,

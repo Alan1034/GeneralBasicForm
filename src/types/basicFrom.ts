@@ -49,6 +49,11 @@ export enum FormType {
    * @return {*}
    */
   'form-item-slot'='form-item-slot',
+  /**
+   * @description: 多选框
+   * @return {*}
+   */
+  'checkbox'='checkbox',
 }
 
 export interface ItemType {

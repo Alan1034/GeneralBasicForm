@@ -251,6 +251,20 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ]
         },
         {
+          label: '多选',
+          prop: 'is_multi',
+          type: 'checkbox',
+          checkboxGroupSetting: {
+          },
+          checkboxSetting: {
+          },
+          option: [
+            { value: '是', label: 'true' },
+            { value: '否', label: 'false' }
+          ],
+          rules: []
+        },
+        {
           label: '受访人',
           prop: 'contactors',
           type: 'form-item-slot',
@@ -427,6 +441,14 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 
  'form-item-slot'='form-item-slot',
 
+ /**
+
+  \* @description: 多选框
+
+  */
+
+ 'checkbox'='checkbox',
+
 
 
 ## 对虚拟滚动列表+接口的封装
@@ -442,6 +464,7 @@ import { VInfiniteScrollList } from 'general-basic-form'
   id="user_id"
   name="name"
   ref="InfiniteScrollListRef"
+  checkbox
   :extra="extraRender"
   :max="1"
  />
@@ -451,6 +474,7 @@ import { VInfiniteScrollList } from 'general-basic-form'
 search：数据接口 (page: Number) => Promise<[]>
 id：数据key值（唯一和选择值）
 name：显示名字
+checkbox：是否有多选功能，不传的话就是单纯的虚拟滚动列表
 extra：同行额外显示的内容，(item: any) => VNode | String;
 defaultSelection：包含数据key值的对象数组或者直接传入key值数组
 ```

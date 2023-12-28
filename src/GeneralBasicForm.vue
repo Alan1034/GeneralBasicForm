@@ -32,6 +32,7 @@
       <Select v-if="item.type === 'select'" :item="item" />
       <Divider v-if="item.type === 'divider'" :item="item" />
       <Cascader v-if="item.type === 'cascader'" :item="item" />
+      <Checkbox v-if="item.type === 'checkbox'" :item="item" />
       <DatePicker v-if="item.type === 'date-picker'" :item="item" />
       <InputNumber v-if="item.type === 'input-number'" :item="item" />
       <slot v-if="item.type === 'form-item-slot'" :name="item.name"></slot>
@@ -70,6 +71,7 @@ import InputGraphicVerification from "./components/VBasic/input-graphic-verifica
 import InputMobileVerification from "./components/VBasic/input-mobile-verification/index.vue";
 import Divider from "./components/VBasic/divider/index.vue";
 import Radio from "./components/VBasic/radio/index.vue";
+import Checkbox from "./components/VBasic/checkbox/index.vue";
 import DatePicker from "./components/VBasic/date-picker/index.vue";
 import Select from "./components/VBasic/select/index.vue";
 import Cascader from "./components/VBasic/cascader/index.vue";
@@ -84,6 +86,7 @@ export default defineComponent({
     InputMobileVerification,
     Divider,
     Radio,
+    Checkbox,
     DatePicker,
     Select,
     Cascader,
