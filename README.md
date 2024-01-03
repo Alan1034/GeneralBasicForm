@@ -497,9 +497,6 @@ import { VDescriptions } from 'general-basic-form'
  <VDescriptions
   :formData="props.formData"
   :formItem="formItem"
-  :descriptionsItemProps="{
-    'label-class-name': 'label-class-name'
-  }"
   ...其他el-descriptions的配置
  />
 ```
@@ -519,6 +516,9 @@ formItem：[ {
     {
       label: '拜访详情',
       prop: 'detail',
+      descriptionsItemProps：{
+       'label-class-name': 'label-class-name'
+      }
   }]
 descriptionsItemProps:el-descriptions-item的配置
 ```

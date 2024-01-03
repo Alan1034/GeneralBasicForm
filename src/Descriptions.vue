@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2023-12-15 15:38:58
+ * @LastEditTime: 2024-01-03 09:05:06
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -14,7 +14,7 @@
       v-for="(item, i) in props.formItem"
       :key="item.prop"
       :label="item.label"
-      v-bind="props.descriptionsItemProps"
+      v-bind="item.descriptionsItemProps"
     >
       <RenderComponent
         v-if="item.render"
@@ -36,10 +36,6 @@ const props = defineProps({
   formData: {
     type: Object,
     required: true,
-  },
-  descriptionsItemProps: {
-    type: Object,
-    required: false,
   },
   formItem: {
     type: Array as unknown as PropType<ItemType[]>,
