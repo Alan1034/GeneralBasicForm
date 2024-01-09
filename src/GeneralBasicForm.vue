@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-01-08 16:55:42
+ * @LastEditTime: 2024-01-09 16:35:27
  * @LastEditors: yuanzeyu
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -171,11 +171,6 @@ export default defineComponent({
   watch: {
     formData: {
       handler(val, oldVal) {
-        // console.log(val);
-        // this.queryParams = {
-        //   ...(this.noUrlParameters ? {} : this.queryParams),
-        //   ...val,
-        // };
         if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
           this.queryParams = {
             ...(this.noUrlParameters ? {} : this.queryParams),
@@ -191,7 +186,7 @@ export default defineComponent({
     },
     queryParams: {
       handler(val) {
-        this.$emit("update:newFormData", val);
+        this.$emit("update:formData", val);
       },
       deep: true,
     },
