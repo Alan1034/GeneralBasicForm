@@ -235,11 +235,8 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           radioGroupSetting: {
             disabled: true
           },
-          radioSetting: {
-            border: true
-          },
           option: [
-            { value: '是', label: 'true' },
+            { value: '是', label: 'true',border: true },
             { value: '否', label: 'false' }
           ],
           rules: [
@@ -255,8 +252,6 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           prop: 'is_multi',
           type: 'checkbox',
           checkboxGroupSetting: {
-          },
-          checkboxSetting: {
           },
           option: [
             { value: '是', label: 'true' },
