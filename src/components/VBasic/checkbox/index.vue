@@ -14,9 +14,6 @@ import { ref, inject } from "vue";
 const { item } = defineProps<{ item: any }>();
 const queryParams = inject("queryParams", {});
 const size = inject("size");
-const checkboxSetting = ref({
-  ...item.checkboxSetting,
-});
 const checkboxGroupSetting = ref({
   ...item.checkboxGroupSetting,
 });
@@ -31,9 +28,8 @@ const checkboxGroupSetting = ref({
     <el-checkbox
       v-for="dict in item.option || []"
       :size="size"
-      :label="dict.label"
       :key="dict.label"
-      v-bind="checkboxSetting"
+      v-bind="dict"
       >{{ dict.value }}</el-checkbox
     >
   </el-checkbox-group>

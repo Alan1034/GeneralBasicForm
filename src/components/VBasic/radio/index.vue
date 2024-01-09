@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-08 18:03:42
- * @LastEditTime: 2023-11-29 10:19:37
+ * @LastEditTime: 2024-01-09 11:38:11
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 单选框组件
@@ -14,9 +14,6 @@ import { ref, inject } from "vue";
 const { item } = defineProps<{ item: any }>();
 const queryParams = inject("queryParams", {});
 const size = inject("size");
-const radioSetting = ref({
-  ...item.radioSetting,
-});
 const radioGroupSetting = ref({
   ...item.radioGroupSetting,
 });
@@ -31,9 +28,8 @@ const radioGroupSetting = ref({
     <el-radio
       v-for="dict in item.option || []"
       :size="size"
-      :label="dict.label"
       :key="dict.label"
-      v-bind="radioSetting"
+      v-bind="dict"
       >{{ dict.value }}</el-radio
     >
   </el-radio-group>
