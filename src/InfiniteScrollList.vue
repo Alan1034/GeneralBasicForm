@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2024-01-16 11:10:22
+ * @LastEditTime: 2024-01-16 15:55:36
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -48,10 +48,10 @@
 import { ref, computed, watch } from "vue";
 import type { PropType, FunctionalComponent, VNode } from "vue";
 type SearchFunction = (page: Number) => Promise<[]>;
-type ExtraFunction = false | ((item: any) => VNode | String);
+type ExtraFunction = "false" | ((item: any) => VNode | String);
 const props = defineProps({
   search: {
-    type: Function as unknown as PropType<SearchFunction>,
+    type: Function as PropType<SearchFunction>,
     required: true,
   },
   checkbox: {
@@ -67,7 +67,7 @@ const props = defineProps({
     required: true,
   },
   extra: {
-    type: Function as unknown as PropType<ExtraFunction>,
+    type: null as PropType<ExtraFunction>,
     required: false,
   },
   defaultSelection: {
