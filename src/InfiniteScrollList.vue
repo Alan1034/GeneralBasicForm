@@ -48,7 +48,7 @@
 import { ref, computed, watch } from "vue";
 import type { PropType, FunctionalComponent, VNode } from "vue";
 type SearchFunction = (page: Number) => Promise<[]>;
-type ExtraFunction = (item: any) => VNode | String | false;
+type ExtraFunction = false | ((item: any) => VNode | String);
 const props = defineProps({
   search: {
     type: Function as unknown as PropType<SearchFunction>,
