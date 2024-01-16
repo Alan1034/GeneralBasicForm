@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2023-12-28 10:32:35
+ * @LastEditTime: 2024-01-16 11:10:22
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -48,7 +48,7 @@
 import { ref, computed, watch } from "vue";
 import type { PropType, FunctionalComponent, VNode } from "vue";
 type SearchFunction = (page: Number) => Promise<[]>;
-type ExtraFunction = (item: any) => VNode | String;
+type ExtraFunction = (item: any) => VNode | String | false;
 const props = defineProps({
   search: {
     type: Function as unknown as PropType<SearchFunction>,
@@ -91,7 +91,8 @@ const ExtraComponent: FunctionalComponent<ExtraComponentProps, Events> = (
   context
 ) => {
   const { i } = props;
-  return extra(i);
+
+  return extra ? extra(i) : "";
 };
 watch(
   () => props.defaultSelection,
