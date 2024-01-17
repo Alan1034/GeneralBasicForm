@@ -471,6 +471,13 @@ id：数据key值（唯一和选择值）
 name：显示名字
 checkbox：是否有多选功能，不传的话就是单纯的虚拟滚动列表
 extra：同行额外显示的内容，(item: any) => VNode | String;
+//el-checkbox有固定高度，如果需要配置高度比较高，例如有换行的自定义extra，最好处理一下样式，例子：
+//:deep(.el-checkbox) {
+//  padding: 6px 16px !important;
+//  display: flex;
+//  align-items: baseline;
+//  height: auto;
+//}
 defaultSelection：包含数据key值的对象数组或者直接传入key值数组
 ```
 

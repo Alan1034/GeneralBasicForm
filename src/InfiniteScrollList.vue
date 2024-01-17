@@ -91,8 +91,14 @@ const ExtraComponent: FunctionalComponent<ExtraComponentProps, Events> = (
   context
 ) => {
   const { i } = props;
-
-  return extra ? extra(i) : "";
+  // el-checkbox有固定高度，如果需要配置高度比较高，例如有换行的自定义extra，最好处理一下样式，例子：
+  // :deep(.el-checkbox) {
+  //   padding: 6px 16px !important;
+  //   display: flex;
+  //   align-items: baseline;
+  //   height: auto;
+  // }
+  return extra && extra !== "false" ? extra(i) : "";
 };
 watch(
   () => props.defaultSelection,
