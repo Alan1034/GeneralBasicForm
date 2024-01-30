@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2024-01-16 15:55:36
+ * @LastEditTime: 2024-01-30 09:53:48
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -100,19 +100,25 @@ const ExtraComponent: FunctionalComponent<ExtraComponentProps, Events> = (
   // }
   return extra && extra !== "false" ? extra(i) : "";
 };
+const updateCheckedList = (newSelection: any[]) => {
+  checkedList.value = newSelection.map((item) => {
+    return typeof item === "object" ? item[id] : item;
+  });
+};
 watch(
   () => props.defaultSelection,
   (NewVal = [], oldVal = []) => {
-    checkedList.value = NewVal.map((item) => {
-      return typeof item === "object" ? item[id] : item;
-    });
+    updateCheckedList(NewVal);
   },
   { immediate: true }
 );
 const reset = () => {
+  lowReset();
+  checkedList.value = [];
+};
+const lowReset = () => {
   page.value = 1;
   list.value = [];
-  checkedList.value = [];
   ifbottom.value = false;
 };
 const loadList = async () => {
@@ -132,11 +138,23 @@ const loadList = async () => {
   }
   loading.value = false;
 };
+const refreshList = () => {
+  lowReset();
+  loadList();
+};
 const selectInfo =
   computed(() =>
     list.value.filter((item) => checkedList.value.includes(item[id]))
   ) || {};
-defineExpose({ reset, loadList, selectInfo, list, ifbottom });
+defineExpose({
+  reset,
+  lowReset,
+  loadList,
+  selectInfo,
+  list,
+  ifbottom,
+  refreshList,
+});
 </script>
 
 <style lang="less" scoped>
