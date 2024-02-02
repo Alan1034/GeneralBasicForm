@@ -483,8 +483,10 @@ defaultSelection：包含数据key值的对象数组或者直接传入key值数�
 
 ```
  defineExpose({ reset, loadList, selectInfo, list, ifbottom });
- InfiniteScrollListRef.value.reset()：重置列表内容
- InfiniteScrollListRef.value.loadList()：向下滚动列表内容，受到loading和ifbottom的影响
+ InfiniteScrollListRef?.value?.reset()：重置列表内容
+ InfiniteScrollListRef?.value?.lowReset()：重置列表内容，但保留已选择的选项
+ InfiniteScrollListRef?.value?.loadList()：向下滚动列表内容，受到loading和ifbottom的影响
+ InfiniteScrollListRef?.value?.refreshList()：刷新列表，滚动列表会对整个内容重新请求数据，已选择的内容会自动选择
  InfiniteScrollListRef?.value?.selectInfo：选择的内容
  InfiniteScrollListRef?.value?.list：列表的内容
  InfiniteScrollListRef?.value?.ifbottom：是否到底部
