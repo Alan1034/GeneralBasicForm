@@ -18,8 +18,12 @@ import type {
   InputGraphicVerification,
 } from "../../../types/componentsProps";
 const { item } = defineProps<{ item: any }>();
-const { graphicSrc = "", getGraphic = () => {} }: InputGraphicVerification =
-  item;
+const {
+  graphicSrc = "",
+  graphicAlt = "",
+  getGraphic = () => {},
+  key,
+}: InputGraphicVerification = item;
 
 const { formLoading, updateFormLoading } = inject<any>(formLoadingKey);
 // console.log(formLoading.value, "formLoading.value");
@@ -34,7 +38,12 @@ const graphicClick = async () => {
 <template>
   <div class="input-graphic-verification" v-loading="formLoading">
     <Input :item="item" class="input" />
-    <img class="graphic" @click="graphicClick" :src="graphicSrc" />
+    <img
+      class="graphic"
+      @click="graphicClick"
+      :src="graphicSrc"
+      :alt="graphicAlt || `${key}`"
+    />
   </div>
 </template>
 

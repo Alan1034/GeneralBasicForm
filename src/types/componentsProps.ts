@@ -9,6 +9,7 @@ export interface BasicFormComponentsProps {
 
 export interface InputGraphicVerification {
   graphicSrc?: any
+  graphicAlt?: string
   getGraphic?: Function
   key: string | number
 };
