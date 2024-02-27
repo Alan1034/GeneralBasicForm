@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-02-27 17:13:37
+ * @LastEditTime: 2024-02-27 18:21:37
  * @LastEditors: yuanzeyu
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -25,7 +25,7 @@
       :label="item.label"
       :prop="item.prop"
       :key="item.prop"
-      :rules="item.rules"
+      :rules="getItemRules(item)"
     >
       <Input v-if="item.type === 'input'" :item="item" />
       <Radio v-if="item.type === 'radio'" :item="item" />
@@ -151,6 +151,7 @@ export default defineComponent({
   data() {
     return {
       formLoading: this.loading || false,
+      trimRegex: /\S/,
     };
   },
   setup(props) {
@@ -209,27 +210,6 @@ export default defineComponent({
       }
       this.$emit("update:loading", val);
     },
-    noInputBlank: {
-      handler(val, oldVal) {
-        if (val) {
-          const trimRegex = /\S/;
-          const rulesTemp = [];
-          this.formItem.forEach((item: any) => {
-            if (item.type === "input") {
-              if (!("rules" in item)) {
-                item["rules"] = [];
-              }
-              item["rules"].push({
-                pattern: trimRegex,
-                message: "请输入（不能仅输入空格）",
-                trigger: "blur",
-              });
-            }
-          });
-        }
-      },
-      immediate: true,
-    },
   },
   provide() {
     return {
@@ -274,6 +254,20 @@ export default defineComponent({
       };
       this.afterReset();
       this.handleQuery();
+    },
+    getItemRules(item: any) {
+      const { type, rules = [] } = item;
+      const newRules = [...rules];
+      if (this.noInputBlank && type === "input") {
+        newRules.push({
+          pattern: this.trimRegex,
+          message: "请输入（不能仅输入空格）",
+          trigger: "blur",
+        });
+        return newRules;
+      }
+
+      return newRules;
     },
   },
 });
