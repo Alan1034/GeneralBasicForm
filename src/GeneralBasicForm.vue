@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-01-09 16:35:27
+ * @LastEditTime: 2024-02-27 16:04:16
  * @LastEditors: yuanzeyu
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -142,6 +142,11 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    noInputBlank: {
+      // 用于判断input框是否校验仅空格
+      type: Boolean,
+      default: () => false,
+    },
   },
   data() {
     return {
@@ -203,6 +208,23 @@ export default defineComponent({
         return;
       }
       this.$emit("update:loading", val);
+    },
+    noInputBlank: {
+      handler(val, oldVal) {
+        if (val) {
+          const trimRegex = /\S/;
+          this.formItem.forEach((item: any) => {
+            if (item.type === "input") {
+              item.rules.push({
+                pattern: trimRegex,
+                message: "请输入（不能仅输入空格）",
+                trigger: "blur",
+              });
+            }
+          });
+        }
+      },
+      immediate: true,
     },
   },
   provide() {

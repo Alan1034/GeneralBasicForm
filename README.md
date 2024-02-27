@@ -24,6 +24,7 @@ import 'general-basic-form/style'
       :size="size"
       ref="generalBasicForm"
       labelWidth="90px"
+      :noInputBlank="true"
     >
       <template v-slot:default>
         ...一些传入插槽的内容
@@ -124,6 +125,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
     noUrlParameters:true // 不接受和不改变url的参数
     loading:false // 加载动画
     formData:{} // 注意，因为可能出现的性能问题在组件watch formData的变化时没有使用deep，所以有时候深度的修改会不生效，导致表单数据不完整
+    noInputBlank: true //校验input框不能仅输入空格
     //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
     formItem: [
     	{
