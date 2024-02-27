@@ -107,7 +107,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
             const params = VGeneralBasicFormRef.value['queryParams']
             resolve(params)
           } else {
-            reject(false)
+            resolve(false)
           }
         }
       )
