@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-02-27 16:04:16
+ * @LastEditTime: 2024-02-27 17:13:37
  * @LastEditors: yuanzeyu
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -213,9 +213,13 @@ export default defineComponent({
       handler(val, oldVal) {
         if (val) {
           const trimRegex = /\S/;
+          const rulesTemp = [];
           this.formItem.forEach((item: any) => {
             if (item.type === "input") {
-              item.rules.push({
+              if (!("rules" in item)) {
+                item["rules"] = [];
+              }
+              item["rules"].push({
                 pattern: trimRegex,
                 message: "请输入（不能仅输入空格）",
                 trigger: "blur",
