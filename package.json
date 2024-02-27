@@ -1,6 +1,6 @@
 {
   "name": "general-basic-form",
-  "version": "2.0.40",
+  "version": "2.0.41",
   "description": "",
   "main": "./dist/index.umd.cjs",
   "type": "module",
