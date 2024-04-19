@@ -17,12 +17,12 @@ import { VGeneralBasicForm } from 'general-basic-form'
 import 'general-basic-form/style'
 ```
 
-    <GeneralBasicForm
+    <VGeneralBasicForm
       :showSearch="showSearch"
       :getList="getList"
       :formItem="formItem"
       :size="size"
-      ref="generalBasicForm"
+      ref="VGeneralBasicFormRef"
       labelWidth="90px"
       :noInputBlank="true"
     >
@@ -34,17 +34,17 @@ import 'general-basic-form/style'
           <div>上次同步时间：</div>
         </el-form-item>
       </template>
-    </GeneralBasicForm>
+    </VGeneralBasicForm>
 
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
 在单纯作为表单的时候可以这样使用：
 
-    <GeneralBasicForm
+    <VGeneralBasicForm
         formOnly
         :formItem="formItem"
         size="small"
-        ref="generalBasicForm"
+        ref="VGeneralBasicFormRef"
         :labelWidth="formLabelWidth"
         :formData: {
           // 外部传入的表单数据，用于回填
