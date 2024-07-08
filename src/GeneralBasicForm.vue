@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2021-11-30 17:27:27
+ * @LastEditTime: 2024-07-08 19:03:27
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -25,16 +25,14 @@
       :label="item.label"
       :prop="item.prop"
       :key="item.prop"
-      :rules="item.rules"
+      :rules="getItemRules(item)"
     >
       <el-input
         v-if="item.type === 'input'"
         @keydown.enter="getList"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="inputSetting"
-        :placeholder="item.placeholder || inputSetting.placeholder"
-        :maxlength="item.maxlength"
+        v-bind="getInputSetting(item)"
       >
         <template v-for="(templateEle, name) in item.template" #[name]>
           <component
@@ -43,6 +41,27 @@
             :is="currentInputComponent()"
             :templateEle="templateEle"
           />
+        </template>
+      </el-input>
+      <el-input
+        v-else-if="item.type === 'input-mobile-verification'"
+        @keydown.enter="getList"
+        v-model="queryParams[item.prop]"
+        :size="size"
+        v-bind="getInputSetting(item)"
+      >
+        <template v-for="(templateEle, name) in item.template" #[name]>
+          <component
+            :key="name"
+            v-if="templateEle"
+            :is="currentInputComponent()"
+            :templateEle="templateEle"
+          />
+        </template>
+        <template slot="append"
+          ><verification-button
+            :verificationSetting="item.verificationSetting"
+          ></verification-button>
         </template>
       </el-input>
       <el-select
@@ -111,6 +130,7 @@
 </template>
 
 <script>
+import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
 export default {
   name: "GeneralBasicForm",
   components: {
@@ -118,12 +138,18 @@ export default {
       const { templateEle } = props;
       return templateEle();
     },
+    VerificationButton,
   },
   props: {
     showSearch: {
       // 是否展示所有元素
       type: Boolean,
       default: true,
+    },
+    loading: {
+      // 加载动画
+      type: Boolean,
+      default: false,
     },
     formOnly: {
       // 是否只展示表单不展示按钮
@@ -148,7 +174,7 @@ export default {
     size: {
       // 控制按钮大小
       type: String,
-      default: "medium",
+      default: "default",
     },
     labelWidth: {
       // 表单文字宽度
@@ -164,6 +190,11 @@ export default {
       // 外部传入的表单数据，用于回填
       type: Object,
       default: () => {},
+    },
+    noInputBlank: {
+      // 用于判断input框是否校验仅空格
+      type: Boolean,
+      default: () => false,
     },
   },
   data() {
@@ -246,6 +277,27 @@ export default {
     },
     currentInputComponent() {
       return "input-archive";
+    },
+    getItemRules(item) {
+      const { type, rules = [] } = item;
+      const newRules = [...rules];
+      if (this.noInputBlank && type === "input") {
+        newRules.push({
+          pattern: this.trimRegex,
+          message: "请输入（不能仅输入空格）",
+          trigger: "blur",
+        });
+        return newRules;
+      }
+
+      return newRules;
+    },
+    getInputSetting(item) {
+      const { inputSetting } = item;
+      return {
+        ...this.inputSetting,
+        ...inputSetting,
+      };
     },
   },
 };
