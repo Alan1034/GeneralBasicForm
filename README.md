@@ -1,6 +1,6 @@
 # GeneralBasicForm
 
-## 一个兼容 Vue3 和 React(未来实现) 的表单组件
+## 一个兼容 Vue3 和 React(未来实现) 的表单组件，Vue2请安装@1版本
 
 示例:
 
