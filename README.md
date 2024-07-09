@@ -1,6 +1,6 @@
 # GeneralBasicForm
 
-一个兼容 Vue2 和 Vue3 的表单组件，需要typescript的支持，vue2请使用@1版本，Vue3请使用@2版本 <br/>
+一个兼容 Vue2 和 Vue3 的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本 <br/>
 
 示例:
 
@@ -21,7 +21,7 @@ import { VGeneralBasicForm } from "general-basic-form";
       :getList="getList"
       :formItem="formItem"
       :size="size"
-      ref="generalBasicForm"
+      ref="VGeneralBasicFormRef"
       labelWidth="90px"
     >
      ...一些传入插槽的内容
@@ -35,7 +35,7 @@ import { VGeneralBasicForm } from "general-basic-form";
         formOnly
         :formItem="formItem"
         size="small"
-        ref="generalBasicForm"
+        ref="VGeneralBasicFormRef"
         :labelWidth="formLabelWidth"
         :formData: {
           // 外部传入的表单数据，用于回填
@@ -63,14 +63,41 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 
 表单数据校验需要拿到内部表单的ref
 
-    this.$refs["generalBasicForm"].$refs["queryFormRef"]    
-      .validate(
-        async (valid) => {
-          if (valid) { 
-            console.log(this.$refs["generalBasicForm"]["queryParams"]);
-          }
+      const VGeneralBasicFormRef = this.$refs["VGeneralBasicFormRef"];
+      VGeneralBasicFormRef.$refs["queryFormRef"].validate(async (boolean, object) => {
+        if (boolean) {
+          console.log(this.$refs["VGeneralBasicFormRef"]["queryParams"]);
         }
-      );
+      });
+      
+      校验单个字段
+      const VGeneralBasicFormRef = this.$refs["VGeneralBasicFormRef"];
+      const state = await new Promise((resolve, reject) => {
+        VGeneralBasicFormRef.$refs["queryFormRef"]?.validateField(
+          "accNum",
+          (errorMessage) => {
+            if (!errorMessage) {
+               const { accNum } = VGeneralBasicFormRef["queryParams"];
+              http
+                .getMobileByAccNum({ accNum })
+                .then((res) => {
+                  if (res) {
+                    if (res.data) {
+                    }
+                    resolve(true);
+                  }else {
+                    resolve(false);
+                  }
+                })
+                .catch((error) => {
+                  resolve(false);
+                });
+            } else {
+              resolve(false);
+            }
+          }
+        );
+      });
 
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
@@ -115,6 +142,10 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               message: "请输入正确的Invoice单号"
             }
           ],
+          verificationSetting: {
+                defaultText: "查询",
+                restTime: 5,
+          },
           template: {
             suffix: () => {
               return <svg-icon icon-class="baifenbi" />;

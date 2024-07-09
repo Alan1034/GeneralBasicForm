@@ -2,23 +2,19 @@
   "name": "general-basic-form",
   "version": "1.0.26",
   "description": "",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.mjs",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.umd.js"
-    }
-  },
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "type": "module",
   "scripts": {
-    "build": "cross-env CURRENT_ENV=prod run-p type-check build-only",
+    "build": "cross-env CURRENT_ENV=prod run-p type-check && run-p build-only",
     "test:e2e": "playwright test",
     "build-only": "vite build",
-    "type-check": "tsc --noEmit -p tsconfig.json --composite false"
+    "type-check": "tsc --noEmit -p tsconfig.json --composite false",
+    "link": "tsx script/link.ts && yarn link",
+    "unlink": "tsx script/unlinkModule.ts && yarn unlink && run-p build",
+    "linkNode": "tsx script/linkNode.ts && yarn link && run-p dev",
+    "unlinkNode": "tsx script/unlinkNode.ts && yarn unlink && run-p buildts",
+    "dev": "tsc -w -p .",
+    "buildts": "rimraf dist && tsc -p ."
   },
   "keywords": [
     "general-basic-form",
@@ -26,13 +22,14 @@
     "vue",
     "vue2",
     "vue3",
-    "element-plus"
+    "element-plus",
+    "typescript"
   ],
   "author": "chendeli419287484@qq.com",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alan1034/GeneralBasicForm"
+    "url": "git+https://github.com/Alan1034/GeneralBasicForm.git"
   },
   "devDependencies": {
     "@playwright/test": "^1.36.1",
@@ -41,8 +38,13 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "cross-env": "^7.0.3",
+    "less": "^4.2.0",
+    "chalk": "^2.4.2",
     "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.5",
+    "tsx": "^4.0.0",
     "typescript": "^5.2.2",
     "vite-plugin-image-optimizer": "^1.1.6"
-  }
+  },
+  "typings": "./publish/index.d.ts"
 }

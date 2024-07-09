@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-07-08 19:03:27
+ * @LastEditTime: 2024-07-09 16:23:56
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -61,6 +61,7 @@
         <template slot="append"
           ><verification-button
             :verificationSetting="item.verificationSetting"
+            :getSmscode="item.getSmscode"
           ></verification-button>
         </template>
       </el-input>
@@ -69,9 +70,7 @@
         v-else-if="item.type === 'select'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="selectSetting"
-        :multiple="item.multiple"
-        :placeholder="item.placeholder || selectSetting.placeholder"
+        v-bind="getSelectSetting(item)"
       >
         <el-option
           v-for="dict in item.option || []"
@@ -85,32 +84,20 @@
         v-else-if="item.type === 'cascader'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="selectSetting"
         :options="item.options || []"
-        :placeholder="item.placeholder || selectSetting.placeholder"
+        v-bind="getSelectSetting(item)"
       ></el-cascader>
       <el-date-picker
         v-else-if="item.type === 'date-picker'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="datePackerSetting"
-        :start-placeholder="
-          item['start-placeholder'] || datePackerSetting['start-placeholder']
-        "
-        :end-placeholder="
-          item['end-placeholder'] || datePackerSetting['end-placeholder']
-        "
-        :value-format="item['value-format']"
+        v-bind="getDatePackerSetting(item)"
       ></el-date-picker>
       <el-input-number
         v-if="item.type === 'input-number'"
         v-model="queryParams[item.prop]"
         :size="size"
-        v-bind="inputSetting"
-        :min="item.min"
-        :max="item.max"
-        :controls-position="item['controls-position']"
-        :step-strictly="item['step-strictly']"
+        v-bind="getInputSetting(item)"
       />
     </el-form-item>
     <slot></slot>
@@ -120,6 +107,7 @@
         icon="el-icon-search"
         :size="size"
         @click="handleQuery"
+        v-loading="formLoading"
         >查询</el-button
       >
       <el-button icon="el-icon-refresh" :size="size" @click="resetQuery"
@@ -202,8 +190,10 @@ export default {
       queryParams: {
         ...(this.noUrlParameters ? {} : this.$route?.query),
       }, // form表单数据
+      formLoading: this.loading || false,
       selectSetting: {
         placeholder: "请选择",
+        filterable: true,
         clearable: true,
         style: "width: 200px",
       },
@@ -235,11 +225,40 @@ export default {
   //   };
   // },
   watch: {
-    formData(val) {
-      this.queryParams = {
-        ...(this.noUrlParameters ? {} : this.queryParams),
-        ...val,
-      };
+    formData: {
+      handler(val, oldVal) {
+        if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
+          this.queryParams = {
+            ...(this.noUrlParameters ? {} : this.queryParams),
+            ...val,
+          };
+        }
+        // console.log(this.queryParams);
+      },
+      // watch 默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
+      // https://cn.vuejs.org/guide/essentials/watchers.html#deep-watchers
+      immediate: true,
+      // deep: true,
+    },
+    queryParams: {
+      handler(val) {
+        this.$emit("update:formData", val);
+      },
+      deep: true,
+    },
+    loading(val) {
+      // console.log("loading", val);
+      if (this.formLoading === val) {
+        return;
+      }
+      this.formLoading = val;
+    },
+    formLoading(val) {
+      // console.log("formLoading", val);
+      if (this.loading === val) {
+        return;
+      }
+      this.$emit("update:loading", val);
     },
   },
   methods: {
@@ -299,12 +318,23 @@ export default {
         ...inputSetting,
       };
     },
+    getSelectSetting(item) {
+      const { selectSetting } = item;
+      return {
+        ...this.selectSetting,
+        ...selectSetting,
+      };
+    },
+    getDatePackerSetting(item) {
+      const { datePackerSetting } = item;
+      return {
+        ...this.datePackerSetting,
+        ...datePackerSetting,
+      };
+    },
   },
 };
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 2px !important;
-}
 </style>
