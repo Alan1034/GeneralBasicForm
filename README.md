@@ -159,8 +159,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "二次工艺",
           prop: "spName",
           type: "select",
-          multiple:true, //多选
-          selectSetting:{},
+          selectSetting:{multiple:true, //多选},
           option: [
             { value: "3", label: "满印" },
             { value: "1", label: "区域印花" },

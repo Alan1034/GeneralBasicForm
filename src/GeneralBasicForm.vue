@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-07-10 09:42:56
+ * @LastEditTime: 2024-07-10 16:51:31
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -75,7 +75,7 @@
         <el-option
           v-for="dict in item.option || []"
           :key="dict.value"
-          :label="dict.desc"
+          :label="dict.label"
           :value="dict.value"
         />
       </el-select>
