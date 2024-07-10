@@ -24,7 +24,14 @@ import { VGeneralBasicForm } from "general-basic-form";
       ref="VGeneralBasicFormRef"
       labelWidth="90px"
     >
-     ...一些传入插槽的内容
+      <template v-slot:default>
+    ...一些传入插槽的内容
+      </template>
+      <template v-slot:behind-the-button>
+        <el-form-item>
+          <div>上次同步时间：</div>
+        </el-form-item>
+      </template>
     </VGeneralBasicForm>
 
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
@@ -142,10 +149,6 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               message: "请输入正确的Invoice单号"
             }
           ],
-          verificationSetting: {
-                defaultText: "查询",
-                restTime: 5,
-          },
           template: {
             suffix: () => {
               return <svg-icon icon-class="baifenbi" />;
@@ -219,6 +222,10 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               trigger: 'blur'
             }
           ],
+          verificationSetting: {
+                defaultText: "查询",
+                restTime: 5,
+          },
           getSmscode,// 获取验证码的回调函数,获取失败必须返回false,否则计时器不会重新计算
         },
         {

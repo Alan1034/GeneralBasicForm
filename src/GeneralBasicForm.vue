@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-07-09 16:23:56
+ * @LastEditTime: 2024-07-10 09:42:56
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -107,13 +107,14 @@
         icon="el-icon-search"
         :size="size"
         @click="handleQuery"
-        v-loading="formLoading"
+        :loading="formLoading"
         >查询</el-button
       >
       <el-button icon="el-icon-refresh" :size="size" @click="resetQuery"
         >重置</el-button
       >
     </el-form-item>
+    <slot name="behind-the-button" />
   </el-form>
 </template>
 
