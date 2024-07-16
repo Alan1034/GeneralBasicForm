@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2024-01-30 09:53:48
+ * @LastEditTime: 2024-07-16 10:46:16
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -21,7 +21,7 @@
       :infinite-scroll-disabled="ifbottom"
     >
       <li v-for="i in list" :key="i[id]" class="list-item">
-        <el-checkbox :label="i[id]" class="checkbox"
+        <el-checkbox :value="i[id]" class="checkbox"
           >{{ i[name] }}
           <ExtraComponent :i="i" v-if="props.extra"></ExtraComponent>
         </el-checkbox>

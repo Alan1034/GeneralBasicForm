@@ -28,9 +28,9 @@ const radioGroupSetting = ref({
     <el-radio
       v-for="dict in item.option || []"
       :size="size"
-      :key="dict.label"
+      :key="dict.value"
       v-bind="dict"
-      >{{ dict.value }}</el-radio
+      >{{ dict.label }}</el-radio
     >
   </el-radio-group>
 </template>

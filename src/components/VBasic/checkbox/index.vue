@@ -28,9 +28,9 @@ const checkboxGroupSetting = ref({
     <el-checkbox
       v-for="dict in item.option || []"
       :size="size"
-      :key="dict.label"
+      :key="dict.value"
       v-bind="dict"
-      >{{ dict.value }}</el-checkbox
+      >{{ dict.label }}</el-checkbox
     >
   </el-checkbox-group>
 </template>

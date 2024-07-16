@@ -30,8 +30,7 @@ const selectSetting = ref({
     <el-option
       v-for="dict in item.option || []"
       :key="dict.value"
-      :label="dict.label"
-      :value="dict.value"
+      v-bind="dict"
     />
   </el-select>
 </template>
