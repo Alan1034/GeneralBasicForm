@@ -138,7 +138,8 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           type: "input",
        	  inputSetting: {
             placeholder: '请输入手机验证码',
-            style: 'width: 100%'
+            style: 'width: 100%',
+            "prefix-icon": "el-icon-search"
           },
           rules: [
             {
@@ -149,11 +150,6 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               message: "请输入正确的Invoice单号"
             }
           ],
-          template: {
-            suffix: () => {
-              return <svg-icon icon-class="baifenbi" />;
-            },
-          },
     	},
         {
           label: "二次工艺",
