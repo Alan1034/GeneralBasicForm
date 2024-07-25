@@ -29,7 +29,6 @@
     >
       <el-input
         v-if="item.type === 'input'"
-        @keydown.enter="getList"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="getInputSetting(item)"
@@ -45,7 +44,6 @@
       </el-input>
       <el-input
         v-else-if="item.type === 'input-mobile-verification'"
-        @keydown.enter="getList"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="getInputSetting(item)"
@@ -333,6 +331,9 @@ export default {
         ...datePackerSetting,
       };
     },
+    keydown(e){
+      console.log(e)
+    }
   },
 };
 </script>
