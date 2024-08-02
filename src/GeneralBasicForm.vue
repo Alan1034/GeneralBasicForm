@@ -29,7 +29,7 @@
     >
       <el-input
         v-if="item.type === 'input'"
-        @keydown.enter="getList"
+        @keydown.enter.native="getList"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="getInputSetting(item)"
@@ -45,7 +45,7 @@
       </el-input>
       <el-input
         v-else-if="item.type === 'input-mobile-verification'"
-        @keydown.enter="getList"
+        @keydown.enter.native="getList"
         v-model="queryParams[item.prop]"
         :size="size"
         v-bind="getInputSetting(item)"
