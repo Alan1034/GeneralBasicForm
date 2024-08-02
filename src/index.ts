@@ -13,3 +13,7 @@ import GeneralBasicForm from './GeneralBasicForm.vue';
 
 export const VGeneralBasicForm = GeneralBasicForm
 
+import SearchBox from './SearchBox.vue';
+
+export const VSearchBox = SearchBox
+
