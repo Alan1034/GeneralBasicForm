@@ -2,6 +2,12 @@
 
 一个兼容 Vue2 和 Vue3 的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本 <br/>
 
+| 组件\兼容性      | vue2 | vue3 |
+| ---------------- | ---- | ---- |
+| GeneralBasicForm | √    | √    |
+| SearchBox        | √    |      |
+|                  |      |      |
+
 示例:
 
 因为兼容性问题，目前只能使用完整引入
@@ -353,6 +359,12 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       //divider支持template：
       //default
 
-
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
+
+# SearchBox
+
+```
+import { VGeneralBasicForm } from "general-basic-form";
+```
+
