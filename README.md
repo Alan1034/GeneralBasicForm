@@ -365,6 +365,23 @@ install: npm i general-basic-form
 # SearchBox
 
 ```
-import { VGeneralBasicForm } from "general-basic-form";
+import { VSearchBox } from "general-basic-form";
+```
+
+![image-20240802200107233](C:\Users\陈德立\AppData\Roaming\Typora\typora-user-images\image-20240802200107233.png)
+
+```
+<VSearchBox placeholder="请输入您想搜索的商品" openHref :inputstyle="{ display: 'block', width: 'auto', margin: '0 90px' }">
+</VSearchBox>
+```
+
+
+
+```
+query：Object //搜索条件，会带到跳转后的路由query里
+routePath：String //搜索后跳转路径
+inputstyle：Object//输入框样式
+openHref：Boolean//是否在新标签页中打开搜索结果
+size:String//el-input的size
 ```
 
