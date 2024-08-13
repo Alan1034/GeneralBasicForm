@@ -161,9 +161,9 @@ export default {
       default: [],
     },
     size: {
-      // 控制按钮大小
+      // 控制按钮大小 vue2 medium / small / mini
       type: String,
-      default: "default",
+      default: "",
     },
     labelWidth: {
       // 表单文字宽度
