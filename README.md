@@ -2,8 +2,8 @@
 
 | 组件\兼容性         | vue2 | vue3 |
 | ------------------- | ---- | ---- |
-| GeneralBasicForm    | √    | √    |
-| SearchBox           | √    |      |
+| VGeneralBasicForm    | √    | √    |
+| VSearchBox           | √    |      |
 | VInfiniteScrollList |      | √    |
 | VDescriptions       |      | √    |
 
