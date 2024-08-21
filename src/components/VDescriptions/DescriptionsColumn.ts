@@ -17,15 +17,15 @@ const DescriptionsColumn = {
       default: { render: () => { } },
       type: Object,
     },
-    scope: {
+    formData: {
       default: {},
       type: Object,
     },
   },
   render(createElement, context) {
     const { props } = context;
-    const { column, scope } = props;
-    const ele = column.render(scope)
+    const { column, formData } = props;
+    const ele = column.render(formData)
     return ele;
   }
 }

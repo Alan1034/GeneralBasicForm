@@ -394,12 +394,13 @@ import { VDescriptions } from 'general-basic-form'
   :formData="props.formData"
   :formItem="formItem"
   ...其他el-descriptions的配置
+  如：size="mini" :column="1" 
  />
 ```
 
 ```
-formData：Object
-formItem：[ {
+formData:Object
+formItem:[ {
       label: '受访人',
       prop: 'contactors',
       render: (scope: any) => {
@@ -412,7 +413,7 @@ formItem：[ {
     {
       label: '拜访详情',
       prop: 'detail',
-      descriptionsItemProps：{
+      descriptionsItemProps:{
        'label-class-name': 'label-class-name'
       }
   }]
