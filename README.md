@@ -5,7 +5,7 @@
 | VGeneralBasicForm    | √    | √    |
 | VSearchBox           | √    |      |
 | VInfiniteScrollList |      | √    |
-| VDescriptions       |      | √    |
+| VDescriptions       | √    | √    |
 
 示例:
 
@@ -384,3 +384,37 @@ openHref：Boolean//是否在新标签页中打开搜索结果
 size:String//el-input的size
 ```
 
+# VDescriptions对展示描述列表的封装
+
+![image-20231208182455415](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081824708.png)
+
+```
+import { VDescriptions } from 'general-basic-form'
+ <VDescriptions
+  :formData="props.formData"
+  :formItem="formItem"
+  ...其他el-descriptions的配置
+ />
+```
+
+```
+formData：Object
+formItem：[ {
+      label: '受访人',
+      prop: 'contactors',
+      render: (scope: any) => {
+        const { $index, row = {} } = scope
+        const { contactors = [] } = row
+        const ele = (contactors.length > 0 ? <span>{contactors.map((item: any) => item.name).join("，")} </span> : null)
+        return ele
+      }
+    },
+    {
+      label: '拜访详情',
+      prop: 'detail',
+      descriptionsItemProps：{
+       'label-class-name': 'label-class-name'
+      }
+  }]
+descriptionsItemProps:el-descriptions-item的配置
+```
