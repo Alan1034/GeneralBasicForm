@@ -49,6 +49,7 @@ import { VGeneralBasicForm } from "general-basic-form";
         size="small"
         ref="VGeneralBasicFormRef"
         :labelWidth="formLabelWidth"
+        v-bind:loading:sync="loading"
         :formData: {
           // 外部传入的表单数据，用于回填
         }
