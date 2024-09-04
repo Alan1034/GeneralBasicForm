@@ -1,8 +1,8 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-02-27 18:21:37
- * @LastEditors: yuanzeyu
+ * @LastEditTime: 2024-09-04 17:18:32
+ * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
  * @FilePath: \GeneralBasicForm\src\GeneralBasicForm.vue
@@ -27,21 +27,21 @@
       :key="item.prop"
       :rules="getItemRules(item)"
     >
-      <Input v-if="item.type === 'input'" :item="item" />
-      <Radio v-if="item.type === 'radio'" :item="item" />
-      <Select v-if="item.type === 'select'" :item="item" />
-      <Divider v-if="item.type === 'divider'" :item="item" />
-      <Cascader v-if="item.type === 'cascader'" :item="item" />
-      <Checkbox v-if="item.type === 'checkbox'" :item="item" />
-      <DatePicker v-if="item.type === 'date-picker'" :item="item" />
-      <InputNumber v-if="item.type === 'input-number'" :item="item" />
-      <slot v-if="item.type === 'form-item-slot'" :name="item.name"></slot>
+      <Input v-if="/^input$/i.test(item.type)" :item="item" />
+      <Radio v-if="/^radio$/i.test(item.type)" :item="item" />
+      <Select v-if="/^select$/i.test(item.type)" :item="item" />
+      <Divider v-if="/^divider$/i.test(item.type)" :item="item" />
+      <Cascader v-if="/^cascader$/i.test(item.type)" :item="item" />
+      <Checkbox v-if="/^checkbox$/i.test(item.type)" :item="item" />
+      <DatePicker v-if="/^date-picker$/i.test(item.type)" :item="item" />
+      <InputNumber v-if="/^input-number$/i.test(item.type)" :item="item" />
+      <slot v-if="/^form-item-slot$/i.test(item.type)" :name="item.name"></slot>
       <InputMobileVerification
-        v-if="item.type === 'input-mobile-verification'"
+        v-if="/^input-mobile-verification$/i.test(item.type)"
         :item="item"
       />
       <InputGraphicVerification
-        v-if="item.type === 'input-graphic-verification'"
+        v-if="/^input-graphic-verification$/i.test(item.type)"
         :item="item"
         :key="item.key"
       />
@@ -67,8 +67,8 @@ import type { ItemType } from "./types/basicFrom";
 import { useRoute } from "vue-router";
 import Input from "./components/VBasic/input/index.vue";
 import InputNumber from "./components/VBasic/input-number/index.vue";
-import InputGraphicVerification from "./components/VBasic/input-graphic-verification/index.vue";
-import InputMobileVerification from "./components/VBasic/input-mobile-verification/index.vue";
+import InputGraphicVerification from "./components/CustomCom/input-graphic-verification/index.vue";
+import InputMobileVerification from "./components/CustomCom/input-mobile-verification/index.vue";
 import Divider from "./components/VBasic/divider/index.vue";
 import Radio from "./components/VBasic/radio/index.vue";
 import Checkbox from "./components/VBasic/checkbox/index.vue";
