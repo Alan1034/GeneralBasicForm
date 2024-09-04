@@ -16,6 +16,7 @@ const queryParams = inject("queryParams", {});
 const size = inject("size");
 const radioGroupSetting = ref({
   ...item.radioGroupSetting,
+  ...item.setting,
 });
 </script>
 

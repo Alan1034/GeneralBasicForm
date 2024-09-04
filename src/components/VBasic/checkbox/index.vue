@@ -16,6 +16,7 @@ const queryParams = inject("queryParams", {});
 const size = inject("size");
 const checkboxGroupSetting = ref({
   ...item.checkboxGroupSetting,
+  ...item.setting,
 });
 </script>
 

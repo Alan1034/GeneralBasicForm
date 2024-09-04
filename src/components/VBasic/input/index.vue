@@ -40,6 +40,7 @@ export default defineComponent({
       inputSetting: {
         ...inputDefaultSetting,
         ...this.item.inputSetting,
+        ...this.item.setting,
       },
     };
   },

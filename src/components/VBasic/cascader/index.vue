@@ -18,6 +18,7 @@ const size = inject("size");
 const selectSetting = ref({
   ...selectDefaultSetting,
   ...item.selectSetting,
+  ...item.setting,
 });
 </script>
 

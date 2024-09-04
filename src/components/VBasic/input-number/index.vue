@@ -18,6 +18,7 @@ const size = inject("size");
 const inputSetting = ref({
   ...inputDefaultSetting,
   ...item.inputSetting,
+  ...item.setting,
 });
 </script>
 

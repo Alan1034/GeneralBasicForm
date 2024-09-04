@@ -139,7 +139,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: '',
           prop: 'bsName35',
           type: 'divider',
-          dividerSetting: {
+          setting: {
           },
           template: {
             default: () => {
@@ -150,7 +150,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
         { label: "款式名称",
           prop: "bsName",
           type: "input",
-       	  inputSetting: {
+       	  setting: {
             placeholder: '请输入手机验证码',
             style: 'width: 100%'
           },
@@ -173,7 +173,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "二次工艺",
           prop: "spName",
           type: "select",
-          selectSetting:{ multiple:true, //多选},
+          setting:{ multiple:true, //多选},
           option: [
             { value: "3", label: "满印" },
             { value: "1", label: "区域印花" },
@@ -184,7 +184,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "创建时间",
           prop: "create_time",
           type: "date-picker",
-          datePackerSetting: {
+          setting: {
             "range-separator": "至",
           }
         },
@@ -206,7 +206,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: '',
           prop: 'bsName2',
           type: 'input-graphic-verification',
-          inputSetting: {
+          setting: {
             placeholder: '请输入图形验证码',
             style: 'width: 100%'
           },
@@ -224,7 +224,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: '',
           prop: 'bsName3',
           type: 'input-mobile-verification',
-          inputSetting: {
+          setting: {
             placeholder: '请输入手机验证码',
             style: 'width: 100%'
           },
@@ -240,7 +240,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: '是否必填',
           prop: 'is_optional',
           type: 'radio',
-          radioGroupSetting: {
+          setting: {
             disabled: true
           },
           option: [
@@ -259,7 +259,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: '多选',
           prop: 'is_multi',
           type: 'checkbox',
-          checkboxGroupSetting: {
+          setting: {
           },
           option: [
             { value: '是', label: 'true' },
@@ -286,7 +286,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "分类",
           prop: "分类",
           type: "cascader",
-          selectSetting:{},
+          setting:{},
           options: [
             {
               value: "zhinan",

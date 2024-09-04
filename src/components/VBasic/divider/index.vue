@@ -40,6 +40,7 @@ export default defineComponent({
     return {
       dividerSetting: {
         ...this.item.dividerSetting,
+        ...this.item.setting,
       },
     };
   },

@@ -18,6 +18,7 @@ const size = inject("size");
 const datePackerSetting = ref({
   ...datePackerDefaultSetting,
   ...item.datePackerSetting,
+  ...item.setting,
 });
 </script>
 
