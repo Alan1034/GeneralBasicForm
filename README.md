@@ -2,12 +2,14 @@
 
 ## 一个兼容 Vue2 、Vue3 和 React(未来实现)  的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本
 
-| 组件\兼容性         | vue2 | vue3 |
-| ------------------- | ---- | ---- |
-| VGeneralBasicForm    | √    | √    |
-| VSearchBox           | √    |      |
-| VInfiniteScrollList |      | √    |
-| VDescriptions       |      | √    |
+| 组件\兼容性         | vue2 | vue3 | Ant Design Vue | Element Plus | Element（ui） |
+| ------------------- | ---- | ---- | ---- | ---- | ---- |
+| VGeneralBasicForm    | √    | √    |     | √   | √   |
+| VSearchBox           | √    |      |      |  | √ |
+| VInfiniteScrollList |      | √    |     | √   |     |
+| VDescriptions       |      | √    |     | √   |     |
+| VInputMobilecVerification | | √ | √ | √ |  |
+| VInputGraphicVerification | | √ | √ | √ |  |
 
 示例:
 
@@ -233,7 +235,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               message: '请输入手机验证码',
               trigger: 'blur'
             }
-          ]
+          ],
           getSmscode,// 获取验证码的回调函数,获取失败必须返回false,否则计时器不会重新计算
         },
         {
@@ -535,5 +537,19 @@ formItem：[ {
 descriptionsItemProps:el-descriptions-item的配置
 ```
 
+# VInputMobilecVerification，VInputGraphicVerification表单里的图形验证码、手机验证码组件，可以单独引入
+
+```
+<VInputGraphicVerification class="VInputGraphicVerification" :item="{同表单}" componentType="Ant Design Vue" :loading="loading"></VInputGraphicVerification>
+<VInputMobilecVerification class="VInputGraphicVerification" :item="{同表单}" componentType="Ant Design Vue"></VInputMobilecVerification>
+```
+
+componentType： 
+
+"Ant Design Vue"
+
+ "Element Plus" （默认）
+
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
+

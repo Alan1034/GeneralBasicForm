@@ -19,6 +19,7 @@ const buttonText: Ref<string | number> = ref(defaultText);
 const timer = ref(null);
 const buttonType = computed(() => buttonText.value === defaultText);
 const buttonName = shallowRef("el-button")
+console.log(componentType)
 switch (componentType) {
   case "Element Plus":
     buttonName.value = "el-button"

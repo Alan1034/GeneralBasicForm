@@ -18,20 +18,27 @@ import VerificationButton from "./verification-button.vue";
 const { item, componentType = "Element Plus" } = defineProps<{ item: any, componentType?: ComponentType }>();
 // 重新赋值一下触发下面的代码，否则响应会在内部进行
 const mobileItem = item;
-mobileItem.template = {
-  append: () => {
-    return h(VerificationButton, {
-      getSmscode: mobileItem.getSmscode,
-    });
-  },
-};
 const inputType = shallowRef(EInput)
 switch (componentType) {
   case "Element Plus":
-    inputType.value = EInput
+    inputType.value = EInput;
+    mobileItem.template = {
+      append: () => {
+        return h(VerificationButton, {
+          getSmscode: mobileItem.getSmscode,
+        });
+      },
+    };
     break;
   case "Ant Design Vue":
     inputType.value = AInput
+    mobileItem.template = {
+      addonAfter: () => {
+        return h(VerificationButton, {
+          getSmscode: mobileItem.getSmscode,
+        });
+      },
+    };
     break;
   default:
     break;
