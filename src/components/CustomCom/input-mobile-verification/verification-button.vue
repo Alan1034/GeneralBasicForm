@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-09-03 15:58:20
- * @LastEditTime: 2024-09-04 18:53:37
+ * @LastEditTime: 2024-09-05 19:09:41
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -19,7 +19,6 @@ const buttonText: Ref<string | number> = ref(defaultText);
 const timer = ref(null);
 const buttonType = computed(() => buttonText.value === defaultText);
 const buttonName = shallowRef("el-button")
-console.log(componentType)
 switch (componentType) {
   case "Element Plus":
     buttonName.value = "el-button"

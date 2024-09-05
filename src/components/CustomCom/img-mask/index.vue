@@ -20,7 +20,6 @@ import { onMounted, ref } from "vue";
 const loadingCanvas = ref() as any
 const { imgSrc } = defineProps<{ imgSrc: string }>();
 onMounted(() => {
-  console.log("onMounted")
   const img = new Image();
   const pieces = [];
   const piecesX = 8; // Number of horizontal pieces
