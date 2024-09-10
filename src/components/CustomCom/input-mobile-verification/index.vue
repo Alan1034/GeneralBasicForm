@@ -21,7 +21,6 @@ const mobileItem = item;
 const inputType = <any>shallowRef(EInput)
 switch (componentType) {
   case "Element Plus":
-    console.log("1")
     inputType.value = EInput;
     mobileItem.template = {
       append: () => {
@@ -32,7 +31,6 @@ switch (componentType) {
     };
     break;
   case "Ant Design Vue":
-  console.log("2")
     inputType.value = AInput
     mobileItem.template = {
       addonAfter: () => {
