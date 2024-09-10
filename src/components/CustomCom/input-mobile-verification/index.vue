@@ -18,9 +18,10 @@ import VerificationButton from "./verification-button.vue";
 const { item, componentType = "Element Plus" } = defineProps<{ item: any, componentType?: ComponentType }>();
 // 重新赋值一下触发下面的代码，否则响应会在内部进行
 const mobileItem = item;
-const inputType = shallowRef(EInput)
+const inputType = <any>shallowRef(EInput)
 switch (componentType) {
   case "Element Plus":
+    console.log("1")
     inputType.value = EInput;
     mobileItem.template = {
       append: () => {
@@ -31,6 +32,7 @@ switch (componentType) {
     };
     break;
   case "Ant Design Vue":
+  console.log("2")
     inputType.value = AInput
     mobileItem.template = {
       addonAfter: () => {

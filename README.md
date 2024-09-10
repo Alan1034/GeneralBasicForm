@@ -540,8 +540,9 @@ descriptionsItemProps:el-descriptions-item的配置
 # VInputMobilecVerification，VInputGraphicVerification表单里的图形验证码、手机验证码组件，可以单独引入
 
 ```
-<VInputGraphicVerification class="VInputGraphicVerification" :item="{同表单}" componentType="Ant Design Vue" :loading="loading"></VInputGraphicVerification>
-<VInputMobilecVerification class="VInputGraphicVerification" :item="{同表单}" componentType="Ant Design Vue"></VInputMobilecVerification>
+<VInputGraphicVerification :item="{同表单，可忽略label和rules字段}" :loading="loading"></VInputGraphicVerification>
+
+<VInputMobilecVerification :item="{同表单，可忽略label和rules字段}" componentType="Ant Design Vue"></VInputMobilecVerification>
 ```
 
 componentType： 
@@ -549,6 +550,19 @@ componentType：
 "Ant Design Vue"
 
  "Element Plus" （默认）
+
+```
+全部必须提供：
+provide(/* 注入名 */ "queryParams", /* 表单值对象 */ queryParams);
+
+componentType为Ant Design Vue需要提供：
+import { Form } from 'ant-design-vue';
+provide(/* 注入名 */ "Form", /* Ant Design Vue Form实例，用于表单数据更新等 */ Form);
+
+可选：
+provide("size", size); // 同组件size
+provide("getList", getList); // 输入框回车触发
+```
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
