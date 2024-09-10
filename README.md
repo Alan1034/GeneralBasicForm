@@ -552,7 +552,7 @@ componentType：
  "Element Plus" （默认）
 
 ```
-全部必须提供：
+此用法下必须提供：
 provide(/* 注入名 */ "queryParams", /* 表单值对象 */ queryParams);
 
 componentType为Ant Design Vue需要提供：
