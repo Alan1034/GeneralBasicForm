@@ -7,7 +7,7 @@
 | VGeneralBasicForm    | √    | √    |     | √   | √   |
 | VSearchBox           | √    |      |      |  | √ |
 | VInfiniteScrollList |      | √    |     | √   |     |
-| VDescriptions       |      | √    |     | √   |     |
+| VDescriptions       |      | √    | √ | √   |     |
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
 
@@ -511,13 +511,14 @@ import { VDescriptions } from 'general-basic-form'
  <VDescriptions
   :formData="props.formData"
   :formItem="formItem"
+  componentType="Ant Design Vue"
   ...其他el-descriptions的配置
  />
 ```
 
 ```
-formData：Object
-formItem：[ {
+formData:Object
+formItem:[ {
       label: '受访人',
       prop: 'contactors',
       render: (scope: any) => {
@@ -530,11 +531,12 @@ formItem：[ {
     {
       label: '拜访详情',
       prop: 'detail',
-      descriptionsItemProps：{
+      descriptionsItemProps:{
        'label-class-name': 'label-class-name'
       }
   }]
-descriptionsItemProps:el-descriptions-item的配置
+componentType:"Ant Design Vue"|"Element Plus"（默认）
+descriptionsItemProps:a-descriptions-item|el-descriptions-item的配置
 ```
 
 # VInputMobilecVerification，VInputGraphicVerification表单里的图形验证码、手机验证码组件，可以单独引入
@@ -545,11 +547,9 @@ descriptionsItemProps:el-descriptions-item的配置
 <VInputMobilecVerification :item="{同表单，可忽略label和rules字段}" componentType="Ant Design Vue"></VInputMobilecVerification>
 ```
 
-componentType： 
-
-"Ant Design Vue"
-
- "Element Plus" （默认）
+```
+componentType:"Ant Design Vue"|"Element Plus"（默认）
+```
 
 ```
 此用法下必须提供：
