@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-09-03 15:58:20
- * @LastEditTime: 2024-09-05 19:09:41
+ * @LastEditTime: 2024-09-18 10:54:40
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeUnmount, Ref, shallowRef } from "vue";
 import type { ComponentType } from "../../../types/componentType";
-const { getSmscode, componentType = "Element Plus" } = defineProps<{ getSmscode: Function, componentType?: ComponentType }>();
+const { getSmscode, componentType = "Element Plus", item } = defineProps<{ getSmscode: Function, componentType?: ComponentType, item: any }>();
 
 const defaultText = "获取验证码";
 const restTime = 60;
@@ -62,6 +62,7 @@ const buttonClick = async () => {
 onBeforeUnmount(() => {
   reset();
 });
+const buttonSetting = { ...item.buttonSetting }
 </script>
 
 <template>
@@ -70,7 +71,7 @@ onBeforeUnmount(() => {
       ? 'var(--color-primary, #409EFF)'
       : 'var(--text-color-placeholder, #A8ABB2)',
     cursor: buttonType ? 'pointer' : 'default',
-  }" @click="buttonClick">{{ buttonType ? defaultText : buttonText + "s" }}</component>
+  }" @click="buttonClick" v-bind="buttonSetting">{{ buttonType ? defaultText : buttonText + "s" }}</component>
 </template>
 
 <style lang="less" scoped>

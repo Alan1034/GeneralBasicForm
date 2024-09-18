@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-09 10:01:20
- * @LastEditTime: 2024-09-04 18:43:40
+ * @LastEditTime: 2024-09-18 10:47:17
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 手机验证码组件
@@ -26,6 +26,7 @@ switch (componentType) {
       append: () => {
         return h(VerificationButton, {
           getSmscode: mobileItem.getSmscode,
+          item,
         });
       },
     };
@@ -33,9 +34,10 @@ switch (componentType) {
   case "Ant Design Vue":
     inputType.value = AInput
     mobileItem.template = {
-      addonAfter: () => {
+      suffix: () => {
         return h(VerificationButton, {
           getSmscode: mobileItem.getSmscode,
+          item,
         });
       },
     };

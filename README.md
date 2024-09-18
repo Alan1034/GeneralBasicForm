@@ -226,10 +226,14 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: '',
           prop: 'bsName3',
           type: 'input-mobile-verification',
-          setting: {
+          inputSetting: {
             placeholder: '请输入手机验证码',
             style: 'width: 100%'
           },
+    	  buttonSetting: {
+      		type: "text",
+      		style: 'text-align: end',
+    	  },
           rules: [
             {
               message: '请输入手机验证码',
