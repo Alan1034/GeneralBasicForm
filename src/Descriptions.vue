@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2024-09-25 18:14:06
+ * @LastEditTime: 2024-09-25 18:16:46
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -51,8 +51,8 @@ watch(
     let PhasedFormItem = NewFormItem
     if (props.strict) {
       // strict严格模式过滤formItem
-      console.log(NewFormData)
-      console.log(PhasedFormItem)
+      // console.log(NewFormData)
+      // console.log(PhasedFormItem)
       for (const key in NewFormData) {
         if (Object.prototype.hasOwnProperty.call(NewFormData, key)) {
           const element = NewFormData[key];
@@ -66,7 +66,7 @@ watch(
 
 
     }
-    console.log(PhasedFormItem)
+    // console.log(PhasedFormItem)
     renderFormItem.value = PhasedFormItem
   },
   { immediate: true }
