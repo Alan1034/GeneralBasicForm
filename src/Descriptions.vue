@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2024-09-25 18:01:50
+ * @LastEditTime: 2024-09-25 18:14:06
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -39,7 +39,7 @@ const props = defineProps({
     default: "Element Plus"
   },
   strict: {
-    // 使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字）
+    // 使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字），但有render的字段仍然会展示
     type: Boolean,
     default: false
   },
@@ -51,14 +51,14 @@ watch(
     let PhasedFormItem = NewFormItem
     if (props.strict) {
       // strict严格模式过滤formItem
-      // console.log(NewFormData)
-      // console.log(PhasedFormItem)
+      console.log(NewFormData)
+      console.log(PhasedFormItem)
       for (const key in NewFormData) {
         if (Object.prototype.hasOwnProperty.call(NewFormData, key)) {
           const element = NewFormData[key];
           if (!element) {
             PhasedFormItem = PhasedFormItem.filter((item) => {
-              return item.prop !== key
+              return ((item.prop !== key) || (item.render))
             })
           }
         }
@@ -66,6 +66,7 @@ watch(
 
 
     }
+    console.log(PhasedFormItem)
     renderFormItem.value = PhasedFormItem
   },
   { immediate: true }

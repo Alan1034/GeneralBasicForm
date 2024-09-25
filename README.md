@@ -540,7 +540,7 @@ formItem:[ {
       }
   }]
 componentType:"Ant Design Vue"|"Element Plus"（默认）
-strict:Boolean //使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字）
+strict:Boolean //使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字），但有render的字段仍然会展示
 descriptionsItemProps:a-descriptions-item|el-descriptions-item的配置
 ```
 
