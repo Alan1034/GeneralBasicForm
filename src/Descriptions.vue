@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2024-09-11 18:32:25
+ * @LastEditTime: 2024-09-25 18:01:50
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -10,7 +10,7 @@
 -->
 <template>
   <component :is="descriptions" :column="1" border class="form-width" v-bind="$attrs">
-    <component :is="descriptionsItem" v-for="(item, i) in props.formItem" :key="item.prop" :label="item.label"
+    <component :is="descriptionsItem" v-for="(item, i) in renderFormItem" :key="item.prop" :label="item.label"
       v-bind="item.descriptionsItemProps">
       <RenderComponent v-if="item.render" :i="i" :render="item.render" :formData="formData"></RenderComponent>
       <span v-else>
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import type { PropType, FunctionalComponent, VNode } from "vue";
-import { shallowRef } from "vue";
+import { shallowRef, watch, ref } from "vue";
 import type { ComponentType } from "./types/componentType"
 import type { ItemType } from "./types/basicFrom";
 const props = defineProps({
@@ -38,7 +38,38 @@ const props = defineProps({
     type: String as unknown as PropType<ComponentType>,
     default: "Element Plus"
   },
+  strict: {
+    // 使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字）
+    type: Boolean,
+    default: false
+  },
 });
+const renderFormItem = ref<ItemType[]>([])
+watch(
+  () => [props.formData, props.formItem],
+  ([NewFormData = {}, NewFormItem = <any>[]]) => {
+    let PhasedFormItem = NewFormItem
+    if (props.strict) {
+      // strict严格模式过滤formItem
+      // console.log(NewFormData)
+      // console.log(PhasedFormItem)
+      for (const key in NewFormData) {
+        if (Object.prototype.hasOwnProperty.call(NewFormData, key)) {
+          const element = NewFormData[key];
+          if (!element) {
+            PhasedFormItem = PhasedFormItem.filter((item) => {
+              return item.prop !== key
+            })
+          }
+        }
+      }
+
+
+    }
+    renderFormItem.value = PhasedFormItem
+  },
+  { immediate: true }
+);
 const descriptions = shallowRef("el-descriptions-item")
 const descriptionsItem = shallowRef("descriptions-item")
 switch (props.componentType) {
