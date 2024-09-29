@@ -11,108 +11,41 @@
 /** 通用基本表单。用在表单页面搜索栏 */
 
 <template>
-  <el-form
-    :model="queryParams"
-    ref="queryFormRef"
-    v-show="showSearch"
-    inline
-    label-position="left"
-    :label-width="labelWidth"
-    v-bind="$attrs"
-  >
-    <el-form-item
-      v-for="item in formItem"
-      :label="item.label"
-      :prop="item.prop"
-      :key="item.prop"
-      :rules="getItemRules(item)"
-    >
-      <el-input
-        v-if="item.type === 'input'"
-        @keydown.enter.native="getList"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="getInputSetting(item)"
-      >
+  <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" inline label-position="left"
+    :label-width="labelWidth" v-bind="$attrs">
+    <el-form-item v-for="item in formItem" :label="item.label" :prop="item.prop" :key="item.prop"
+      :rules="getItemRules(item)">
+      <el-input v-if="item.type === 'input'" @keydown.enter.native="getList" v-model="queryParams[item.prop]"
+        :size="size" v-bind="getInputSetting(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
-          <component
-            :key="name"
-            v-if="templateEle"
-            :is="currentInputComponent()"
-            :templateEle="templateEle"
-          />
+          <component :key="name" v-if="templateEle" :is="currentInputComponent()" :templateEle="templateEle" />
         </template>
       </el-input>
-      <el-input
-        v-else-if="item.type === 'input-mobile-verification'"
-        @keydown.enter.native="getList"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="getInputSetting(item)"
-      >
+      <el-input v-else-if="item.type === 'input-mobile-verification'" @keydown.enter.native="getList"
+        v-model="queryParams[item.prop]" :size="size" v-bind="getInputSetting(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
-          <component
-            :key="name"
-            v-if="templateEle"
-            :is="currentInputComponent()"
-            :templateEle="templateEle"
-          />
+          <component :key="name" v-if="templateEle" :is="currentInputComponent()" :templateEle="templateEle" />
         </template>
-        <template slot="append"
-          ><verification-button
-            :verificationSetting="item.verificationSetting"
-            :getSmscode="item.getSmscode"
-          ></verification-button>
+        <template slot="append"><verification-button :verificationSetting="item.verificationSetting"
+            :getSmscode="item.getSmscode"></verification-button>
         </template>
       </el-input>
-      <el-select
-        filterable
-        v-else-if="item.type === 'select'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="getSelectSetting(item)"
-      >
-        <el-option
-          v-for="dict in item.option || []"
-          :key="dict.value"
-          :label="dict.label"
-          :value="dict.value"
-        />
+      <el-select filterable v-else-if="item.type === 'select'" v-model="queryParams[item.prop]" :size="size"
+        v-bind="getSelectSetting(item)">
+        <el-option v-for="dict in item.option || []" :key="dict.value" :label="dict.label" :value="dict.value" />
       </el-select>
-      <el-cascader
-        filterable
-        v-else-if="item.type === 'cascader'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        :options="item.options || []"
-        v-bind="getSelectSetting(item)"
-      ></el-cascader>
-      <el-date-picker
-        v-else-if="item.type === 'date-picker'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="getDatePackerSetting(item)"
-      ></el-date-picker>
-      <el-input-number
-        v-if="item.type === 'input-number'"
-        v-model="queryParams[item.prop]"
-        :size="size"
-        v-bind="getInputSetting(item)"
-      />
+      <el-cascader filterable v-else-if="item.type === 'cascader'" v-model="queryParams[item.prop]" :size="size"
+        :options="item.options || []" v-bind="getSelectSetting(item)"></el-cascader>
+      <el-date-picker v-else-if="item.type === 'date-picker'" v-model="queryParams[item.prop]" :size="size"
+        v-bind="getDatePackerSetting(item)"></el-date-picker>
+      <el-input-number v-if="item.type === 'input-number'" v-model="queryParams[item.prop]" :size="size"
+        v-bind="getInputSetting(item)" />
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
-      <el-button
-        type="primary"
-        icon="el-icon-search"
-        :size="size"
-        @click="handleQuery"
-        :loading="formLoading"
-        >查询</el-button
-      >
-      <el-button icon="el-icon-refresh" :size="size" @click="resetQuery"
-        >重置</el-button
-      >
+      <el-button type="primary" icon="el-icon-search" :size="size" @click="handleQuery"
+        :loading="formLoading">查询</el-button>
+      <el-button icon="el-icon-refresh" :size="size" @click="resetQuery">重置</el-button>
     </el-form-item>
     <slot name="behind-the-button" />
   </el-form>
@@ -148,12 +81,12 @@ export default {
     getList: {
       // 查找数据调用的函数
       type: Function,
-      default: () => {},
+      default: () => { },
     },
     afterReset: {
       // 在重置按钮点击完后但还没重新请求时触发的的函数
       type: Function,
-      default: () => {},
+      default: () => { },
     },
     formItem: {
       // 定义表单的数据
@@ -178,7 +111,7 @@ export default {
     formData: {
       // 外部传入的表单数据，用于回填
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     noInputBlank: {
       // 用于判断input框是否校验仅空格
@@ -313,29 +246,31 @@ export default {
       return newRules;
     },
     getInputSetting(item) {
-      const { inputSetting } = item;
+      const { inputSetting, setting } = item;
       return {
         ...this.inputSetting,
         ...inputSetting,
+        ...setting,
       };
     },
     getSelectSetting(item) {
-      const { selectSetting } = item;
+      const { selectSetting, setting } = item;
       return {
         ...this.selectSetting,
         ...selectSetting,
+        ...setting,
       };
     },
     getDatePackerSetting(item) {
-      const { datePackerSetting } = item;
+      const { datePackerSetting, setting } = item;
       return {
         ...this.datePackerSetting,
         ...datePackerSetting,
+        ...setting,
       };
     },
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
