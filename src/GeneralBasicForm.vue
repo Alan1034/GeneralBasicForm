@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-07-10 16:51:31
+ * @LastEditTime: 2024-09-29 16:43:14
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -11,8 +11,7 @@
 /** 通用基本表单。用在表单页面搜索栏 */
 
 <template>
-  <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" inline label-position="left"
-    :label-width="labelWidth" v-bind="$attrs">
+  <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" :label-width="labelWidth" v-bind="attrs">
     <el-form-item v-for="item in formItem" :label="item.label" :prop="item.prop" :key="item.prop"
       :rules="getItemRules(item)">
       <el-input v-if="item.type === 'input'" @keydown.enter.native="getList" v-model="queryParams[item.prop]"
@@ -142,6 +141,10 @@ export default {
         "end-placeholder": "结束日期",
         type: "daterange",
       },
+      attrs: {
+        inline: true,
+        "label-position": "left"
+      }
     };
   },
   // setup(props) {
@@ -178,6 +181,16 @@ export default {
       handler(val) {
         this.$emit("update:formData", val);
       },
+      deep: true,
+    },
+    $attrs: {
+      handler(val) {
+        this.attrs = {
+          ...this.attrs,
+          ...val
+        }
+      },
+      immediate: true,
       deep: true,
     },
     loading(val) {

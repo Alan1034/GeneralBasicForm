@@ -9,7 +9,7 @@
  * 
 -->
 <template>
-  <el-descriptions border class="v-descriptions" v-bind="$attrs">
+  <el-descriptions v-bind="attrs">
     <el-descriptions-item v-for="(item, i) in formItem" :key="item.prop" :label="item.label"
       v-bind="item.descriptionsItemProps">
       <DescriptionsColumn v-if="item.render" :column="item" :formData="formData" />
@@ -25,6 +25,14 @@ export default {
   components: {
     DescriptionsColumn
   },
+  data() {
+    return {
+      attrs: {
+        border: true,
+        class: "v-descriptions"
+      }
+    }
+  },
   props: {
     formItem: {
       // 定义表单的数据
@@ -38,6 +46,18 @@ export default {
     },
 
   },
+  watch: {
+    $attrs: {
+      handler(val) {
+        this.attrs = {
+          ...this.attrs,
+          ...val
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  }
 }
 </script>
 <style lang="">

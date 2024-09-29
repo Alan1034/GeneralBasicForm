@@ -1,6 +1,6 @@
 <template>
   <div class="search-box">
-    <el-input v-model="keyWord" @keydown.enter.native="search" :size="size" :style="{ ...inputstyle }" v-bind="$attrs">
+    <el-input v-model="keyWord" @keydown.enter.native="search" :size="size" :style="{ ...inputstyle }" v-bind="attrs">
       <svg slot="prefix" class="el-input__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
         viewBox="0 0 16 16" fill="none">
         <path
@@ -44,8 +44,21 @@ export default {
   },
   data() {
     return {
-      keyWord: this.$route?.query?.keyWord || ''
+      keyWord: this.$route?.query?.keyWord || '',
+      attrs: {}
     }
+  },
+  watch: {
+    $attrs: {
+      handler(val) {
+        this.attrs = {
+          ...this.attrs,
+          ...val
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   methods: {
     search() {
