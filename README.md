@@ -1,11 +1,13 @@
 # GeneralBasicForm 一个兼容 Vue2 和 Vue3 的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本
 
-| 组件\兼容性         | vue2 | vue3 |
-| ------------------- | ---- | ---- |
-| VGeneralBasicForm    | √    | √    |
-| VSearchBox           | √    |      |
-| VInfiniteScrollList |      | √    |
-| VDescriptions       | √    | √    |
+| 组件\兼容性         | vue2 | vue3 | Ant Design Vue | Element Plus | Element（ui） |
+| ------------------- | ---- | ---- | ---- | ---- | ---- |
+| VGeneralBasicForm    | √    | √    |     | √   | √   |
+| VSearchBox           | √    |      |      |  | √ |
+| VInfiniteScrollList |      | √    |     | √   |     |
+| VDescriptions       |      | √    | √ | √   |     |
+| VInputMobilecVerification | | √ | √ | √ |  |
+| VInputGraphicVerification | | √ | √ | √ |  |
 
 示例:
 
