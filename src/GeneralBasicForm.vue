@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-09-29 16:43:14
+ * @LastEditTime: 2024-09-30 15:13:38
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -15,13 +15,13 @@
     <el-form-item v-for="item in formItem" :label="item.label" :prop="item.prop" :key="item.prop"
       :rules="getItemRules(item)">
       <el-input v-if="item.type === 'input'" @keydown.enter.native="getList" v-model="queryParams[item.prop]"
-        :size="size" v-bind="getInputSetting(item)">
+        :size="size" v-bind="getInputSetting(item)" v-on="getInputEvents(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
           <component :key="name" v-if="templateEle" :is="currentInputComponent()" :templateEle="templateEle" />
         </template>
       </el-input>
       <el-input v-else-if="item.type === 'input-mobile-verification'" @keydown.enter.native="getList"
-        v-model="queryParams[item.prop]" :size="size" v-bind="getInputSetting(item)">
+        v-model="queryParams[item.prop]" :size="size" v-bind="getInputSetting(item)" v-on="getInputEvents(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
           <component :key="name" v-if="templateEle" :is="currentInputComponent()" :templateEle="templateEle" />
         </template>
@@ -30,15 +30,15 @@
         </template>
       </el-input>
       <el-select filterable v-else-if="item.type === 'select'" v-model="queryParams[item.prop]" :size="size"
-        v-bind="getSelectSetting(item)">
+        v-bind="getSelectSetting(item)" v-on="getSelectEvents(item)">
         <el-option v-for="dict in item.option || []" :key="dict.value" :label="dict.label" :value="dict.value" />
       </el-select>
       <el-cascader filterable v-else-if="item.type === 'cascader'" v-model="queryParams[item.prop]" :size="size"
-        :options="item.options || []" v-bind="getSelectSetting(item)"></el-cascader>
+        :options="item.options || []" v-bind="getSelectSetting(item)" v-on="getSelectEvents(item)"></el-cascader>
       <el-date-picker v-else-if="item.type === 'date-picker'" v-model="queryParams[item.prop]" :size="size"
-        v-bind="getDatePackerSetting(item)"></el-date-picker>
+        v-bind="getDatePackerSetting(item)" v-on="getDatePackerEvents(item)"></el-date-picker>
       <el-input-number v-if="item.type === 'input-number'" v-model="queryParams[item.prop]" :size="size"
-        v-bind="getInputSetting(item)" />
+        v-bind="getInputSetting(item)" v-on="getInputEvents(item)" />
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
@@ -266,6 +266,18 @@ export default {
         ...setting,
       };
     },
+    defaultFunction() {
+      
+    },
+    getInputEvents(item) {
+      return {
+        blur: item['blur'] || this.defaultFunction,
+        focus: item['focus'] || this.defaultFunction,
+        change: item['change'] || this.defaultFunction,
+        input: item['input'] || this.defaultFunction,
+        clear: item['clear'] || this.defaultFunction,
+      };
+    },
     getSelectSetting(item) {
       const { selectSetting, setting } = item;
       return {
@@ -274,12 +286,30 @@ export default {
         ...setting,
       };
     },
+    getSelectEvents(item) {
+      return {
+        change: item['change'] || this.defaultFunction,
+        "visible-change": item['visible-change'] || this.defaultFunction,
+        "remove-tag": item['remove-tag'] || this.defaultFunction,
+        "expand-change": item['expand-change'] || this.defaultFunction,
+        clear: item['clear'] || this.defaultFunction,
+        blur: item['blur'] || this.defaultFunction,
+        focus: item['focus'] || this.defaultFunction,
+      };
+    },
     getDatePackerSetting(item) {
       const { datePackerSetting, setting } = item;
       return {
         ...this.datePackerSetting,
         ...datePackerSetting,
         ...setting,
+      };
+    },
+    getDatePackerEvents(item) {
+      return {
+        change: item['change'] || this.defaultFunction,
+        blur: item['blur'] || this.defaultFunction,
+        focus: item['focus'] || this.defaultFunction,
       };
     },
   },
