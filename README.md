@@ -52,8 +52,8 @@ import { VGeneralBasicForm } from "general-basic-form";
         ref="VGeneralBasicFormRef"
         :labelWidth="formLabelWidth"
         v-bind:loading:sync="loading"
-        :formData: {
-          // 外部传入的表单数据，用于回填
+        :formData.sync: {
+          // 外部传入的表单数据（可以是响应式数据），用于回填
         }
         noUrlParameters
         :afterReset="afterReset"
