@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2024-08-21 17:35:09
+ * @LastEditTime: 2024-10-21 17:12:26
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -37,7 +37,7 @@ export default {
     formItem: {
       // 定义表单的数据
       type: Array,
-      default: [],
+      default: () => [],
     },
     formData: {
       // 外部传入的表单数据，用于回填
