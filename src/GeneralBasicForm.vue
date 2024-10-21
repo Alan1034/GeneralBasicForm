@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-09-04 17:18:32
+ * @LastEditTime: 2024-10-21 17:15:49
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -11,22 +11,10 @@
 /** 通用基本表单。用在表单页面搜索栏 */
 
 <template>
-  <el-form
-    :model="queryParams"
-    ref="queryFormRef"
-    v-show="showSearch"
-    inline
-    label-position="left"
-    :label-width="labelWidth"
-    v-bind="$attrs"
-  >
-    <el-form-item
-      v-for="item in formItem"
-      :label="item.label"
-      :prop="item.prop"
-      :key="item.prop"
-      :rules="getItemRules(item)"
-    >
+  <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" inline label-position="left"
+    :label-width="labelWidth" v-bind="$attrs">
+    <el-form-item v-for="item in formItem" :label="item.label" :prop="item.prop" :key="item.prop"
+      :rules="getItemRules(item)">
       <Input v-if="/^input$/i.test(item.type)" :item="item" />
       <Radio v-if="/^radio$/i.test(item.type)" :item="item" />
       <Select v-if="/^select$/i.test(item.type)" :item="item" />
@@ -36,25 +24,12 @@
       <DatePicker v-if="/^date-picker$/i.test(item.type)" :item="item" />
       <InputNumber v-if="/^input-number$/i.test(item.type)" :item="item" />
       <slot v-if="/^form-item-slot$/i.test(item.type)" :name="item.name"></slot>
-      <InputMobileVerification
-        v-if="/^input-mobile-verification$/i.test(item.type)"
-        :item="item"
-      />
-      <InputGraphicVerification
-        v-if="/^input-graphic-verification$/i.test(item.type)"
-        :item="item"
-        :key="item.key"
-      />
+      <InputMobileVerification v-if="/^input-mobile-verification$/i.test(item.type)" :item="item" />
+      <InputGraphicVerification v-if="/^input-graphic-verification$/i.test(item.type)" :item="item" :key="item.key" />
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
-      <el-button
-        type="primary"
-        :size="size"
-        @click="handleQuery"
-        v-loading="formLoading"
-        >查询</el-button
-      >
+      <el-button type="primary" :size="size" @click="handleQuery" v-loading="formLoading">查询</el-button>
       <el-button :size="size" @click="resetQuery">重置</el-button>
     </el-form-item>
     <slot name="behind-the-button" />
@@ -110,17 +85,17 @@ export default defineComponent({
     getList: {
       // 查找数据调用的函数
       type: Function,
-      default: () => {},
+      default: () => { },
     },
     afterReset: {
       // 在重置按钮点击完后但还没重新请求时触发的的函数
       type: Function,
-      default: () => {},
+      default: () => { },
     },
     formItem: {
       // 定义表单的数据
       type: Array as unknown as PropType<ItemType[]>,
-      default: [],
+      default: () => [],
     },
     size: {
       // 控制按钮大小
@@ -140,7 +115,7 @@ export default defineComponent({
     formData: {
       // 外部传入的表单数据，用于回填
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     noInputBlank: {
       // 用于判断input框是否校验仅空格
@@ -273,5 +248,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
