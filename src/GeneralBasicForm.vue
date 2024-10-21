@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-09-30 15:13:38
+ * @LastEditTime: 2024-10-21 16:57:43
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -90,7 +90,7 @@ export default {
     formItem: {
       // 定义表单的数据
       type: Array,
-      default: [],
+      default: () => [],
     },
     size: {
       // 控制按钮大小 vue2 medium / small / mini
@@ -267,7 +267,7 @@ export default {
       };
     },
     defaultFunction() {
-      
+
     },
     getInputEvents(item) {
       return {
