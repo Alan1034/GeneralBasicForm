@@ -113,6 +113,9 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           }
         );
       });
+      
+      深度更新formData
+      this.formData = { ...newVal }
 
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
