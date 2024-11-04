@@ -152,6 +152,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
             style: 'width: 100%',
             "prefix-icon": "el-icon-search"
           },
+          class: "flex-item",
           rules: [
             {
               message: "请输入信息"

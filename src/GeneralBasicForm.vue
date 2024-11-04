@@ -12,8 +12,7 @@
 
 <template>
   <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" :label-width="labelWidth" v-bind="attrs">
-    <el-form-item v-for="item in formItem" :label="item.label" :prop="item.prop" :key="item.prop"
-      :rules="getItemRules(item)">
+    <el-form-item v-for="item in formItem" :key="item.prop" :rules="getItemRules(item)" v-bind="item">
       <el-input v-if="item.type === 'input'" @keydown.enter.native="getList" v-model="queryParams[item.prop]"
         :size="size" v-bind="getInputSetting(item)" v-on="getInputEvents(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
