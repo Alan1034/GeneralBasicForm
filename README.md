@@ -192,8 +192,12 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "二次工艺成本价格（人民币分）",
           prop: "spCost",
           type: "input-number",
-          "controls-position": "right",
-          min: 0,
+          setting: {
+                style: 'width: 178px',
+                placeholder: '请输入配比',
+                precision:2,
+                min: 0,
+           },
           rules: [
             {
               required: true,
