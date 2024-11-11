@@ -266,7 +266,8 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ]
         },
         {
-        // vue2未实现
+        // 使用时需要在formData中定义好prop的默认值
+        // 例 formData:{ is_multi:[]}
           label: '多选',
           prop: 'is_multi',
           type: 'checkbox',

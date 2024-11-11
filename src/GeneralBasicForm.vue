@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-10-21 16:57:43
+ * @LastEditTime: 2024-11-11 17:57:01
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -39,6 +39,13 @@
         v-bind="getDatePackerSetting(item)" v-on="getDatePackerEvents(item)"></el-date-picker>
       <el-input-number v-if="item.type === 'input-number'" v-model="queryParams[item.prop]" :size="size"
         v-bind="getInputSetting(item)" v-on="getInputEvents(item)" />
+
+      <el-checkbox-group v-else-if="item.type === 'checkbox'" v-model="queryParams[item.prop]" :size="size"
+        v-bind="getCheckboxGroupSetting(item)" v-on="getCheckboxGroupEvents(item)">
+        <el-checkbox v-for="dict in item.option || []" :key="dict.key || dict.value || dict.label"
+          v-bind="dict"></el-checkbox>
+      </el-checkbox-group>
+
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
@@ -310,6 +317,18 @@ export default {
         change: item['change'] || this.defaultFunction,
         blur: item['blur'] || this.defaultFunction,
         focus: item['focus'] || this.defaultFunction,
+      };
+    },
+    getCheckboxGroupSetting(item) {
+      const { checkboxGroupSetting, setting } = item;
+      return {
+        ...checkboxGroupSetting,
+        ...setting,
+      };
+    },
+    getCheckboxGroupEvents(item) {
+      return {
+        change: item['change'] || this.defaultFunction,
       };
     },
   },
