@@ -30,7 +30,8 @@
       </el-input>
       <el-select filterable v-else-if="item.type === 'select'" v-model="queryParams[item.prop]" :size="size"
         v-bind="getSelectSetting(item)" v-on="getSelectEvents(item)">
-        <el-option v-for="dict in item.option || []" :key="dict.value" :label="dict.label" :value="dict.value" />
+        <el-option v-for="dict in item.option || []" :key="dict.key || dict.value" :label="dict.label"
+          :value="dict.value" />
       </el-select>
       <el-cascader filterable v-else-if="item.type === 'cascader'" v-model="queryParams[item.prop]" :size="size"
         :options="item.options || []" v-bind="getSelectSetting(item)" v-on="getSelectEvents(item)"></el-cascader>
