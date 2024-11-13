@@ -10,6 +10,7 @@
 | VDescriptions       |      | √    | √ | √   |     |
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
+| VTreeTransfer | √ |  |  |  | √ |
 
 示例:
 
