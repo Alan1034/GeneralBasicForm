@@ -437,3 +437,18 @@ formItem:[ {
   }]
 descriptionsItemProps:el-descriptions-item的配置
 ```
+
+# VTreeTransfer树形穿梭框
+
+```javascript
+import { VTreeTransfer } from 'general-basic-form'
+<VTreeTransfer ref="TreeTransferRef" :data-source.sync="treeFromData" filterable :checkedKeys="checkedKeys">
+</VTreeTransfer>
+```
+
+```
+treeFromData：Array //树的数据源
+checkedKeys：Array //设置选中的数据
+获取穿梭框右侧数据：setup写法：TreeTransferRef.value["selectedList"]
+```
+

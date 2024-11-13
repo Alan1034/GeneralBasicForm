@@ -20,3 +20,7 @@ export const VSearchBox = SearchBox
 import Descriptions from "./Descriptions.vue";
 
 export const VDescriptions = Descriptions
+
+import TreeTransfer from "./tree-transfer/index.vue";
+
+export const VTreeTransfer = TreeTransfer
