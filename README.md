@@ -8,6 +8,7 @@
 | VDescriptions       |      | √    | √ | √   |     |
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
+| VTreeTransfer | √ |  |  |  | √ |
 
 示例:
 
@@ -439,6 +440,8 @@ descriptionsItemProps:el-descriptions-item的配置
 ```
 
 # VTreeTransfer树形穿梭框
+
+![image-20241113173459422](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202411131735541.png)
 
 ```javascript
 import { VTreeTransfer } from 'general-basic-form'
