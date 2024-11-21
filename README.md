@@ -469,6 +469,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 
 ```
 import { VInfiniteScrollList } from 'general-basic-form'
+import 'general-basic-form/style'
 <VInfiniteScrollList
   :search="search"
   id="user_id"
@@ -479,7 +480,16 @@ import { VInfiniteScrollList } from 'general-basic-form'
   :max="1"
  />
 ```
+```
+移动端配合下拉刷新使用
+import { getOrderItem } from "../orderItem/functional"
+// getOrderItem为JSX函数，返回一个VUE组件
 
+<t-pull-down-refresh v-model="refreshing" @refresh="onRefresh" class="refresh-content">
+      <VInfiniteScrollList :search="loadData" :checkbox="false" id="cancelId" ref="InfiniteScrollListRef" checkbox
+        :extra="getOrderItem" height="100%" infinite-scroll-distance="50"/>
+    </t-pull-down-refresh>
+```
 ```
 search：数据接口 (page: Number) => Promise<[]>
 id：数据key值（唯一和选择值）
@@ -494,6 +504,7 @@ extra：同行额外显示的内容，(item: any) => VNode | String;
 //  height: auto;
 //}
 defaultSelection：包含数据key值的对象数组或者直接传入key值数组
+height:默认272px String
 ```
 
 ```
@@ -505,6 +516,7 @@ defaultSelection：包含数据key值的对象数组或者直接传入key值数�
  InfiniteScrollListRef?.value?.selectInfo：选择的内容
  InfiniteScrollListRef?.value?.list：列表的内容
  InfiniteScrollListRef?.value?.ifbottom：是否到底部
+ InfiniteScrollListRef?.value?.loading：加载中
 ```
 
 # VDescriptions对展示描述列表的封装

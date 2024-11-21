@@ -3,7 +3,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-11-09 10:01:20
- * @LastEditTime: 2024-09-05 17:07:07
+ * @LastEditTime: 2024-11-21 19:14:22
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 图形验证码组件
@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import EInput from "../../VBasic/input/index.vue";
 import AInput from "../../VABasic/input/index.vue";
-import anime from 'animejs/lib/anime.es.js';
 import { inject, shallowRef, computed } from "vue";
 import { formLoadingKey } from "../../../injectKey";
 import ImgMask from "../img-mask/index.vue";

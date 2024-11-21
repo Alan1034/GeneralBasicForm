@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-05 15:09:03
- * @LastEditTime: 2024-07-16 10:46:16
+ * @LastEditTime: 2024-11-21 19:37:38
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 公共的无限滚动列表
@@ -9,32 +9,17 @@
  * 
 -->
 <template>
-  <el-checkbox-group
-    v-model="checkedList"
-    v-loading="loading"
-    v-bind="props"
-    v-if="props.checkbox"
-  >
-    <ul
-      v-infinite-scroll="loadList"
-      class="list"
-      :infinite-scroll-disabled="ifbottom"
-    >
+  <el-checkbox-group v-model="checkedList" v-loading="loading" v-bind="props" v-if="props.checkbox">
+    <ul v-infinite-scroll="loadList" class="list" :infinite-scroll-disabled="ifbottom" :style="{ height }">
       <li v-for="i in list" :key="i[id]" class="list-item">
-        <el-checkbox :value="i[id]" class="checkbox"
-          >{{ i[name] }}
+        <el-checkbox :value="i[id]" class="checkbox">{{ i[name] }}
           <ExtraComponent :i="i" v-if="props.extra"></ExtraComponent>
         </el-checkbox>
       </li>
     </ul>
   </el-checkbox-group>
-  <ul
-    v-infinite-scroll="loadList"
-    class="list"
-    :infinite-scroll-disabled="ifbottom"
-    v-else
-    v-bind="props"
-  >
+  <ul v-infinite-scroll="loadList" class="list" :infinite-scroll-disabled="ifbottom" :style="{ height }" v-else
+    v-bind="props">
     <li v-for="i in list" :key="i[id]" class="list-item">
       <div class="checkbox">
         {{ i[name] }}
@@ -64,7 +49,7 @@ const props = defineProps({
   },
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   extra: {
     type: null as PropType<ExtraFunction>,
@@ -74,8 +59,13 @@ const props = defineProps({
     type: Array,
     required: false,
   },
+  height: {
+    type: String,
+    required: false,
+    default: "272px"
+  },
 });
-const { search, id, name, extra } = props;
+const { search, id, name, extra, height } = props;
 const list = ref<any[]>([]);
 const page = ref(1);
 const ifbottom = ref(false); //判断是否到底部，是的话就不再请求
@@ -154,14 +144,15 @@ defineExpose({
   list,
   ifbottom,
   refreshList,
+  loading,
 });
 </script>
 
 <style lang="less" scoped>
 .list {
-  height: 272px;
   overflow: auto;
-  padding: 8px 0px;
+  padding: 0;
+  margin: 0;
   .checkbox {
     width: calc(100% - 32px);
     padding: 0 16px;
