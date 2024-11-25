@@ -12,13 +12,14 @@
 <script setup lang="ts">
 import EInput from "../../VBasic/input/index.vue";
 import AInput from "../../VABasic/input/index.vue";
-import { h, shallowRef } from "vue";
+import { h, shallowRef, ref } from "vue";
 import type { ComponentType } from "../../../types/componentType";
 import VerificationButton from "./verification-button.vue";
 const { item, componentType = "Element Plus" } = defineProps<{ item: any, componentType?: ComponentType }>();
 // 重新赋值一下触发下面的代码，否则响应会在内部进行
 const mobileItem = item;
 const inputType = <any>shallowRef(EInput)
+const VerificationButtonRef = ref()
 switch (componentType) {
   case "Element Plus":
     inputType.value = EInput;
@@ -27,6 +28,7 @@ switch (componentType) {
         return h(VerificationButton, {
           getSmscode: mobileItem.getSmscode,
           item,
+          ref: VerificationButtonRef
         });
       },
     };
@@ -38,6 +40,7 @@ switch (componentType) {
         return h(VerificationButton, {
           getSmscode: mobileItem.getSmscode,
           item,
+          ref: VerificationButtonRef
         });
       },
     };
@@ -45,6 +48,7 @@ switch (componentType) {
   default:
     break;
 }
+defineExpose({ VerificationButtonRef })
 </script>
 
 <template>

@@ -63,6 +63,7 @@ onBeforeUnmount(() => {
   reset();
 });
 const buttonSetting = { ...item.buttonSetting }
+defineExpose({ buttonClick, reset })
 </script>
 
 <template>

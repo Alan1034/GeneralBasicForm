@@ -562,7 +562,7 @@ descriptionsItemProps:a-descriptions-item|el-descriptions-item的配置
 ```
 <VInputGraphicVerification :item="{同表单，可忽略label和rules字段}" :loading="loading"></VInputGraphicVerification>
 
-<VInputMobilecVerification :item="{同表单，可忽略label和rules字段}" componentType="Ant Design Vue"></VInputMobilecVerification>
+<VInputMobilecVerification :item="{同表单，可忽略label和rules字段}" componentType="Ant Design Vue" ref="VInputMobilecVerificationRef"></VInputMobilecVerification>
 ```
 
 ```
@@ -580,6 +580,10 @@ provide(/* 注入名 */ "Form", /* Ant Design Vue Form实例，用于表单数�
 可选：
 provide("size", size); // 同组件size
 provide("getList", getList); // 输入框回车触发
+
+调用发送短信验证码和重置的方法
+VInputMobilecVerificationRef.value.VerificationButtonRef.buttonClick()
+VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
 ```
 
 安装：npm i general-basic-form<br/>
