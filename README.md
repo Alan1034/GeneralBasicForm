@@ -7,7 +7,7 @@
 | VGeneralBasicForm    | √    | √    |     | √   | √   |
 | VSearchBox           | √    |      |      |  | √ |
 | VInfiniteScrollList |      | √    |     | √   |     |
-| VDescriptions       |      | √    | √ | √   |     |
+| VDescriptions       | √ | √    | √ | √   | √ |
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
 | VTreeTransfer | √ |  |  |  | √ |
