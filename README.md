@@ -15,9 +15,9 @@
 因为兼容性问题，目前只能使用完整引入
 
 ```
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-app.use(ElementPlus)
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 ```
 
 ```
