@@ -1,4 +1,6 @@
-# GeneralBasicForm 一个兼容 Vue2 和 Vue3 的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本
+# GeneralBasicForm
+
+## 一个兼容 Vue2 、Vue3 和 React(未来实现)  的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本
 
 | 组件\兼容性         | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） |
 | ------------------- | ---- | ---- | ---- | ---- | ---- |
@@ -15,13 +17,14 @@
 因为兼容性问题，目前只能使用完整引入
 
 ```
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+app.use(ElementPlus)
 ```
 
 ```
-import { VGeneralBasicForm } from "general-basic-form";
+import { VGeneralBasicForm } from 'general-basic-form'
+import 'general-basic-form/style'
 ```
 
     <VGeneralBasicForm
@@ -31,9 +34,10 @@ import { VGeneralBasicForm } from "general-basic-form";
       :size="size"
       ref="VGeneralBasicFormRef"
       labelWidth="90px"
+      :noInputBlank="true"
     >
       <template v-slot:default>
-    ...一些传入插槽的内容
+        ...一些传入插槽的内容
       </template>
       <template v-slot:behind-the-button>
         <el-form-item>
@@ -52,19 +56,20 @@ import { VGeneralBasicForm } from "general-basic-form";
         size="small"
         ref="VGeneralBasicFormRef"
         :labelWidth="formLabelWidth"
-        v-bind:loading:sync="loading"
-        :formData.sync: {
-          // 外部传入的表单数据（可以是响应式数据），用于回填
+        :formData: {
+          // 外部传入的表单数据，用于回填
         }
         noUrlParameters
         :afterReset="afterReset"
+        v-model:loading="loading"
       />
     
       <style lang="scss" scoped>
-      :deep {
-        .el-form-item {
-          margin-bottom: 22px;
-        }
+      :deep(.el-form-item) {
+        margin-bottom: 16px;
+      }
+      :deep(.el-divider--horizontal) {
+        margin: 8px 0px;
       }
       </style>
 
@@ -79,44 +84,44 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 
 表单数据校验需要拿到内部表单的ref
 
-      const VGeneralBasicFormRef = this.$refs["VGeneralBasicFormRef"];
-      VGeneralBasicFormRef.$refs["queryFormRef"].validate(async (boolean, object) => {
-        if (boolean) {
-          console.log(this.$refs["VGeneralBasicFormRef"]["queryParams"]);
-        }
-      });
-      
-      校验单个字段
-      const VGeneralBasicFormRef = this.$refs["VGeneralBasicFormRef"];
-      const state = await new Promise((resolve, reject) => {
-        VGeneralBasicFormRef.$refs["queryFormRef"]?.validateField(
-          "accNum",
-          (errorMessage) => {
-            if (!errorMessage) {
-               const { accNum } = VGeneralBasicFormRef["queryParams"];
-              http
-                .getMobileByAccNum({ accNum })
-                .then((res) => {
-                  if (res) {
-                    if (res.data) {
-                    }
-                    resolve(true);
-                  }else {
-                    resolve(false);
-                  }
-                })
-                .catch((error) => {
-                  resolve(false);
-                });
+    async getSmscode() {
+      const VGeneralBasicFormRef = this.$refs['VGeneralBasicFormRef'] as any
+      const state = await new Promise<boolean>((resolve, reject) => {
+        VGeneralBasicFormRef.$refs['queryFormRef']?.validateField(
+          'user_phone',
+          async (valid: boolean, props?: FormItemProp[] | undefined) => {
+            if (valid) {
+              const { user_phone } = VGeneralBasicFormRef['queryParams']
+              const res: any = await SmscodeList({ user_phone })
+              if (res) {
+                console.log(res)
+                resolve(true)
+              } else {
+                resolve(false)
+              }
             } else {
-              resolve(false);
+              resolve(false)
             }
           }
-        );
-      });
-      
-      深度更新formData
-      this.formData = { ...newVal }
+        )
+      })
+      return state
+    },
+    
+    setup写法：
+    const VGeneralBasicFormRef = ref()
+    const params = await new Promise<any>((resolve, reject) => {
+      VGeneralBasicFormRef.value.$refs['queryFormRef']?.validate(
+        async (valid: boolean, props?: FormItemProp[] | undefined) => {
+          if (valid) {
+            const params = VGeneralBasicFormRef.value['queryParams']
+            resolve(params)
+          } else {
+            resolve(false)
+          }
+        }
+      )
+    })
 
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
@@ -133,11 +138,11 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
     noInputBlank: true //校验input框不能仅输入空格
     //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
     formItem: [
-    	{ // vue2未实现
+    	{
           label: '',
           prop: 'bsName35',
           type: 'divider',
-          dividerSetting: {
+          setting: {
           },
           template: {
             default: () => {
@@ -148,12 +153,10 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
         { label: "款式名称",
           prop: "bsName",
           type: "input",
-       	  inputSetting: {
+       	  setting: {
             placeholder: '请输入手机验证码',
-            style: 'width: 100%',
-            "prefix-icon": "el-icon-search"
+            style: 'width: 100%'
           },
-          class: "flex-item",
           rules: [
             {
               message: "请输入信息"
@@ -163,29 +166,30 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
               message: "请输入正确的Invoice单号"
             }
           ],
-          change: (value) => {
-        	console.log(value)
-      	  }
+          template: {
+            suffix: () => {
+              return <svg-icon icon-class="baifenbi" />;
+            },
+          },
     	},
         {
           label: "二次工艺",
           prop: "spName",
           type: "select",
-          selectSetting:{multiple:true, //多选},
+          setting:{ multiple:true, //多选},
           option: [
-            { value: "3", label: "满印" },
+            { value: "3", label: "满印" }, //value为Object的时候推荐使用JSON.stringify(Object)
             { value: "1", label: "区域印花" },
             { value: "2", label: "绣花" },
           ],
-          change: (value) => {
-        	console.log(value)
-      	  }
+          change:(e) => {
+           }
         },
         { 
           label: "创建时间",
           prop: "create_time",
           type: "date-picker",
-          datePackerSetting: {
+          setting: {
             "range-separator": "至",
           }
         },
@@ -193,12 +197,8 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "二次工艺成本价格（人民币分）",
           prop: "spCost",
           type: "input-number",
-          setting: {
-                style: 'width: 178px',
-                placeholder: '请输入配比',
-                precision:2,
-                min: 0,
-           },
+          "controls-position": "right",
+          min: 0,
           rules: [
             {
               required: true,
@@ -208,11 +208,10 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ],
         },
         {
-        // vue2未实现
           label: '',
           prop: 'bsName2',
           type: 'input-graphic-verification',
-          inputSetting: {
+          setting: {
             placeholder: '请输入图形验证码',
             style: 'width: 100%'
           },
@@ -234,24 +233,23 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
             placeholder: '请输入手机验证码',
             style: 'width: 100%'
           },
+    	  buttonSetting: {
+      		type: "text",
+      		style: 'text-align: end',
+    	  },
           rules: [
             {
               message: '请输入手机验证码',
               trigger: 'blur'
             }
           ],
-          verificationSetting: {
-                defaultText: "查询",
-                restTime: 5,
-          },
           getSmscode,// 获取验证码的回调函数,获取失败必须返回false,否则计时器不会重新计算
         },
         {
-        // vue2未实现
           label: '是否必填',
           prop: 'is_optional',
           type: 'radio',
-          radioGroupSetting: {
+          setting: {
             disabled: true
           },
           option: [
@@ -267,12 +265,10 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           ]
         },
         {
-        // 使用时需要在formData中定义好prop的默认值
-        // 例 formData:{ is_multi:[]}
           label: '多选',
           prop: 'is_multi',
           type: 'checkbox',
-          checkboxGroupSetting: {
+          setting: {
           },
           option: [
             { value: '是', label: 'true' },
@@ -281,7 +277,6 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           rules: []
         },
         {
-        // vue2未实现
           label: '受访人',
           prop: 'contactors',
           type: 'form-item-slot',
@@ -300,7 +295,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           label: "分类",
           prop: "分类",
           type: "cascader",
-          selectSetting:{},
+          setting:{},
           options: [
             {
               value: "zhinan",
@@ -376,31 +371,154 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       
       //divider支持template：
       //default
+支持组件type:
 
-安装：npm i general-basic-form<br/>
-install: npm i general-basic-form
+ /**
 
-# SearchBox 对搜索框的单独封装
+  \* @description: 输入框
+
+  */
+
+ 'input' = 'input',
+
+ /**
+
+  \* @description: 输入框/图像验证码
+
+  */
+
+ 'input-graphic-verification' = 'input-graphic-verification',
+
+ /**
+
+  \* @description: 输入框/手机验证码
+
+  */
+
+ 'input-mobile-verification' = 'input-mobile-verification',
+
+ /**
+
+  \* @description: 分割线
+
+  */
+
+ 'divider' = 'divider',
+
+ /**
+
+  \* @description: 选择器
+
+  */
+
+ 'select' = 'select',
+
+ /**
+
+  \* @description: 级联选择器
+
+  */
+
+ 'cascader' = 'cascader',
+
+ /**
+
+  \* @description: 日期选择器
+
+  */
+
+ 'date-picker' = 'date-picker',
+
+ /**
+
+  \* @description: 数字输入框
+
+  */
+
+ 'input-number' = 'input-number',
+
+ /**
+
+  \* @description: 单选框
+
+  */
+
+ 'radio' = 'radio',
+
+ /**
+
+  \* @description: 自定义元素，插槽组件
+
+  */
+
+ 'form-item-slot'='form-item-slot',
+
+ /**
+
+  \* @description: 多选框
+
+  */
+
+ 'checkbox'='checkbox',
+
+
+
+# VInfiniteScrollList对虚拟滚动列表+接口的封装
+
+
+
+![image-20231208165229296](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081652392.png)
 
 ```
-import { VSearchBox } from "general-basic-form";
+import { VInfiniteScrollList } from 'general-basic-form'
+import 'general-basic-form/style'
+<VInfiniteScrollList
+  :search="search"
+  id="user_id"
+  name="name"
+  ref="InfiniteScrollListRef"
+  checkbox
+  :extra="extraRender"
+  :max="1"
+ />
+```
+```
+移动端配合下拉刷新使用
+import { getOrderItem } from "../orderItem/functional"
+// getOrderItem为JSX函数，返回一个VUE组件
+
+<t-pull-down-refresh v-model="refreshing" @refresh="onRefresh" class="refresh-content">
+      <VInfiniteScrollList :search="loadData" :checkbox="false" id="cancelId" ref="InfiniteScrollListRef" checkbox
+        :extra="getOrderItem" height="100%" infinite-scroll-distance="50"/>
+    </t-pull-down-refresh>
+```
+```
+search：数据接口 (page: Number) => Promise<[]>
+id：数据key值（唯一和选择值）
+name：显示名字
+checkbox：是否有多选功能，不传的话就是单纯的虚拟滚动列表
+extra：同行额外显示的内容，(item: any) => VNode | String;
+//el-checkbox有固定高度，如果需要配置高度比较高，例如有换行的自定义extra，最好处理一下样式，例子：
+//:deep(.el-checkbox) {
+//  padding: 6px 16px !important;
+//  display: flex;
+//  align-items: baseline;
+//  height: auto;
+//}
+defaultSelection：包含数据key值的对象数组或者直接传入key值数组
+height:默认272px String
 ```
 
-![image-20240802200107233](C:\Users\陈德立\AppData\Roaming\Typora\typora-user-images\image-20240802200107233.png)
-
 ```
-<VSearchBox placeholder="请输入您想搜索的商品" openHref :inputstyle="{ display: 'block', width: 'auto', margin: '0 90px' }">
-</VSearchBox>
-```
-
-
-
-```
-query：Object //搜索条件，会带到跳转后的路由query里
-routePath：String //搜索后跳转路径
-inputstyle：Object//输入框样式
-openHref：Boolean//是否在新标签页中打开搜索结果
-size:String//el-input的size
+ defineExpose({ reset, loadList, selectInfo, list, ifbottom });
+ InfiniteScrollListRef?.value?.reset()：重置列表内容
+ InfiniteScrollListRef?.value?.lowReset()：重置列表内容，但保留已选择的选项
+ InfiniteScrollListRef?.value?.loadList()：向下滚动列表内容，受到loading和ifbottom的影响
+ InfiniteScrollListRef?.value?.refreshList()：刷新列表，滚动列表会对整个内容重新请求数据，已选择的内容会自动选择
+ InfiniteScrollListRef?.value?.selectInfo：选择的内容
+ InfiniteScrollListRef?.value?.list：列表的内容
+ InfiniteScrollListRef?.value?.ifbottom：是否到底部
+ InfiniteScrollListRef?.value?.loading：加载中
 ```
 
 # VDescriptions对展示描述列表的封装
@@ -412,8 +530,8 @@ import { VDescriptions } from 'general-basic-form'
  <VDescriptions
   :formData="props.formData"
   :formItem="formItem"
+  componentType="Ant Design Vue"
   ...其他el-descriptions的配置
-  如：size="mini" :column="1" 
  />
 ```
 
@@ -436,22 +554,40 @@ formItem:[ {
        'label-class-name': 'label-class-name'
       }
   }]
-descriptionsItemProps:el-descriptions-item的配置
+componentType:"Ant Design Vue"|"Element Plus"（默认）
+strict:Boolean //使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字），但有render的字段仍然会展示
+descriptionsItemProps:a-descriptions-item|el-descriptions-item的配置
 ```
 
-# VTreeTransfer树形穿梭框
+# VInputMobilecVerification，VInputGraphicVerification表单里的图形验证码、手机验证码组件，可以单独引入
 
-![image-20241113173459422](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202411131735541.png)
+```
+<VInputGraphicVerification :item="{同表单，可忽略label和rules字段}" :loading="loading"></VInputGraphicVerification>
 
-```javascript
-import { VTreeTransfer } from 'general-basic-form'
-<VTreeTransfer ref="TreeTransferRef" :data-source.sync="treeFromData" filterable :checkedKeys="checkedKeys">
-</VTreeTransfer>
+<VInputMobilecVerification :item="{同表单，可忽略label和rules字段}" componentType="Ant Design Vue" ref="VInputMobilecVerificationRef"></VInputMobilecVerification>
 ```
 
 ```
-treeFromData：Array //树的数据源
-checkedKeys：Array //设置选中的数据
-获取穿梭框右侧数据：setup写法：TreeTransferRef.value["selectedList"]
+componentType:"Ant Design Vue"|"Element Plus"（默认）
 ```
+
+```
+此用法下必须提供：
+provide(/* 注入名 */ "queryParams", /* 表单值对象 */ queryParams);
+
+componentType为Ant Design Vue需要提供：
+import { Form } from 'ant-design-vue';
+provide(/* 注入名 */ "Form", /* Ant Design Vue Form实例，用于表单数据更新等 */ Form);
+
+可选：
+provide("size", size); // 同组件size
+provide("getList", getList); // 输入框回车触发
+
+调用发送短信验证码和重置的方法
+VInputMobilecVerificationRef.value.VerificationButtonRef.buttonClick()
+VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
+```
+
+安装：npm i general-basic-form<br/>
+install: npm i general-basic-form
 
