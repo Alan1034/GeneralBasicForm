@@ -65,6 +65,6 @@
     "/dist"
   ],
   "dependencies": {
-    "network-spanner": "^1.2.6"
+    "network-spanner": "^1.2.8"
   }
 }
