@@ -178,7 +178,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
           type: "select",
           setting:{ multiple:true, //多选},
           option: [
-            { value: "3", label: "满印" }, //value为Object的时候推荐使用JSON.stringify(Object)
+            { value: "3", label: "满印" }, 
             { value: "1", label: "区域印花" },
             { value: "2", label: "绣花" },
           ],

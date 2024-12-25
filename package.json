@@ -63,5 +63,8 @@
   },
   "files": [
     "/dist"
-  ]
+  ],
+  "dependencies": {
+    "network-spanner": "^1.2.6"
+  }
 }

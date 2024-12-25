@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-11-11 17:57:01
+ * @LastEditTime: 2024-12-25 15:40:48
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -59,6 +59,7 @@
 
 <script>
 import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
+import { ObjectStoreInUrl } from "network-spanner"
 export default {
   name: "GeneralBasicForm",
   components: {
@@ -128,7 +129,7 @@ export default {
   data() {
     return {
       queryParams: {
-        ...(this.noUrlParameters ? {} : this.$route?.query),
+        ...(this.noUrlParameters ? {} : ObjectStoreInUrl.queryToData(this.$route?.query)),
       }, // form表单数据
       formLoading: this.loading || false,
       selectSetting: {
@@ -219,11 +220,13 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       const params = { page: 1, limit: 10 };
-      const searchParams = {
-        ...this.$route?.query,
-        ...this.queryParams,
-        ...params,
-      };
+      const searchParams = ObjectStoreInUrl.paramsToQuery(
+        {
+          ...this.$route?.query,
+          ...this.queryParams,
+          ...params,
+        }
+      );
       if (!this.noUrlParameters) {
         this.$router.push({
           query: { ...searchParams },
