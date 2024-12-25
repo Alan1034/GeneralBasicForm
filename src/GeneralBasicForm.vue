@@ -51,7 +51,7 @@ import DatePicker from "./components/VBasic/date-picker/index.vue";
 import Select from "./components/VBasic/select/index.vue";
 import Cascader from "./components/VBasic/cascader/index.vue";
 import { formLoadingKey } from "./injectKey";
-
+import { ObjectStoreInUrl } from "network-spanner"
 export default defineComponent({
   name: "GeneralBasicForm",
   components: {
@@ -133,7 +133,7 @@ export default defineComponent({
     const { size, noUrlParameters, getList } = props;
     const route = useRoute();
     const queryParams = ref({
-      ...(noUrlParameters ? {} : route?.query),
+      ...(noUrlParameters ? {} : ObjectStoreInUrl.queryToData(route?.query)),
     }); // form表单数据
     provide(/* 注入名 */ "queryParams", /* 值 */ queryParams);
     provide(/* 注入名 */ "size", /* 值 */ size);
@@ -201,11 +201,11 @@ export default defineComponent({
     /** 搜索按钮操作 */
     handleQuery() {
       const params = { page: 1, limit: 10 };
-      const searchParams = {
+      const searchParams = ObjectStoreInUrl.paramsToQuery({
         ...this.$route?.query,
         ...this.queryParams,
         ...params,
-      };
+      });
       if (!this.noUrlParameters) {
         this.$router.push({
           query: { ...searchParams },
