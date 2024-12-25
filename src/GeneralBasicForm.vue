@@ -11,22 +11,10 @@
 /** 通用基本表单。用在表单页面搜索栏 */
 
 <template>
-  <el-form
-    :model="queryParams"
-    ref="queryFormRef"
-    v-show="showSearch"
-    inline
-    label-position="left"
-    :label-width="labelWidth"
-    v-bind="$attrs"
-  >
-    <el-form-item
-      v-for="item in formItem"
-      :label="item.label"
-      :prop="item.prop"
-      :key="item.prop"
-      :rules="getItemRules(item)"
-    >
+  <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" inline label-position="left"
+    :label-width="labelWidth" v-bind="$attrs">
+    <el-form-item v-for="item in formItem" :label="item.label" :prop="item.prop" :key="item.prop"
+      :rules="getItemRules(item)">
       <Input v-if="/^input$/i.test(item.type)" :item="item" />
       <Radio v-if="/^radio$/i.test(item.type)" :item="item" />
       <Select v-if="/^select$/i.test(item.type)" :item="item" />
@@ -36,25 +24,12 @@
       <DatePicker v-if="/^date-picker$/i.test(item.type)" :item="item" />
       <InputNumber v-if="/^input-number$/i.test(item.type)" :item="item" />
       <slot v-if="/^form-item-slot$/i.test(item.type)" :name="item.name"></slot>
-      <InputMobileVerification
-        v-if="/^input-mobile-verification$/i.test(item.type)"
-        :item="item"
-      />
-      <InputGraphicVerification
-        v-if="/^input-graphic-verification$/i.test(item.type)"
-        :item="item"
-        :key="item.key"
-      />
+      <InputMobileVerification v-if="/^input-mobile-verification$/i.test(item.type)" :item="item" />
+      <InputGraphicVerification v-if="/^input-graphic-verification$/i.test(item.type)" :item="item" :key="item.key" />
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
-      <el-button
-        type="primary"
-        :size="size"
-        @click="handleQuery"
-        v-loading="formLoading"
-        >查询</el-button
-      >
+      <el-button type="primary" :size="size" @click="handleQuery" v-loading="formLoading">查询</el-button>
       <el-button :size="size" @click="resetQuery">重置</el-button>
     </el-form-item>
     <slot name="behind-the-button" />
@@ -76,7 +51,7 @@ import DatePicker from "./components/VBasic/date-picker/index.vue";
 import Select from "./components/VBasic/select/index.vue";
 import Cascader from "./components/VBasic/cascader/index.vue";
 import { formLoadingKey } from "./injectKey";
-
+import { ObjectStoreInUrl } from "network-spanner"
 export default defineComponent({
   name: "GeneralBasicForm",
   components: {
@@ -110,12 +85,12 @@ export default defineComponent({
     getList: {
       // 查找数据调用的函数
       type: Function,
-      default: () => {},
+      default: () => { },
     },
     afterReset: {
       // 在重置按钮点击完后但还没重新请求时触发的的函数
       type: Function,
-      default: () => {},
+      default: () => { },
     },
     formItem: {
       // 定义表单的数据
@@ -140,7 +115,7 @@ export default defineComponent({
     formData: {
       // 外部传入的表单数据，用于回填
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     noInputBlank: {
       // 用于判断input框是否校验仅空格
@@ -158,7 +133,7 @@ export default defineComponent({
     const { size, noUrlParameters, getList } = props;
     const route = useRoute();
     const queryParams = ref({
-      ...(noUrlParameters ? {} : route?.query),
+      ...(noUrlParameters ? {} : ObjectStoreInUrl.queryToData(route?.query)),
     }); // form表单数据
     provide(/* 注入名 */ "queryParams", /* 值 */ queryParams);
     provide(/* 注入名 */ "size", /* 值 */ size);
@@ -226,11 +201,11 @@ export default defineComponent({
     /** 搜索按钮操作 */
     handleQuery() {
       const params = { page: 1, limit: 10 };
-      const searchParams = {
+      const searchParams = ObjectStoreInUrl.paramsToQuery({
         ...this.$route?.query,
         ...this.queryParams,
         ...params,
-      };
+      });
       if (!this.noUrlParameters) {
         this.$router.push({
           query: { ...searchParams },
@@ -273,5 +248,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
