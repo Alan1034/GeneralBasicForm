@@ -88,6 +88,12 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 this.$refs["VGeneralBasicFormRef"].handleQuery()
 ```
 
+重置
+
+```
+this.$refs['GeneralBasicFormRef'].resetQuery()
+```
+
 表单数据校验需要拿到内部表单的ref
 
     async getSmscode() {
