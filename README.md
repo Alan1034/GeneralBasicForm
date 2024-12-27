@@ -56,7 +56,7 @@ import 'general-basic-form/style'
         size="small"
         ref="VGeneralBasicFormRef"
         :labelWidth="formLabelWidth"
-        :formData: {
+        :formData.sync: {
           // 外部传入的表单数据，用于回填
         }
         noUrlParameters
