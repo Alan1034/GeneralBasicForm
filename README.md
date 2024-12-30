@@ -11,6 +11,7 @@
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
 | VTreeTransfer | √ |  |  |  | √ |
+| VTabs | √ | | | | √ |
 
 示例:
 
@@ -85,7 +86,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 带参数搜索
 
 ```
-this.$refs["VGeneralBasicFormRef"].handleQuery()
+this.$refs["VGeneralBasicFormRef"].handleQuery() //搜索时page和limit会传默认值1和10
 ```
 
 重置
@@ -598,6 +599,21 @@ provide("getList", getList); // 输入框回车触发
 调用发送短信验证码和重置的方法
 VInputMobilecVerificationRef.value.VerificationButtonRef.buttonClick()
 VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
+```
+
+# VTabs对标签页进行封装，支持与URL联动
+
+```
+import {  VTabs } from "general-basic-form";
+<VTabs :tabPanes="tabPanes" v-model="query.purchaseType" activeNameKey="purchaseType" :getList="search"> slot的内容 </VTabs>
+```
+
+```
+tabPanes:[],// 定义标签页的数据
+noUrlParameters:false,// 不接受和不改变url的参数
+activeNameKey:"activeName",//保存标签页的字段KEY
+defActiveName:null,//标签页的选中值
+getList:()=>{},// 查找数据调用的函数
 ```
 
 安装：npm i general-basic-form<br/>

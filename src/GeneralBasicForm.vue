@@ -1,5 +1,15 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
+ * @Date: 2024-12-29 17:56:35
+ * @LastEditTime: 2024-12-30 17:09:25
+ * @LastEditors: 陈德立*******419287484@qq.com
+ * @Github: https://github.com/Alan1034
+ * @Description: 
+ * @FilePath: \GeneralBasicForm\src\GeneralBasicForm.vue
+ * 
+-->
+<!--
+ * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
  * @LastEditTime: 2024-12-25 15:40:48
  * @LastEditors: 陈德立*******419287484@qq.com
@@ -246,7 +256,7 @@ export default {
         });
       }
       this.queryParams = {
-        ...(this.noUrlParameters ? {} : this.$route?.query),
+        ...(this.noUrlParameters ? {} : ObjectStoreInUrl.queryToData(this.$route?.query)),
       };
       this.afterReset();
       this.handleQuery();

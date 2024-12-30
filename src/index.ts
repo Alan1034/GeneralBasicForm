@@ -24,3 +24,7 @@ export const VDescriptions = Descriptions
 import TreeTransfer from "./tree-transfer/index.vue";
 
 export const VTreeTransfer = TreeTransfer
+
+import Tabs from "./tabs/index.vue";
+
+export const VTabs = Tabs
