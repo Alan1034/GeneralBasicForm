@@ -11,6 +11,7 @@
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
 | VTreeTransfer | √ |  |  |  | √ |
+| VTabs | √ | | | | √ |
 
 示例:
 
