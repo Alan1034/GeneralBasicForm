@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
       const searchParams = ObjectStoreInUrl.paramsToQuery(
         {
           ...this.$route?.query,
@@ -78,8 +78,9 @@ export default {
       if (this.tabPanes[0]?.name) {
         activeName = this.tabPanes[0]?.name
       }
-      if (!this.noUrlParameters) {
-        activeName = ObjectStoreInUrl.queryToData(Number(this.$route?.query[this.activeNameKey]))
+      const urlActiveName = ObjectStoreInUrl.queryToData(Number(this.$route?.query[this.activeNameKey]))
+      if (!this.noUrlParameters && urlActiveName) {
+        activeName = urlActiveName
       }
       if (this.defActiveName) {
         activeName = this.defActiveName
