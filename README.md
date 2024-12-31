@@ -603,6 +603,8 @@ VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
 
 # VTabs对标签页进行封装，支持与URL联动
 
+![image-20241231155055749](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202412311551923.png)
+
 ```
 import {  VTabs } from "general-basic-form";
 <VTabs :tabPanes="tabPanes" v-model="query.purchaseType" activeNameKey="purchaseType" :getList="search"> slot的内容 </VTabs>
