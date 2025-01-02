@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2024-10-21 17:15:49
+ * @LastEditTime: 2025-01-02 18:53:28
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -122,6 +122,22 @@ export default defineComponent({
       type: Boolean,
       default: () => false,
     },
+    currentPageKey: {
+      type: String,
+      default: "page",
+    },
+    pageSizeKey: {
+      type: String,
+      default: "limit",
+    },
+    defCurrentPage: {
+      type: Number,
+      default: 1,
+    },
+    defPageSize: {
+      type: Number,
+      default: 10,
+    },
   },
   data() {
     return {
@@ -200,7 +216,7 @@ export default defineComponent({
   methods: {
     /** 搜索按钮操作 */
     handleQuery() {
-      const params = { page: 1, limit: 10 };
+      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: this.defPageSize };
       const searchParams = ObjectStoreInUrl.paramsToQuery({
         ...this.$route?.query,
         ...this.queryParams,
@@ -218,7 +234,7 @@ export default defineComponent({
     /** 重置按钮操作 */
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
-      const params = { page: 1 };
+      const params = { [this.currentPageKey]: this.defCurrentPage };
       if (!this.noUrlParameters) {
         await this.$router.push({
           query: { ...params },
