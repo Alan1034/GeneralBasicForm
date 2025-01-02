@@ -150,6 +150,10 @@ this.$refs['GeneralBasicFormRef'].resetQuery()
     formData:{} // 注意，因为可能出现的性能问题在组件watch formData的变化时没有使用deep，所以有时候深度的修改会不生效，导致表单数据不完整
     noInputBlank: true //校验input框不能仅输入空格
     //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
+    currentPageKey:"page", //当前页数key
+    pageSizeKey:"limit", //每页显示个数选择器的选项设置
+    defCurrentPage:1, //默认的页数
+    defPageSize：10, //默认的每页显示个数
     formItem: [
     	{
           label: '',
