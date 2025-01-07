@@ -1,7 +1,17 @@
+<!--
+ * @Author: 陈德立*******419287484@qq.com
+ * @Date: 2025-01-07 09:43:47
+ * @LastEditTime: 2025-01-07 09:44:12
+ * @LastEditors: 陈德立*******419287484@qq.com
+ * @Github: https://github.com/Alan1034
+ * @Description: 
+ * @FilePath: \GeneralBasicForm\src\tabs\index.vue
+ * 
+-->
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick" v-bind="$attrs">
     <el-tab-pane v-for="item in tabPanes" :key="item.name" v-bind="item">
-      {{ item.context && item.context() }}
+      {{ item.render && item.render(item) }}
     </el-tab-pane>
     <slot></slot>
   </el-tabs>
