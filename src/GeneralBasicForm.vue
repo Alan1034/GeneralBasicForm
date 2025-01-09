@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-02 16:00:07
+ * @LastEditTime: 2025-01-09 18:31:39
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -55,7 +55,7 @@
         <el-checkbox v-for="dict in item.option || []" :key="dict.key || dict.value || dict.label"
           v-bind="dict"></el-checkbox>
       </el-checkbox-group>
-
+      <slot v-if="/^form-item-slot$/i.test(item.type)" :name="item.name"></slot>
     </el-form-item>
     <slot></slot>
     <el-form-item v-if="!formOnly">
@@ -200,7 +200,7 @@ export default {
       handler(val, oldVal) {
         if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
           this.queryParams = {
-            ...(this.noUrlParameters ? {} : this.queryParams),
+            ...this.queryParams,
             ...val,
           };
         }
