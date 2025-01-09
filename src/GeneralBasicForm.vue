@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-09 18:31:39
+ * @LastEditTime: 2025-01-09 18:55:37
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -213,7 +213,7 @@ export default {
     },
     queryParams: {
       handler(val) {
-        this.$emit("update:formData", val);
+        this.$emit("update:formData", { ...val });
       },
       deep: true,
     },
