@@ -170,7 +170,7 @@ export default defineComponent({
       handler(val, oldVal) {
         if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
           this.queryParams = {
-            ...(this.noUrlParameters ? {} : this.queryParams),
+            ...this.queryParams,
             ...val,
           };
         }
