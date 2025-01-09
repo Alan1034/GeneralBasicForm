@@ -183,7 +183,7 @@ export default defineComponent({
     },
     queryParams: {
       handler(val) {
-        this.$emit("update:formData", val);
+        this.$emit("update:formData", { ...val });
       },
       deep: true,
     },
