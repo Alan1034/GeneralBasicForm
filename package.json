@@ -47,6 +47,9 @@
     "vue-router": ">=4.2.4"
   },
   "typings": "./dist/index.d.ts",
+  "dependencies": {
+    "network-spanner": "^1.2.8"
+  },
   "module": "./dist/index.js",
   "exports": {
     ".": {
@@ -57,8 +60,5 @@
   },
   "files": [
     "/dist"
-  ],
-  "dependencies": {
-    "network-spanner": "^1.2.8"
-  }
+  ]
 }
