@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-09 18:55:37
+ * @LastEditTime: 2025-01-13 15:36:33
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -244,13 +244,18 @@ export default {
   },
   methods: {
     /** 搜索按钮操作 */
-    handleQuery() {
+    handleQuery(queryParameter = {}) {
+      queryParameter.defaultPageFirst ??= true
       const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: this.defPageSize };
       const searchParams = ObjectStoreInUrl.paramsToQuery(
-        {
+        queryParameter.defaultPageFirst ? {
           ...this.$route?.query,
           ...this.queryParams,
           ...params,
+        } : {
+          ...params,
+          ...this.$route?.query,
+          ...this.queryParams,
         }
       );
       if (!this.noUrlParameters) {

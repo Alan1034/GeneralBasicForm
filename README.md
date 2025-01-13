@@ -88,6 +88,11 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 ```
 this.$refs["VGeneralBasicFormRef"].handleQuery() //搜索时page和limit会传默认值1和10
 ```
+URL参数优先搜索
+
+```
+this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false }) //搜索时page和limit会优先使用URL上的参数，保证页面前进后退和刷新时分页不切换
+```
 
 重置
 
