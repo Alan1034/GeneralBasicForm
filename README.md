@@ -135,7 +135,7 @@ this.$refs['GeneralBasicFormRef'].resetQuery()
             const params = VGeneralBasicFormRef.value['queryParams']
             resolve(params)
           } else {
-            resolve(false)
+            reject()
           }
         }
       )
