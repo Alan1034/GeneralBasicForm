@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-13 15:36:33
+ * @LastEditTime: 2025-01-23 19:40:01
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -70,6 +70,9 @@
 <script>
 import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
 import { ObjectStoreInUrl } from "network-spanner"
+import { Schemas, HandleTable } from "general-basic-indexdb"
+const { handleData, getData } = HandleTable
+const { formSchema } = Schemas
 export default {
   name: "GeneralBasicForm",
   components: {
@@ -120,10 +123,10 @@ export default {
       type: String,
       default: "90px",
     },
-    noUrlParameters: {
+    parametersType: {
       // 不接受和不改变url的参数
-      type: Boolean,
-      default: () => false,
+      type: String,
+      default: () => "url",
     },
     formData: {
       // 外部传入的表单数据，用于回填
@@ -154,9 +157,7 @@ export default {
   },
   data() {
     return {
-      queryParams: {
-        ...(this.noUrlParameters ? {} : ObjectStoreInUrl.queryToData(this.$route?.query)),
-      }, // form表单数据
+      queryParams: this.initQueryParams(), // form表单数据
       formLoading: this.loading || false,
       selectSetting: {
         placeholder: "请选择",
@@ -244,25 +245,42 @@ export default {
   },
   methods: {
     /** 搜索按钮操作 */
-    handleQuery(queryParameter = {}) {
+    async handleQuery(queryParameter = {}) {
       queryParameter.defaultPageFirst ??= true
-      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: this.defPageSize };
-      const searchParams = ObjectStoreInUrl.paramsToQuery(
-        queryParameter.defaultPageFirst ? {
-          ...this.$route?.query,
-          ...this.queryParams,
-          ...params,
-        } : {
-          ...params,
-          ...this.$route?.query,
-          ...this.queryParams,
-        }
-      );
-      if (!this.noUrlParameters) {
-        this.$router.push({
-          query: { ...searchParams },
-        });
+      const params = { [this.currentPageKey]: this.defCurrentPage };
+      let searchParams = {
+        ...params,
+        ...this.queryParams,
       }
+
+      if (this.parametersType === "url") {
+        searchParams = {
+          ...ObjectStoreInUrl.queryToData(this.$route?.query),
+          ...searchParams,
+        }
+      }
+
+      if (this.parametersType === "indexDB") {
+        const DBParams = await getData(
+          {
+            tableName: "formParams",
+            propertiesKey: "queryParams",
+            primaryKey: "default",
+            mapDB: formSchema
+          }
+        )
+        searchParams = {
+          ...DBParams,
+          ...searchParams,
+        }
+      }
+      if (queryParameter.defaultPageFirst) {
+        searchParams = {
+          ...searchParams,
+          ...params,
+        }
+      }
+      await this.saveParams(searchParams)
       this.getList({
         ...searchParams,
       });
@@ -271,16 +289,47 @@ export default {
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { [this.currentPageKey]: this.defCurrentPage };
-      if (!this.noUrlParameters) {
-        await this.$router.push({
-          query: { ...params },
-        });
-      }
-      this.queryParams = {
-        ...(this.noUrlParameters ? {} : ObjectStoreInUrl.queryToData(this.$route?.query)),
-      };
+      await this.saveParams(params)
       this.afterReset();
       this.handleQuery();
+    },
+    async initQueryParams() {
+      let queryParams = {
+        [this.pageSizeKey]: this.defPageSize
+      }
+      if (this.parametersType === "url") {
+        queryParams = { ...queryParams, ...ObjectStoreInUrl.queryToData(this.$route?.query) }
+      }
+      if (this.parametersType === "indexDB") {
+        const DBParams = await getData(
+          {
+            tableName: "formParams",
+            propertiesKey: "queryParams",
+            primaryKey: "default",
+            mapDB: formSchema
+          }
+        )
+        this.queryParams = { ...queryParams, ...DBParams }
+      }
+      return queryParams
+    },
+    async saveParams(params) {
+      if (this.parametersType === "url") {
+        await this.$router.push({
+          query: ObjectStoreInUrl.paramsToQuery({ ...params }),
+        });
+      }
+      if (this.parametersType === "indexDB") {
+        await handleData({
+          tableName: "formParams",
+          propertiesKey: "queryParams",
+          parameter: { ...params },
+          primaryKey: "default",
+          mapDB: formSchema
+        })
+      }
+      this.queryParams = { ...params };
+      return
     },
     currentInputComponent() {
       return "input-archive";

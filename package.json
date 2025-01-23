@@ -2,7 +2,7 @@
   "name": "general-basic-form",
   "version": "1.1.4",
   "description": "",
-  "main": "./dist/index.umd.cjs",
+  "main": "./src/index.ts",
   "type": "module",
   "scripts": {
     "build": "cross-env CURRENT_ENV=prod run-p type-check && run-p build-only",
@@ -51,20 +51,8 @@
   "peerDependencies": {
     "vue": "^2.7.0-0"
   },
-  "typings": "./dist/index.d.ts",
+  "typings": "./publish/index.d.ts",
   "dependencies": {
     "network-spanner": "^1.2.8"
-  },
-  "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./style": "./dist/style.css"
-  },
-  "files": [
-    "/dist"
-  ]
+  }
 }
