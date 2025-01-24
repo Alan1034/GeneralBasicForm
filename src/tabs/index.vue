@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-01-07 09:43:47
- * @LastEditTime: 2025-01-07 09:44:12
+ * @LastEditTime: 2025-01-24 16:46:04
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -31,10 +31,9 @@ export default {
       type: Array,
       default: () => [],
     },
-    noUrlParameters: {
-      // 不接受和不改变url的参数
-      type: Boolean,
-      default: () => false,
+    parametersType: {
+      type: String,
+      default: "url",
     },
     activeNameKey: {
       type: String,
@@ -89,7 +88,7 @@ export default {
         activeName = this.tabPanes[0]?.name
       }
       const urlActiveName = ObjectStoreInUrl.queryToData(Number(this.$route?.query[this.activeNameKey]))
-      if (!this.noUrlParameters && urlActiveName) {
+      if (this.parametersType === "url" && urlActiveName) {
         activeName = urlActiveName
       }
       if (this.defActiveName) {

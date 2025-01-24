@@ -60,7 +60,7 @@ import 'general-basic-form/style'
         :formData.sync: {
           // 外部传入的表单数据，用于回填
         }
-        noUrlParameters
+        parametersType="data"
         :afterReset="afterReset"
         v-model:loading="loading"
       />
@@ -628,7 +628,7 @@ import {  VTabs } from "general-basic-form";
 
 ```
 tabPanes:[],// 定义标签页的数据
-noUrlParameters:false,// 不接受和不改变url的参数
+parametersType:"url" // 见parametersType类型介绍
 activeNameKey:"activeName",//保存标签页的字段KEY
 defActiveName:null,//标签页的选中值
 getList:()=>{},// 查找数据调用的函数

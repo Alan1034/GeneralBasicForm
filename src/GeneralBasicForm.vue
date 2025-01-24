@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-23 19:40:01
+ * @LastEditTime: 2025-01-24 17:30:04
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -70,6 +70,7 @@
 <script>
 import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
 import { ObjectStoreInUrl } from "network-spanner"
+import { saveParamsByType, makeParamsByType } from "./utils/handle-data"
 import { Schemas, HandleTable } from "general-basic-indexdb"
 const { handleData, getData } = HandleTable
 const { formSchema } = Schemas
@@ -124,9 +125,8 @@ export default {
       default: "90px",
     },
     parametersType: {
-      // 不接受和不改变url的参数
       type: String,
-      default: () => "url",
+      default: "url",
     },
     formData: {
       // 外部传入的表单数据，用于回填
@@ -205,7 +205,7 @@ export default {
             ...val,
           };
         }
-        // console.log(this.queryParams);
+
       },
       // watch 默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
       // https://cn.vuejs.org/guide/essentials/watchers.html#deep-watchers
@@ -214,6 +214,7 @@ export default {
     },
     queryParams: {
       handler(val) {
+        console.log("update:formData", val);
         this.$emit("update:formData", { ...val });
       },
       deep: true,
@@ -252,35 +253,17 @@ export default {
         ...params,
         ...this.queryParams,
       }
-
-      if (this.parametersType === "url") {
-        searchParams = {
-          ...ObjectStoreInUrl.queryToData(this.$route?.query),
-          ...searchParams,
-        }
-      }
-
-      if (this.parametersType === "indexDB") {
-        const DBParams = await getData(
-          {
-            tableName: "formParams",
-            propertiesKey: "queryParams",
-            primaryKey: "default",
-            mapDB: formSchema
-          }
-        )
-        searchParams = {
-          ...DBParams,
-          ...searchParams,
-        }
-      }
+      console.log(this.queryParams, "this.queryParams")
+      console.log(searchParams, "searchParams")
+      searchParams = await makeParamsByType(searchParams, this)
+      console.log(searchParams, "searchParamsNew")
       if (queryParameter.defaultPageFirst) {
         searchParams = {
           ...searchParams,
           ...params,
         }
       }
-      await this.saveParams(searchParams)
+      await saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
@@ -289,7 +272,8 @@ export default {
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { [this.currentPageKey]: this.defCurrentPage };
-      await this.saveParams(params)
+      await saveParamsByType(params, this)
+      this.queryParams = { ...params };
       this.afterReset();
       this.handleQuery();
     },
@@ -304,7 +288,7 @@ export default {
         const DBParams = await getData(
           {
             tableName: "formParams",
-            propertiesKey: "queryParams",
+            propertiesKey: this.$route.path || "defQueryParams",
             primaryKey: "default",
             mapDB: formSchema
           }
@@ -312,24 +296,6 @@ export default {
         this.queryParams = { ...queryParams, ...DBParams }
       }
       return queryParams
-    },
-    async saveParams(params) {
-      if (this.parametersType === "url") {
-        await this.$router.push({
-          query: ObjectStoreInUrl.paramsToQuery({ ...params }),
-        });
-      }
-      if (this.parametersType === "indexDB") {
-        await handleData({
-          tableName: "formParams",
-          propertiesKey: "queryParams",
-          parameter: { ...params },
-          primaryKey: "default",
-          mapDB: formSchema
-        })
-      }
-      this.queryParams = { ...params };
-      return
     },
     currentInputComponent() {
       return "input-archive";

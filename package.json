@@ -22,6 +22,7 @@
     "vue",
     "vue2",
     "vue3",
+    "vue-router",
     "element-plus",
     "element",
     "typescript"
