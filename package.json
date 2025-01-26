@@ -54,6 +54,7 @@
   },
   "typings": "./publish/index.d.ts",
   "dependencies": {
+    "general-basic-indexdb": "^1.0.1",
     "network-spanner": "^1.2.8"
   }
 }
