@@ -219,7 +219,6 @@ export default {
     },
     queryParams: {
       handler(val) {
-        console.log("update:formData", val);
         this.$emit("update:formData", { ...val });
       },
       deep: true,
@@ -258,10 +257,7 @@ export default {
         ...params,
         ...this.queryParams,
       }
-      console.log(this.queryParams, "this.queryParams")
-      console.log(searchParams, "searchParams")
       searchParams = await makeParamsByType(searchParams, this)
-      console.log(searchParams, "searchParamsNew")
       if (queryParameter.defaultPageFirst) {
         searchParams = {
           ...searchParams,
