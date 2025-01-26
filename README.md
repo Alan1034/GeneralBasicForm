@@ -127,17 +127,30 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
 
+parametersType类型介绍
+
+| parametersType形式 | 支持页面刷新 | 参数改变引起路由跳转 | 组件间共享数据 | 存储上限 | 浏览器兼容性 |
+| ------------------ | ------------ | -------------------- | -------------- | -------- | ------------ |
+| url                | 是           | 是                   | 是             | 中       | 高           |
+| data               | 否           | 否                   | 否             | 高       | 高           |
+| indexDB            | 是           | 否                   | 是             | 高       | 中           |
+
 数据示例:
 
     showSearch: true, // 显示搜索条件
     getList(); // 请求数据的函数
     afterReset(); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
-    noUrlParameters:true // 不接受和不改变url的参数
+    parametersType:"url" // 见parametersType类型介绍
     loading:false // 加载动画
     formData:{} // 注意，因为可能出现的性能问题在组件watch formData的变化时没有使用deep，所以有时候深度的修改会不生效，导致表单数据不完整
     noInputBlank: true //校验input框不能仅输入空格
     //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
+    currentPageKey:"page", //当前页数key
+    pageSizeKey:"limit", //每页显示个数选择器的选项设置
+    defCurrentPage:1, //默认的页数
+    defPageSize：10, //默认的每页显示个数
+    queryWhenReady:false,//初始化完成后自动触发查找数据函数，建议用这个this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false })
     formItem: [
     	{
           label: '',
