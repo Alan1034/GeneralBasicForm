@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2025-01-26 10:40:25
+ * @LastEditTime: 2025-01-26 10:41:37
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -215,18 +215,21 @@ export default defineComponent({
   },
   methods: {
     /** 搜索按钮操作 */
-    handleQuery() {
-      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: this.defPageSize };
-      const searchParams = ObjectStoreInUrl.paramsToQuery({
-        ...this.$route?.query,
-        ...this.queryParams,
+    async handleQuery(queryParameter = {}) {
+      queryParameter.defaultPageFirst ??= true
+      const params = { [this.currentPageKey]: this.defCurrentPage };
+      let searchParams = {
         ...params,
-      });
-      if (!this.noUrlParameters) {
-        this.$router.push({
-          query: { ...searchParams },
-        });
+        ...this.queryParams,
       }
+      searchParams = await makeParamsByType(searchParams, this)
+      if (queryParameter.defaultPageFirst) {
+        searchParams = {
+          ...searchParams,
+          ...params,
+        }
+      }
+      await saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
@@ -235,16 +238,33 @@ export default defineComponent({
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { [this.currentPageKey]: this.defCurrentPage };
-      if (!this.noUrlParameters) {
-        await this.$router.push({
-          query: { ...params },
-        });
-      }
-      this.queryParams = {
-        ...(this.noUrlParameters ? {} : this.$route?.query),
-      };
+      await saveParamsByType(params, this)
+      this.queryParams = { ...params };
       this.afterReset();
       this.handleQuery();
+    },
+    async initQueryParams() {
+      let queryParams = {
+        [this.pageSizeKey]: this.defPageSize
+      }
+      if (this.parametersType === "url") {
+        queryParams = { ...queryParams, ...ObjectStoreInUrl.queryToData(this.$route?.query) }
+      }
+      if (this.parametersType === "indexDB") {
+        const DBParams = await getData(
+          {
+            tableName: "formParams",
+            propertiesKey: this.$route.path || "defQueryParams",
+            primaryKey: "default",
+            mapDB: formSchema
+          }
+        )
+        this.queryParams = { ...queryParams, ...DBParams }
+      }
+      if (this.queryWhenReady) {
+        this.handleQuery({ defaultPageFirst: false })
+      }
+      return queryParams
     },
     getItemRules(item: any) {
       const { type, rules = [] } = item;
