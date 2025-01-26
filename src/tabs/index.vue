@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-01-07 09:43:47
- * @LastEditTime: 2025-01-26 10:23:04
+ * @LastEditTime: 2025-01-26 15:39:44
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -18,7 +18,7 @@
 </template>
 <script>
 import { ObjectStoreInUrl } from "network-spanner"
-import { saveParamsByType, makeParamsByType } from "../utils/handle-data"
+import HandleData from "../utils/handle-data";
 import { Schemas, HandleTable } from "general-basic-indexdb"
 const { getData } = HandleTable
 const { formSchema } = Schemas
@@ -71,10 +71,10 @@ export default {
   methods: {
     async handleClick(tab, event) {
       // console.log(tab, event);
-      const searchParams = await makeParamsByType({
+      const searchParams = await HandleData.makeParamsByType({
         [this.activeNameKey]: this.activeName,
       }, this)
-      await saveParamsByType(searchParams, this)
+      await HandleData.saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });

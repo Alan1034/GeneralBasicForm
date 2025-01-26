@@ -70,7 +70,7 @@
 <script>
 import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
 import { ObjectStoreInUrl } from "network-spanner"
-import { saveParamsByType, makeParamsByType } from "./utils/handle-data"
+import HandleData from "./utils/handle-data";
 import { Schemas, HandleTable } from "general-basic-indexdb"
 const {  getData } = HandleTable
 const { formSchema } = Schemas
@@ -257,14 +257,14 @@ export default {
         ...params,
         ...this.queryParams,
       }
-      searchParams = await makeParamsByType(searchParams, this)
+      searchParams = await HandleData.makeParamsByType(searchParams, this)
       if (queryParameter.defaultPageFirst) {
         searchParams = {
           ...searchParams,
           ...params,
         }
       }
-      await saveParamsByType(searchParams, this)
+      await HandleData.saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
@@ -273,7 +273,7 @@ export default {
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { [this.currentPageKey]: this.defCurrentPage };
-      await saveParamsByType(params, this)
+      await HandleData.saveParamsByType(params, this)
       this.queryParams = { ...params };
       this.afterReset();
       this.handleQuery();

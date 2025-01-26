@@ -4,8 +4,7 @@ import { Schemas, HandleTable } from "general-basic-indexdb";
 const { handleData, getData } = HandleTable;
 const { formSchema } = Schemas;
 
-
-export const makeParamsByType = async (params, vm) => {
+const makeParamsByType = async (params, vm) => {
   if (vm.parametersType === "url") {
     params = {
       ...ObjectStoreInUrl.queryToData(vm.$route?.query),
@@ -25,11 +24,10 @@ export const makeParamsByType = async (params, vm) => {
       ...params,
     };
   }
-  console.log(params)
   return params;
 };
 
-export const saveParamsByType = async (params, vm) => {
+const saveParamsByType = async (params, vm) => {
   if (vm.parametersType === "url") {
     await vm.$router.push({
       query: ObjectStoreInUrl.paramsToQuery({ ...params }),
@@ -45,4 +43,9 @@ export const saveParamsByType = async (params, vm) => {
     });
   }
   return;
+};
+
+export default {
+  makeParamsByType,
+  saveParamsByType,
 };
