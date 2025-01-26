@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2025-01-26 10:41:37
+ * @LastEditTime: 2025-01-26 10:53:12
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -52,6 +52,10 @@ import Select from "./components/VBasic/select/index.vue";
 import Cascader from "./components/VBasic/cascader/index.vue";
 import { formLoadingKey } from "./injectKey";
 import { ObjectStoreInUrl } from "network-spanner"
+import { saveParamsByType, makeParamsByType } from "./utils/handle-data"
+import { Schemas, HandleTable } from "general-basic-indexdb"
+const {  getData } = HandleTable
+const { formSchema } = Schemas
 export default defineComponent({
   name: "GeneralBasicForm",
   components: {
@@ -138,20 +142,22 @@ export default defineComponent({
       type: Number,
       default: 10,
     },
+    queryWhenReady: {
+      // 初始化完成后自动触发查找数据函数
+      type: Boolean,
+      default: () => false,
+    }
   },
   data() {
     return {
       formLoading: this.loading || false,
       trimRegex: /\S/,
+      queryParams: this.initQueryParams(), // form表单数据
     };
   },
   setup(props) {
-    const { size, noUrlParameters, getList } = props;
-    const route = useRoute();
-    const queryParams = ref({
-      ...(noUrlParameters ? {} : ObjectStoreInUrl.queryToData(route?.query)),
-    }); // form表单数据
-    provide(/* 注入名 */ "queryParams", /* 值 */ queryParams);
+    const { size, getList } = props;
+    // const route = useRoute();
     provide(/* 注入名 */ "size", /* 值 */ size);
     provide(/* 注入名 */ "getList", /* 值 */ getList);
     // const { formItem } = toRefs(props);
@@ -161,9 +167,9 @@ export default defineComponent({
     // formItem.forEach((item) => {
     //   queryParams[item.prop] = "";
     // });
-    return {
-      queryParams,
-    };
+    // return {
+    //   queryParams,
+    // };
   },
   watch: {
     formData: {
@@ -211,6 +217,7 @@ export default defineComponent({
           this.formLoading = val;
         },
       },
+      queryParams:this.queryParams,
     };
   },
   methods: {
