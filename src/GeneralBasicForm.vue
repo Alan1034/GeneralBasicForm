@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-24 17:30:04
+ * @LastEditTime: 2025-01-26 10:17:24
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -72,7 +72,7 @@ import VerificationButton from "./components/VBasic/input-mobile-verification/ve
 import { ObjectStoreInUrl } from "network-spanner"
 import { saveParamsByType, makeParamsByType } from "./utils/handle-data"
 import { Schemas, HandleTable } from "general-basic-indexdb"
-const { handleData, getData } = HandleTable
+const {  getData } = HandleTable
 const { formSchema } = Schemas
 export default {
   name: "GeneralBasicForm",
@@ -154,6 +154,11 @@ export default {
       type: Number,
       default: 10,
     },
+    queryWhenReady: {
+      // 初始化完成后自动触发查找数据函数
+      type: Boolean,
+      default: () => false,
+    }
   },
   data() {
     return {
@@ -199,7 +204,7 @@ export default {
   watch: {
     formData: {
       handler(val, oldVal) {
-        if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
+        if (JSON.stringify(val) !== JSON.stringify(this.queryParams)) {
           this.queryParams = {
             ...this.queryParams,
             ...val,
@@ -210,7 +215,7 @@ export default {
       // watch 默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
       // https://cn.vuejs.org/guide/essentials/watchers.html#deep-watchers
       immediate: true,
-      // deep: true,
+      deep: true,
     },
     queryParams: {
       handler(val) {
@@ -294,6 +299,9 @@ export default {
           }
         )
         this.queryParams = { ...queryParams, ...DBParams }
+      }
+      if (this.queryWhenReady) {
+        this.handleQuery({ defaultPageFirst: false })
       }
       return queryParams
     },

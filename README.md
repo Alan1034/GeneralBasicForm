@@ -166,6 +166,7 @@ parametersType类型介绍
     pageSizeKey:"limit", //每页显示个数选择器的选项设置
     defCurrentPage:1, //默认的页数
     defPageSize：10, //默认的每页显示个数
+    queryWhenReady:false,//初始化完成后自动触发查找数据函数，建议用这个this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false })
     formItem: [
     	{
           label: '',

@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-01-07 09:43:47
- * @LastEditTime: 2025-01-24 16:46:04
+ * @LastEditTime: 2025-01-26 10:23:04
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -18,6 +18,10 @@
 </template>
 <script>
 import { ObjectStoreInUrl } from "network-spanner"
+import { saveParamsByType, makeParamsByType } from "../utils/handle-data"
+import { Schemas, HandleTable } from "general-basic-indexdb"
+const { getData } = HandleTable
+const { formSchema } = Schemas
 export default {
   name: "VTabs",
   data() {
@@ -51,7 +55,7 @@ export default {
   watch: {
     defActiveName: {
       handler(val, oldVal) {
-        if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
+        if (JSON.stringify(val) !== JSON.stringify(this.activeName)) {
           this.activeName = val;
         }
         // console.log(this.queryParams);
@@ -65,24 +69,17 @@ export default {
     }
   },
   methods: {
-    handleClick(tab, event) {
+    async handleClick(tab, event) {
       // console.log(tab, event);
-      const searchParams = ObjectStoreInUrl.paramsToQuery(
-        {
-          ...this.$route?.query,
-          [this.activeNameKey]: this.activeName,
-        }
-      );
-      if (!this.noUrlParameters) {
-        this.$router.push({
-          query: { ...searchParams },
-        });
-      }
+      const searchParams = await makeParamsByType({
+        [this.activeNameKey]: this.activeName,
+      }, this)
+      await saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
     },
-    activeNameInit() {
+    async activeNameInit() {
       let activeName = ''
       if (this.tabPanes[0]?.name) {
         activeName = this.tabPanes[0]?.name
@@ -90,6 +87,17 @@ export default {
       const urlActiveName = ObjectStoreInUrl.queryToData(Number(this.$route?.query[this.activeNameKey]))
       if (this.parametersType === "url" && urlActiveName) {
         activeName = urlActiveName
+      }
+      if (this.parametersType === "indexDB") {
+        const DBParams = await getData(
+          {
+            tableName: "formParams",
+            propertiesKey: this.$route.path || "defQueryParams",
+            primaryKey: "default",
+            mapDB: formSchema
+          }
+        )
+        this.activeName = DBParams?.[this.activeNameKey]
       }
       if (this.defActiveName) {
         activeName = this.defActiveName
