@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2025-01-26 10:53:12
+ * @LastEditTime: 2025-01-26 10:56:27
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -111,10 +111,9 @@ export default defineComponent({
       type: String,
       default: "90px",
     },
-    noUrlParameters: {
-      // 不接受和不改变url的参数
-      type: Boolean,
-      default: () => false,
+    parametersType: {
+      type: String,
+      default: "url",
     },
     formData: {
       // 外部传入的表单数据，用于回填
