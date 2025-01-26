@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2025-01-02 18:53:28
+ * @LastEditTime: 2025-01-26 10:40:25
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -168,7 +168,7 @@ export default defineComponent({
   watch: {
     formData: {
       handler(val, oldVal) {
-        if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
+        if (JSON.stringify(val) !== JSON.stringify(this.queryParams)) {
           this.queryParams = {
             ...this.queryParams,
             ...val,
@@ -179,7 +179,7 @@ export default defineComponent({
       // watch 默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
       // https://cn.vuejs.org/guide/essentials/watchers.html#deep-watchers
       immediate: true,
-      // deep: true,
+      deep: true,
     },
     queryParams: {
       handler(val) {
