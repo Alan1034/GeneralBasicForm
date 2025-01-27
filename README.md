@@ -145,11 +145,11 @@ this.$refs['GeneralBasicFormRef'].resetQuery()
 
 parametersType类型介绍
 
-| parametersType形式 | 支持页面刷新 | 参数改变引起路由跳转 | 组件间共享数据 | 存储上限 | 浏览器兼容性 |
-| ------------------ | ------------ | -------------------- | -------------- | -------- | ------------ |
-| url                | 是           | 是                   | 是             | 中       | 高           |
-| data               | 否           | 否                   | 否             | 高       | 高           |
-| indexDB            | 是           | 否                   | 是             | 高       | 中           |
+| parametersType形式 | 支持页面刷新 | 参数改变引起路由跳转 | 组件间共享数据 | 存储上限 | 支持区分不同用户和路由 | 浏览器兼容性 |
+| ------------------ | ------------ | -------------------- | -------------- | -------- | ---------------------- | ------------ |
+| url                | 是           | 是                   | 是             | 中       | 否                     | 高           |
+| data               | 否           | 否                   | 否             | 高       | 否                     | 高           |
+| indexDB            | 是           | 否                   | 是             | 高       | 是                     | 中           |
 
 数据示例:
 
@@ -158,6 +158,7 @@ parametersType类型介绍
     afterReset(); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
     parametersType:"url" // 见parametersType类型介绍
+    DBPrimaryKey：//[String, Number] indexDB的primaryKey，一般配合parametersType==="indexDB"使用
     loading:false // 加载动画
     formData:{} // 注意，因为可能出现的性能问题在组件watch formData的变化时没有使用deep，所以有时候深度的修改会不生效，导致表单数据不完整
     noInputBlank: true //校验input框不能仅输入空格
@@ -166,7 +167,7 @@ parametersType类型介绍
     pageSizeKey:"limit", //每页显示个数选择器的选项设置
     defCurrentPage:1, //默认的页数
     defPageSize：10, //默认的每页显示个数
-    queryWhenReady:false,//初始化完成后自动触发查找数据函数，建议用这个this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false })
+    queryWhenReady:false,//初始化完成后自动触发查找数据函数，建议用这个代替this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false })
     formItem: [
     	{
           label: '',
@@ -630,6 +631,7 @@ import {  VTabs } from "general-basic-form";
 ```
 tabPanes:[],// 定义标签页的数据
 parametersType:"url" // 见parametersType类型介绍
+DBPrimaryKey：//[String, Number] indexDB的primaryKey，一般配合parametersType==="indexDB"使用
 activeNameKey:"activeName",//保存标签页的字段KEY
 defActiveName:null,//标签页的选中值
 getList:()=>{},// 查找数据调用的函数

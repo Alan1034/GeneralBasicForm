@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-26 10:17:24
+ * @LastEditTime: 2025-01-27 15:32:59
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -69,8 +69,7 @@
 
 <script>
 import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
-import { ObjectStoreInUrl } from "network-spanner"
-import HandleData from "./utils/handle-data";
+import { ObjectStoreInUrl,HandleParamsData } from "network-spanner"
 import { Schemas, HandleTable } from "general-basic-indexdb"
 const {  getData } = HandleTable
 const { formSchema } = Schemas
@@ -128,6 +127,11 @@ export default {
       type: String,
       default: "url",
     },
+    DBPrimaryKey: {
+      // indexDB的primaryKey，一般配合parametersType==="indexDB"使用
+      type: [String, Number],
+      required:false,
+    },
     formData: {
       // 外部传入的表单数据，用于回填
       type: Object,
@@ -158,7 +162,8 @@ export default {
       // 初始化完成后自动触发查找数据函数
       type: Boolean,
       default: () => false,
-    }
+    },
+
   },
   data() {
     return {
@@ -257,14 +262,14 @@ export default {
         ...params,
         ...this.queryParams,
       }
-      searchParams = await HandleData.makeParamsByType(searchParams, this)
+      searchParams = await HandleParamsData.makeParamsByType(searchParams, this)
       if (queryParameter.defaultPageFirst) {
         searchParams = {
           ...searchParams,
           ...params,
         }
       }
-      await HandleData.saveParamsByType(searchParams, this)
+      await HandleParamsData.saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
@@ -273,12 +278,12 @@ export default {
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
       const params = { [this.currentPageKey]: this.defCurrentPage };
-      await HandleData.saveParamsByType(params, this)
+      await HandleParamsData.saveParamsByType(params, this)
       this.queryParams = { ...params };
       this.afterReset();
       this.handleQuery();
     },
-    async initQueryParams() {
+     initQueryParams() {
       let queryParams = {
         [this.pageSizeKey]: this.defPageSize
       }
@@ -286,18 +291,24 @@ export default {
         queryParams = { ...queryParams, ...ObjectStoreInUrl.queryToData(this.$route?.query) }
       }
       if (this.parametersType === "indexDB") {
-        const DBParams = await getData(
+         getData(
           {
             tableName: "formParams",
             propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey: "default",
+            primaryKey: this.DBPrimaryKey|| "default",
             mapDB: formSchema
+          },(DBParams)=>{
+            this.queryParams = { ...queryParams, ...DBParams }
           }
         )
-        this.queryParams = { ...queryParams, ...DBParams }
+        
       }
       if (this.queryWhenReady) {
-        this.handleQuery({ defaultPageFirst: false })
+        // console.log({...this.queryParams},"queryParams")
+        this.$nextTick(()=>{
+          // console.log({...this.queryParams},"queryParams112")
+          this.handleQuery({ defaultPageFirst: false })
+        })
       }
       return queryParams
     },

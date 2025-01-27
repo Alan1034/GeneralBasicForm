@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-01-07 09:43:47
- * @LastEditTime: 2025-01-26 15:39:44
+ * @LastEditTime: 2025-01-27 15:21:39
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -17,11 +17,11 @@
   </el-tabs>
 </template>
 <script>
-import { ObjectStoreInUrl } from "network-spanner"
-import HandleData from "../utils/handle-data";
+import { ObjectStoreInUrl,HandleParamsData } from "network-spanner"
 import { Schemas, HandleTable } from "general-basic-indexdb"
 const { getData } = HandleTable
 const { formSchema } = Schemas
+
 export default {
   name: "VTabs",
   data() {
@@ -38,6 +38,11 @@ export default {
     parametersType: {
       type: String,
       default: "url",
+    },
+    DBPrimaryKey: {
+      // indexDB的primaryKey，一般配合parametersType==="indexDB"使用
+      type: [String, Number],
+      required:false,
     },
     activeNameKey: {
       type: String,
@@ -71,15 +76,15 @@ export default {
   methods: {
     async handleClick(tab, event) {
       // console.log(tab, event);
-      const searchParams = await HandleData.makeParamsByType({
+      const searchParams = await HandleParamsData.makeParamsByType({
         [this.activeNameKey]: this.activeName,
       }, this)
-      await HandleData.saveParamsByType(searchParams, this)
+      await HandleParamsData.saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
     },
-    async activeNameInit() {
+    activeNameInit() {
       let activeName = ''
       if (this.tabPanes[0]?.name) {
         activeName = this.tabPanes[0]?.name
@@ -89,15 +94,17 @@ export default {
         activeName = urlActiveName
       }
       if (this.parametersType === "indexDB") {
-        const DBParams = await getData(
+        getData(
           {
             tableName: "formParams",
             propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey: "default",
+            primaryKey:this.DBPrimaryKey|| "default",
             mapDB: formSchema
+          },(DBParams)=>{
+            this.activeName = DBParams?.[this.activeNameKey]
           }
         )
-        this.activeName = DBParams?.[this.activeNameKey]
+        
       }
       if (this.defActiveName) {
         activeName = this.defActiveName

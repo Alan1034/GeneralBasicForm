@@ -28,9 +28,3 @@ export const VTreeTransfer = TreeTransfer;
 import Tabs from "./tabs/index.vue";
 
 export const VTabs = Tabs;
-
-import utilsFunc from "./utils/handle-data";
-
-export const utils = {
-  ...utilsFunc,
-};
