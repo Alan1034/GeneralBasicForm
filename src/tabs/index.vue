@@ -17,7 +17,7 @@
   </el-tabs>
 </template>
 <script>
-import { ObjectStoreInUrl,HandleParamsData } from "network-spanner"
+import { ObjectStoreInUrl, HandleParamsData } from "network-spanner"
 import { Schemas, HandleTable } from "general-basic-indexdb"
 const { getData } = HandleTable
 const { formSchema } = Schemas
@@ -42,7 +42,7 @@ export default {
     DBPrimaryKey: {
       // indexDB的primaryKey，一般配合parametersType==="indexDB"使用
       type: [String, Number],
-      required:false,
+      required: false,
     },
     activeNameKey: {
       type: String,
@@ -98,13 +98,14 @@ export default {
           {
             tableName: "formParams",
             propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey:this.DBPrimaryKey|| "default",
+            primaryKey: this.DBPrimaryKey || "default",
             mapDB: formSchema
-          },(DBParams)=>{
+          }, (DBParams) => {
+            if (!DBParams?.[this.activeNameKey]) { return }
             this.activeName = DBParams?.[this.activeNameKey]
           }
         )
-        
+
       }
       if (this.defActiveName) {
         activeName = this.defActiveName
