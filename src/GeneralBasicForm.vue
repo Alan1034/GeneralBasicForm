@@ -69,9 +69,9 @@
 
 <script>
 import VerificationButton from "./components/VBasic/input-mobile-verification/verification-button.vue";
-import { ObjectStoreInUrl,HandleParamsData } from "network-spanner"
+import { ObjectStoreInUrl, HandleParamsData } from "network-spanner"
 import { Schemas, HandleTable } from "general-basic-indexdb"
-const {  getData } = HandleTable
+const { getData } = HandleTable
 const { formSchema } = Schemas
 export default {
   name: "GeneralBasicForm",
@@ -130,7 +130,7 @@ export default {
     DBPrimaryKey: {
       // indexDB的primaryKey，一般配合parametersType==="indexDB"使用
       type: [String, Number],
-      required:false,
+      required: false,
     },
     formData: {
       // 外部传入的表单数据，用于回填
@@ -283,7 +283,7 @@ export default {
       this.afterReset();
       this.handleQuery();
     },
-     initQueryParams() {
+    initQueryParams() {
       let queryParams = {
         [this.pageSizeKey]: this.defPageSize
       }
@@ -291,22 +291,22 @@ export default {
         queryParams = { ...queryParams, ...ObjectStoreInUrl.queryToData(this.$route?.query) }
       }
       if (this.parametersType === "indexDB") {
-         getData(
+        getData(
           {
             tableName: "formParams",
             propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey: this.DBPrimaryKey|| "default",
+            primaryKey: this.DBPrimaryKey || "default",
             mapDB: formSchema
-          },(DBParams)=>{
+          }, (DBParams) => {
             this.queryParams = { ...queryParams, ...DBParams }
           }
         )
-        
+
       }
       if (this.queryWhenReady) {
-        // console.log({...this.queryParams},"queryParams")
-        this.$nextTick(()=>{
-          // console.log({...this.queryParams},"queryParams112")
+        // console.log({ ...this.queryParams }, "queryParams")
+        this.$nextTick(() => {
+          // console.log({ ...this.queryParams }, "queryParams112")
           this.handleQuery({ defaultPageFirst: false })
         })
       }
