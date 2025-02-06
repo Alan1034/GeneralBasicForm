@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-02-06 17:23:24
+ * @LastEditTime: 2025-02-06 18:58:13
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -277,7 +277,8 @@ export default {
     /** 重置按钮操作 */
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
-      const params = { [this.currentPageKey]: this.defCurrentPage };
+      const DBParams = await HandleParamsData.makeParamsByType({}, this)
+      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: DBParams?.[this.pageSizeKey] || this.defPageSize };
       await HandleParamsData.saveParamsByType(params, this)
       this.queryParams = { ...params };
       this.afterReset();
