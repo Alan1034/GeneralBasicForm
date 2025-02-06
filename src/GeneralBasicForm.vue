@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-01-27 15:32:59
+ * @LastEditTime: 2025-02-06 17:23:24
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -300,11 +300,16 @@ export default {
           }, (DBParams) => {
             if (!DBParams) { return }
             this.queryParams = { ...queryParams, ...DBParams }
+            if (this.queryWhenReady) {
+              this.$nextTick(() => {
+                this.handleQuery({ defaultPageFirst: false })
+              })
+            }
           }
         )
 
       }
-      if (this.queryWhenReady) {
+      if (this.queryWhenReady && this.parametersType !== "indexDB") {
         // console.log({ ...this.queryParams }, "queryParams")
         this.$nextTick(() => {
           // console.log({ ...this.queryParams }, "queryParams112")
