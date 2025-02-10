@@ -101,8 +101,10 @@ export default {
             primaryKey: this.DBPrimaryKey || "default",
             mapDB: formSchema
           }, (DBParams) => {
-            if (!DBParams?.[this.activeNameKey]) { return }
-            this.activeName = DBParams?.[this.activeNameKey]
+            const activeName = DBParams?.[this.activeNameKey]
+            if (activeName) {
+              this.activeName = DBParams?.[this.activeNameKey]
+            }
           }
         )
 

@@ -299,8 +299,9 @@ export default {
             primaryKey: this.DBPrimaryKey || "default",
             mapDB: formSchema
           }, (DBParams) => {
-            if (!DBParams) { return }
-            this.queryParams = { ...queryParams, ...DBParams }
+            if (DBParams) {
+              this.queryParams = { ...queryParams, ...DBParams }
+            }
             if (this.queryWhenReady) {
               this.$nextTick(() => {
                 this.handleQuery({ defaultPageFirst: false })
