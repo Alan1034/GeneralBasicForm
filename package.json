@@ -55,7 +55,7 @@
   "typings": "./dist/index.d.ts",
   "dependencies": {
     "general-basic-indexdb": "^1.0.3",
-    "network-spanner": "^1.2.11"
+    "network-spanner": "^1.2.13"
   },
   "module": "./dist/index.js",
   "exports": {

@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2024-10-21 17:12:26
+ * @LastEditTime: 2025-02-18 19:30:53
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -12,18 +12,17 @@
   <el-descriptions v-bind="attrs">
     <el-descriptions-item v-for="(item, i) in formItem" :key="item.prop" :label="item.label"
       v-bind="item.descriptionsItemProps">
-      <DescriptionsColumn v-if="item.render" :column="item" :formData="formData" />
+      <TableColumn v-if="item.render" :renderFunction="item.render" :item="formData" />
       <span v-else>{{ formData[item.prop] }}</span>
     </el-descriptions-item>
   </el-descriptions>
 </template>
 <script>
-import DescriptionsColumn from "./components/VDescriptions/DescriptionsColumn";
-
+import { TableColumn } from "network-spanner"
 export default {
   name: "Descriptions",
   components: {
-    DescriptionsColumn
+    TableColumn
   },
   data() {
     return {

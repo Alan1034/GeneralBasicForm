@@ -11,7 +11,7 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick" v-bind="$attrs">
     <el-tab-pane v-for="item in tabPanes" :key="item.name" v-bind="item">
-      {{ item.render && item.render(item) }}
+      <TableColumn v-if="item.render" :renderFunction="item.render" :item="item" />
     </el-tab-pane>
     <slot></slot>
   </el-tabs>
@@ -19,11 +19,15 @@
 <script>
 import { ObjectStoreInUrl, HandleParamsData } from "network-spanner"
 import { Schemas, HandleTable } from "general-basic-indexdb"
+import { TableColumn } from "network-spanner"
 const { getData } = HandleTable
 const { formSchema } = Schemas
 
 export default {
   name: "VTabs",
+  components: {
+    TableColumn
+  },
   data() {
     return {
       activeName: this.activeNameInit()

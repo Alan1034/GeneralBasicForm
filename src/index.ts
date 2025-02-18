@@ -13,6 +13,10 @@ import GeneralBasicForm from "./GeneralBasicForm.vue";
 
 export const VGeneralBasicForm = GeneralBasicForm;
 
+import InfiniteScrollList from "./InfiniteScrollList.vue";
+
+export const VInfiniteScrollList = InfiniteScrollList;
+
 import SearchBox from "./SearchBox.vue";
 
 export const VSearchBox = SearchBox;

@@ -6,7 +6,7 @@
 | ------------------- | ---- | ---- | ---- | ---- | ---- |
 | VGeneralBasicForm    | √    | √    |     | √   | √   |
 | VSearchBox           | √    |      |      |  | √ |
-| VInfiniteScrollList |      | √    |     | √   |     |
+| VInfiniteScrollList | √ | √    |     | √   | √ |
 | VDescriptions       | √ | √    | √ | √   | √ |
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
