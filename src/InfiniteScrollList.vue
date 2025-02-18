@@ -127,10 +127,12 @@ const loadList = async () => {
     ifbottom.value = true;
   }
   loading.value = false;
+  return
 };
-const refreshList = () => {
+const refreshList = async() => {
   lowReset();
-  loadList();
+  await loadList();
+  return
 };
 const selectInfo =
   computed(() =>
