@@ -147,7 +147,7 @@ parametersType类型介绍
     noInputBlank: true //校验input框不能仅输入空格
     //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
     currentPageKey:"page", //当前页数key
-    pageSizeKey:"limit", //每页显示个数选择器的选项设置
+    pageSizeKey:"limit", //每页显示个数key
     defCurrentPage:1, //默认的页数
     defPageSize：10, //默认的每页显示个数
     queryWhenReady:false,//初始化完成后自动触发查找数据函数，建议用这个this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false })
