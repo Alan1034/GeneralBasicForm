@@ -19,7 +19,9 @@
     "vue",
     "vue2",
     "vue3",
-    "element-plus"
+    "element-plus",
+    "element-ui",
+    "Ant Design Vue"
   ],
   "author": "chendeli419287484@qq.com",
   "license": "ISC",
