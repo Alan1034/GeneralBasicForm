@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2025-01-26 10:56:27
+ * @LastEditTime: 2025-03-09 17:08:02
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -39,7 +39,7 @@
 <script lang="ts">
 import { provide, ref, PropType, defineComponent, computed } from "vue";
 import type { ItemType } from "./types/basicFrom";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import Input from "./components/VBasic/input/index.vue";
 import InputNumber from "./components/VBasic/input-number/index.vue";
 import InputGraphicVerification from "./components/CustomCom/input-graphic-verification/index.vue";
@@ -51,10 +51,9 @@ import DatePicker from "./components/VBasic/date-picker/index.vue";
 import Select from "./components/VBasic/select/index.vue";
 import Cascader from "./components/VBasic/cascader/index.vue";
 import { formLoadingKey } from "./injectKey";
-import { ObjectStoreInUrl } from "network-spanner"
-import { saveParamsByType, makeParamsByType } from "./utils/handle-data"
+import { ObjectStoreInUrl, HandleParamsData } from "network-spanner"
 import { Schemas, HandleTable } from "general-basic-indexdb"
-const {  getData } = HandleTable
+const { getData } = HandleTable
 const { formSchema } = Schemas
 export default defineComponent({
   name: "GeneralBasicForm",
@@ -115,6 +114,11 @@ export default defineComponent({
       type: String,
       default: "url",
     },
+    DBPrimaryKey: {
+      // indexDB的primaryKey，一般配合parametersType==="indexDB"使用
+      type: [String, Number],
+      required: false,
+    },
     formData: {
       // 外部传入的表单数据，用于回填
       type: Object,
@@ -156,19 +160,8 @@ export default defineComponent({
   },
   setup(props) {
     const { size, getList } = props;
-    // const route = useRoute();
     provide(/* 注入名 */ "size", /* 值 */ size);
     provide(/* 注入名 */ "getList", /* 值 */ getList);
-    // const { formItem } = toRefs(props);
-    // const { formItem } = props;
-    // console.log(formItem);
-    // const queryParams = {};
-    // formItem.forEach((item) => {
-    //   queryParams[item.prop] = "";
-    // });
-    // return {
-    //   queryParams,
-    // };
   },
   watch: {
     formData: {
@@ -216,26 +209,26 @@ export default defineComponent({
           this.formLoading = val;
         },
       },
-      queryParams:this.queryParams,
+      queryParams: this.queryParams,
     };
   },
   methods: {
     /** 搜索按钮操作 */
-    async handleQuery(queryParameter = {}) {
+    async handleQuery(queryParameter = <any>{}) {
       queryParameter.defaultPageFirst ??= true
       const params = { [this.currentPageKey]: this.defCurrentPage };
       let searchParams = {
         ...params,
         ...this.queryParams,
       }
-      searchParams = await makeParamsByType(searchParams, this)
+      searchParams = await HandleParamsData.makeParamsByType(searchParams, this)
       if (queryParameter.defaultPageFirst) {
         searchParams = {
           ...searchParams,
           ...params,
         }
       }
-      await saveParamsByType(searchParams, this)
+      await HandleParamsData.saveParamsByType(searchParams, this)
       this.getList({
         ...searchParams,
       });
@@ -243,8 +236,9 @@ export default defineComponent({
     /** 重置按钮操作 */
     async resetQuery() {
       this.$refs.queryFormRef.resetFields();
-      const params = { [this.currentPageKey]: this.defCurrentPage };
-      await saveParamsByType(params, this)
+      const DBParams = await HandleParamsData.makeParamsByType({}, this)
+      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: DBParams?.[this.pageSizeKey] || this.defPageSize };
+      await HandleParamsData.saveParamsByType(params, this)
       this.queryParams = { ...params };
       this.afterReset();
       this.handleQuery();
@@ -261,14 +255,27 @@ export default defineComponent({
           {
             tableName: "formParams",
             propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey: "default",
+            primaryKey: this.DBPrimaryKey || "default",
             mapDB: formSchema
+          }, (DBParams) => {
+            if (DBParams) {
+              this.queryParams = { ...queryParams, ...DBParams }
+            }
+            if (this.queryWhenReady) {
+              this.$nextTick(() => {
+                this.handleQuery({ defaultPageFirst: false })
+              })
+            }
           }
         )
         this.queryParams = { ...queryParams, ...DBParams }
       }
-      if (this.queryWhenReady) {
-        this.handleQuery({ defaultPageFirst: false })
+      if (this.queryWhenReady && this.parametersType !== "indexDB") {
+        // console.log({ ...this.queryParams }, "queryParams")
+        this.$nextTick(() => {
+          // console.log({ ...this.queryParams }, "queryParams112")
+          this.handleQuery({ defaultPageFirst: false })
+        })
       }
       return queryParams
     },

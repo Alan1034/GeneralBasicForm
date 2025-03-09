@@ -2,7 +2,7 @@
   "name": "general-basic-form",
   "version": "2.0.62",
   "description": "",
-  "main": "./dist/index.umd.cjs",
+  "main": "./src/index.ts",
   "type": "module",
   "scripts": {
     "build": "cross-env CURRENT_ENV=prod run-p type-check build-only",
@@ -48,19 +48,9 @@
     "vue": ">=3.3.4",
     "vue-router": ">=4.2.4"
   },
-  "typings": "./dist/index.d.ts",
+  "typings": "./publish/index.d.ts",
   "dependencies": {
-    "network-spanner": "^1.2.8"
-  },
-  "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
-    },
-    "./style": "./dist/style.css"
-  },
-  "files": [
-    "/dist"
-  ]
+    "general-basic-indexdb": "^1.0.4",
+    "network-spanner": "^1.2.13"
+  }
 }
