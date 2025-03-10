@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-02-06 18:58:13
+ * @LastEditTime: 2025-03-10 21:20:39
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -255,34 +255,16 @@ export default {
   },
   methods: {
     /** 搜索按钮操作 */
-    async handleQuery(queryParameter = {}) {
-      queryParameter.defaultPageFirst ??= true
-      const params = { [this.currentPageKey]: this.defCurrentPage };
-      let searchParams = {
-        ...params,
-        ...this.queryParams,
-      }
-      searchParams = await HandleParamsData.makeParamsByType(searchParams, this)
-      if (queryParameter.defaultPageFirst) {
-        searchParams = {
-          ...searchParams,
-          ...params,
-        }
-      }
-      await HandleParamsData.saveParamsByType(searchParams, this)
-      this.getList({
-        ...searchParams,
-      });
+    handleQuery(queryParameter = {}) {
+      HandleParamsData.handleQuery({
+        queryParameter, vm: this
+      })
     },
     /** 重置按钮操作 */
-    async resetQuery() {
-      this.$refs.queryFormRef.resetFields();
-      const DBParams = await HandleParamsData.makeParamsByType({}, this)
-      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: DBParams?.[this.pageSizeKey] || this.defPageSize };
-      await HandleParamsData.saveParamsByType(params, this)
-      this.queryParams = { ...params };
-      this.afterReset();
-      this.handleQuery();
+    resetQuery() {
+      HandleParamsData.resetQuery({
+        vm: this
+      })
     },
     initQueryParams() {
       let queryParams = {
@@ -324,17 +306,10 @@ export default {
       return "input-archive";
     },
     getItemRules(item) {
-      const { type, rules = [] } = item;
-      const newRules = [...rules];
-      if (this.noInputBlank && type === "input") {
-        newRules.push({
-          pattern: this.trimRegex,
-          message: "请输入（不能仅输入空格）",
-          trigger: "blur",
-        });
-        return newRules;
-      }
-
+      const newRules = HandleParamsData.getItemRules({
+        item,
+        vm: this
+      })
       return newRules;
     },
     getInputSetting(item) {
