@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2021-08-20 17:14:53
- * @LastEditTime: 2025-03-09 17:08:02
+ * @LastEditTime: 2025-03-10 21:02:58
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -51,10 +51,7 @@ import DatePicker from "./components/VBasic/date-picker/index.vue";
 import Select from "./components/VBasic/select/index.vue";
 import Cascader from "./components/VBasic/cascader/index.vue";
 import { formLoadingKey } from "./injectKey";
-import { ObjectStoreInUrl, HandleParamsData } from "network-spanner"
-import { Schemas, HandleTable } from "general-basic-indexdb"
-const { getData } = HandleTable
-const { formSchema } = Schemas
+import {  HandleParamsData } from "network-spanner"
 export default defineComponent({
   name: "GeneralBasicForm",
   components: {
@@ -154,8 +151,22 @@ export default defineComponent({
   data() {
     return {
       formLoading: this.loading || false,
-      trimRegex: /\S/,
-      queryParams: this.initQueryParams(), // form表单数据
+      queryParams: HandleParamsData.initQueryParams({
+        vm: this
+      }), // form表单数据
+    };
+  },
+  provide() {
+    return {
+      // 显式提供一个计算属性
+      [formLoadingKey]: {
+        formLoading: computed(() => this.formLoading),
+        updateFormLoading: (val) => {
+          this.formLoading = val;
+        },
+      },
+      // 使用computed保持响应性
+      queryParams: computed(() => this.queryParams),
     };
   },
   setup(props) {
@@ -200,97 +211,26 @@ export default defineComponent({
       this.$emit("update:loading", val);
     },
   },
-  provide() {
-    return {
-      // 显式提供一个计算属性
-      [formLoadingKey]: {
-        formLoading: computed(() => this.formLoading),
-        updateFormLoading: (val) => {
-          this.formLoading = val;
-        },
-      },
-      queryParams: this.queryParams,
-    };
-  },
+
   methods: {
     /** 搜索按钮操作 */
-    async handleQuery(queryParameter = <any>{}) {
-      queryParameter.defaultPageFirst ??= true
-      const params = { [this.currentPageKey]: this.defCurrentPage };
-      let searchParams = {
-        ...params,
-        ...this.queryParams,
-      }
-      searchParams = await HandleParamsData.makeParamsByType(searchParams, this)
-      if (queryParameter.defaultPageFirst) {
-        searchParams = {
-          ...searchParams,
-          ...params,
-        }
-      }
-      await HandleParamsData.saveParamsByType(searchParams, this)
-      this.getList({
-        ...searchParams,
-      });
+    handleQuery(queryParameter = <any>{}) {
+      HandleParamsData.handleQuery({
+        queryParameter, vm: this
+      })
     },
     /** 重置按钮操作 */
-    async resetQuery() {
-      this.$refs.queryFormRef.resetFields();
-      const DBParams = await HandleParamsData.makeParamsByType({}, this)
-      const params = { [this.currentPageKey]: this.defCurrentPage, [this.pageSizeKey]: DBParams?.[this.pageSizeKey] || this.defPageSize };
-      await HandleParamsData.saveParamsByType(params, this)
-      this.queryParams = { ...params };
-      this.afterReset();
-      this.handleQuery();
+    resetQuery() {
+      HandleParamsData.resetQuery({
+        vm: this
+      })
     },
-    async initQueryParams() {
-      let queryParams = {
-        [this.pageSizeKey]: this.defPageSize
-      }
-      if (this.parametersType === "url") {
-        queryParams = { ...queryParams, ...ObjectStoreInUrl.queryToData(this.$route?.query) }
-      }
-      if (this.parametersType === "indexDB") {
-        const DBParams = await getData(
-          {
-            tableName: "formParams",
-            propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey: this.DBPrimaryKey || "default",
-            mapDB: formSchema
-          }, (DBParams) => {
-            if (DBParams) {
-              this.queryParams = { ...queryParams, ...DBParams }
-            }
-            if (this.queryWhenReady) {
-              this.$nextTick(() => {
-                this.handleQuery({ defaultPageFirst: false })
-              })
-            }
-          }
-        )
-        this.queryParams = { ...queryParams, ...DBParams }
-      }
-      if (this.queryWhenReady && this.parametersType !== "indexDB") {
-        // console.log({ ...this.queryParams }, "queryParams")
-        this.$nextTick(() => {
-          // console.log({ ...this.queryParams }, "queryParams112")
-          this.handleQuery({ defaultPageFirst: false })
-        })
-      }
-      return queryParams
-    },
-    getItemRules(item: any) {
-      const { type, rules = [] } = item;
-      const newRules = [...rules];
-      if (this.noInputBlank && type === "input") {
-        newRules.push({
-          pattern: this.trimRegex,
-          message: "请输入（不能仅输入空格）",
-          trigger: "blur",
-        });
-        return newRules;
-      }
 
+    getItemRules(item: any) {
+      const newRules = HandleParamsData.getItemRules({
+        item,
+        vm: this
+      })
       return newRules;
     },
   },
