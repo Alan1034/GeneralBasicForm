@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2024-12-29 17:56:35
- * @LastEditTime: 2025-03-10 21:20:39
+ * @LastEditTime: 2025-03-10 21:22:24
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -167,7 +167,9 @@ export default {
   },
   data() {
     return {
-      queryParams: this.initQueryParams(), // form表单数据
+      queryParams: HandleParamsData.initQueryParams({
+        vm: this
+      }), // form表单数据
       formLoading: this.loading || false,
       selectSetting: {
         placeholder: "请选择",
@@ -265,42 +267,6 @@ export default {
       HandleParamsData.resetQuery({
         vm: this
       })
-    },
-    initQueryParams() {
-      let queryParams = {
-        [this.pageSizeKey]: this.defPageSize
-      }
-      if (this.parametersType === "url") {
-        queryParams = { ...queryParams, ...ObjectStoreInUrl.queryToData(this.$route?.query) }
-      }
-      if (this.parametersType === "indexDB") {
-        getData(
-          {
-            tableName: "formParams",
-            propertiesKey: this.$route.path || "defQueryParams",
-            primaryKey: this.DBPrimaryKey || "default",
-            mapDB: formSchema
-          }, (DBParams) => {
-            if (DBParams) {
-              this.queryParams = { ...queryParams, ...DBParams }
-            }
-            if (this.queryWhenReady) {
-              this.$nextTick(() => {
-                this.handleQuery({ defaultPageFirst: false })
-              })
-            }
-          }
-        )
-
-      }
-      if (this.queryWhenReady && this.parametersType !== "indexDB") {
-        // console.log({ ...this.queryParams }, "queryParams")
-        this.$nextTick(() => {
-          // console.log({ ...this.queryParams }, "queryParams112")
-          this.handleQuery({ defaultPageFirst: false })
-        })
-      }
-      return queryParams
     },
     currentInputComponent() {
       return "input-archive";
