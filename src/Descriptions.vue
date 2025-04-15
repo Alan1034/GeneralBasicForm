@@ -1,7 +1,7 @@
 <!--
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-12-08 17:45:01
- * @LastEditTime: 2024-09-25 18:16:46
+ * @LastEditTime: 2025-04-15 23:33:48
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 对展示描述列表的封装
@@ -71,11 +71,11 @@ watch(
   },
   { immediate: true }
 );
-const descriptions = shallowRef("el-descriptions-item")
-const descriptionsItem = shallowRef("descriptions-item")
+const descriptions = shallowRef("el-descriptions")
+const descriptionsItem = shallowRef("el-descriptions-item")
 switch (props.componentType) {
   case "Element Plus":
-    descriptions.value = "el-descriptions-item"
+    descriptions.value = "el-descriptions"
     descriptionsItem.value = "el-descriptions-item"
     break;
   case "Ant Design Vue":
