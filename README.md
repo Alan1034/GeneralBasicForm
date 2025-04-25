@@ -10,8 +10,11 @@
 | VDescriptions       | √ | √    | √ | √   | √ |
 | VInputMobilecVerification | | √ | √ | √ |  |
 | VInputGraphicVerification | | √ | √ | √ |  |
-| VTreeTransfer | √ |  |  |  | √ |
+| VTreeTransfer | √ | √ |  | √ | √ |
 | VTabs | √ | | | | √ |
+
+安装：npm i general-basic-form<br/>
+install: npm i general-basic-form
 
 示例:
 
@@ -600,6 +603,45 @@ VInputMobilecVerificationRef.value.VerificationButtonRef.buttonClick()
 VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
 ```
 
-安装：npm i general-basic-form<br/>
-install: npm i general-basic-form
+# VTreeTransfer 树形数据穿梭框
+
+![image-20250425183446375](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202504251834575.png)
+
+```
+<VTreeTransfer :dataSource="classmate" :treeAttributes="{
+      'node-key': 'user_id', props: { label: 'user_name' }, 'default-expand-all': false
+    }" transferTitleRight="白名单(不会被选中)" transferTitleLeft="普通名单" filterable 		:checkedKeys="checkedKeys">
+</VTreeTransfer>
+    
+import { VTreeTransfer } from 'general-basic-form';    
+const VTreeTransferRef = ref([])
+```
+
+```
+dataSource:[
+  {
+    label: 'Level one 1',
+    id:1,
+    children: [
+      {
+        label: 'Level two 1-1',
+        id:2,
+        children: [
+          {
+            label: 'Level three 1-1-1',
+            id:3,
+          },
+        ],
+      },
+    ],
+  },] 树状结构数据
+treeAttributes:{} 树形控件的属性，见https://element-plus.org/zh-CN/component/tree.html
+transferTitleLeft:"" 左标题
+transferTitleRight:"" 右标题
+filterable:false 是否显示搜索框
+checkedKeys:[1,2] 选中的值
+
+获取选中的数组详情：
+VTreeTransferRef.value["selectedList"].map((item) => {}))
+```
 
