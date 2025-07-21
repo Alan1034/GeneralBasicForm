@@ -16,6 +16,11 @@
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
 
+webpack4兼容：
+加入配置：module.exports = {
+  transpileDependencies: ['general-basic-form'],
+}
+
 示例:
 
 因为兼容性问题，目前只能使用完整引入
