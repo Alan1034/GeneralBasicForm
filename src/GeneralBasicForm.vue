@@ -23,13 +23,13 @@
 <template>
   <el-form :model="queryParams" ref="queryFormRef" v-show="showSearch" :label-width="labelWidth" v-bind="attrs">
     <el-form-item v-for="item in formItem" :key="item.prop" :rules="getItemRules(item)" v-bind="item">
-      <el-input v-if="item.type === 'input'" @keydown.enter.native="getList" v-model="queryParams[item.prop]"
+      <el-input v-if="item.type === 'input'" @keydown.enter.native="handleQuery" v-model="queryParams[item.prop]"
         :size="size" v-bind="getInputSetting(item)" v-on="getInputEvents(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
           <component :key="name" v-if="templateEle" :is="currentInputComponent()" :templateEle="templateEle" />
         </template>
       </el-input>
-      <el-input v-else-if="item.type === 'input-mobile-verification'" @keydown.enter.native="getList"
+      <el-input v-else-if="item.type === 'input-mobile-verification'" @keydown.enter.native="handleQuery"
         v-model="queryParams[item.prop]" :size="size" v-bind="getInputSetting(item)" v-on="getInputEvents(item)">
         <template v-for="(templateEle, name) in item.template" #[name]>
           <component :key="name" v-if="templateEle" :is="currentInputComponent()" :templateEle="templateEle" />
