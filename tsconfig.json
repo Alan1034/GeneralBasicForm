@@ -1,14 +1,23 @@
 {
-  "include": [
-    "public/index.d.ts",
-    "src/**/*",
-    "src/**/*.vue",
-    "public/*",
-  ],
+  "include": ["index.d.ts", "src/**/*", "src/**/*.tsx", "public/*", "./src"],
   "exclude": [],
   "compilerOptions": {
+    "target": "es2015",
+    "moduleResolution": "node",
+    "strict": false,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "module": "commonjs",
+    "lib": ["ESNext", "DOM"],
+    "sourceMap": true,
     "declaration": true,
-    "allowJs": true,
-    "composite": true
+    // "allowJs": true,
+    "jsx": "preserve",
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }
