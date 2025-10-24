@@ -9,30 +9,48 @@ import {
   FieldSeparator,
   FieldSet,
   FieldError,
-  Button,
 } from "./ui/field"
+import { useId } from 'react';
+// import { HandleParamsData } from "network-spanner"
 const BasicForm = (props) => {
   const {
     formItem = [] as ItemType[],
     children,
-    coms: { Input },
+    coms: { Input, Button },
   } = props;
-
+  const handleQuery = (e) => {
+    // HandleParamsData.handleQuery({
+    //   queryParameter, vm: this
+    // })
+    e.preventDefault()
+    console.log(e.target)
+    // 读取表单数据
+    const form = e.target;
+    const formData = new FormData(form);
+    // console.log(formData.get("bsName"))
+    // console.log(formData.getAll("bsName"))
+    console.log(formData.forEach((value, key) => console.log(key, value)))
+  }
   return (
-    <form>
+    <form onSubmit={handleQuery}>
       <FieldGroup>
         {formItem.map((item, index) => {
-
+          const id = useId();
           return (
-            <Field>
-              <FieldLabel htmlFor="checkout-7j9-card-name-43j">
-                Name on Card
+            <Field key={item.prop}>
+              <FieldLabel htmlFor={id} >
+                {item.label}
               </FieldLabel>
-              <Input
-                id="checkout-7j9-card-name-43j"
-                placeholder="Evil Rabbit"
-                required
-              />
+              {
+                /^input$/i.test(item.type) && (
+                  <Input
+                    id={id}
+                    name={item.prop}
+                    {...item.setting}
+                  />
+                )
+              }
+
               {/* <FieldError errors={errors.username} >Enter a valid email address.</FieldError> */}
             </Field>
           )

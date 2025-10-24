@@ -2,17 +2,17 @@
   "name": "general-basic-form",
   "version": "2.1.0",
   "description": "",
-  "main": "./dist/index.umd.cjs",
+  "main": "./src/index.ts",
   "type": "module",
   "scripts": {
     "build": "cross-env CURRENT_ENV=prod run-p type-check && run-p build-only",
     "test:e2e": "playwright test",
     "build-only": "vite build",
     "type-check": "tsc --noEmit -p tsconfig.json --composite false",
-    "link": "tsx script/link.ts && yarn link",
-    "unlink": "tsx script/unlinkModule.ts && yarn unlink && run-p build",
-    "linkNode": "tsx script/linkNode.ts && yarn link && run-p dev",
-    "unlinkNode": "tsx script/unlinkNode.ts && yarn unlink && run-p buildts",
+    "link": "tsx script/link.ts && yarn link && pnpm link",
+    "unlink": "tsx script/unlinkModule.ts && yarn unlink && pnpm unlink && run-p build",
+    "linkNode": "tsx script/linkNode.ts && yarn link && pnpm link && run-p dev",
+    "unlinkNode": "tsx script/unlinkNode.ts && yarn unlink && pnpm unlink && run-p buildts",
     "dev": "tsc -w -p .",
     "buildts": "rimraf dist && tsc -p .",
     "unlinkSetting": "tsx script/unlink.ts"
@@ -58,7 +58,7 @@
   "peerDependencies": {
     "react": ">=19.0.0"
   },
-  "typings": "./dist/index.d.ts",
+  "typings": "./publish/index.d.ts",
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@radix-ui/react-label": "^2.1.7",
@@ -71,16 +71,5 @@
     "network-spanner": "^1.2.14",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.16"
-  },
-  "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
-    },
-    "./style": "./dist/style.css"
-  },
-  "files": [
-    "/dist"
-  ]
+  }
 }
