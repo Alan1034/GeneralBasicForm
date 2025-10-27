@@ -32,28 +32,9 @@ app.use(ElementPlus)
 ```
 
 ```
-import { VGeneralBasicForm } from 'general-basic-form'
-import 'general-basic-form/style'
+import { RGeneralBasicForm } from 'general-basic-form';
 ```
-
-    <VGeneralBasicForm
-      :showSearch="showSearch"
-      :getList="getList"
-      :formItem="formItem"
-      :size="size"
-      ref="VGeneralBasicFormRef"
-      labelWidth="90px"
-      :noInputBlank="true"
-    >
-      <template v-slot:default>
-        ...一些传入插槽的内容
-      </template>
-      <template v-slot:behind-the-button>
-        <el-form-item>
-          <div>上次同步时间：</div>
-        </el-form-item>
-      </template>
-    </VGeneralBasicForm>
+ <RGeneralBasicForm formItem={formItem} getList={getList} parametersType="data" noInputBlank></RGeneralBasicForm>
 
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
