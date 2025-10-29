@@ -14,7 +14,7 @@ const Input = (props) => {
       name={item.prop}
       value={queryParams[item.prop] || ""}
       disabled={formLoading}
-      onChange={e => dispatchQueryParams({ data: { [item.prop]: e.target.value } })}
+      onChange={e => dispatchQueryParams({ data: {...queryParams, [item.prop]: e.target.value } })}
       aria-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
       {...item.setting}
     />

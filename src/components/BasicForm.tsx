@@ -1,6 +1,7 @@
 import { createContext, useState, Dispatch, useReducer, useEffect, useActionState, useMemo, useId } from "react";
 import type { ItemType } from "../types/basicFrom";
 import Input from "../components/RBasic/input";
+import { FormList } from "../components/CustomCom/form-list";
 import { Spinner } from "../components/ui/spinner"
 import {
   Field,
@@ -35,7 +36,6 @@ export const FormContext = createContext(initialState);
 export const TasksDispatchContext = createContext(null);
 const reducer = (state, action) => {
   const { data } = action;
-  console.log(data, action)
   return { ...data }
 }
 
@@ -75,6 +75,7 @@ export const BasicForm = (prop) => {
     coms,
     // getList = () => { },
     formData = {},
+    fieldGroupSetting = {},
     loading = false,
     // showSearch = true,
     // formOnly = false,
@@ -116,18 +117,16 @@ export const BasicForm = (prop) => {
       vm: props,
       dispatchQueryParams,
     })
-    console.log(data)
     dispatchQueryParams({ data })
   }, [inited])
   const submitQuery = async (prevState, formData) => {
 
     // 读取表单数据
-
     let message = {}
-    for (const [key, value] of formData.entries()) {
+    // for (const [key, value] of formData.entries()) {
+    for (const [key, value] of Object.entries(queryParams)) {
       const item = formItem.find((item) => item.prop === key)
-
-      if (item.rules) {
+      if (item && item.rules) {
         const newRules = HandleParamsData.getItemRules({
           item,
           vm: props
@@ -165,7 +164,6 @@ export const BasicForm = (prop) => {
         }
       }
     }
-
     if (Object.keys(message).length == 0) {
       HandleParamsData.handleQuery({
         queryParameter: { defaultPageFirst: !queryWhenReady }, vm: { ...props, }, queryParams
@@ -186,17 +184,28 @@ export const BasicForm = (prop) => {
   return (
     <FormContext value={{ ...props, dispatchQueryParams, queryParams, message, formLoading }}>
       <form action={formAction}>
-        <FieldGroup>
+        <FieldGroup {...fieldGroupSetting}>
           {formItem.map((item, index) => {
             const id = useId();
             return (
-              <Field key={item.prop} data-invalid={message?.[item.prop] && message?.[item.prop].length > 0}>
+              <Field key={item.prop}
+                data-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
+                {...item.fieldSetting}>
                 <FieldLabel htmlFor={id} >
                   {item.label}
                 </FieldLabel>
                 {
                   /^input$/i.test(item.type) && (
                     <Input
+                      id={id}
+                      coms={coms}
+                      item={item}
+                    />
+                  )
+                }
+                {
+                  /^form-list$/i.test(item.type) && (
+                    <FormList
                       id={id}
                       coms={coms}
                       item={item}

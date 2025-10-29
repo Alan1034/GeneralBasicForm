@@ -1,24 +1,26 @@
+<!-- @format -->
+
 # GeneralBasicForm
 
-## 一个兼容 Vue2 、Vue3 和 React(未来实现)  的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本
+## 一个兼容 Vue2 、Vue3 和 React(未来实现) 的表单组件，支持 typescript，vue2 请使用@1 版本，Vue3 请使用@2 版本
 
-| 组件\兼容性         | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） |
-| ------------------- | ---- | ---- | ---- | ---- | ---- |
-| VGeneralBasicForm    | √    | √    |     | √   | √   |
-| VSearchBox           | √    |      |      |  | √ |
-| VInfiniteScrollList |      | √    |     | √   |     |
-| VDescriptions       | √ | √    | √ | √   | √ |
-| VInputMobilecVerification | | √ | √ | √ |  |
-| VInputGraphicVerification | | √ | √ | √ |  |
-| VTreeTransfer | √ | √ |  | √ | √ |
-| VTabs | √ | | | | √ |
+| 组件\兼容性               | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） |
+| ------------------------- | ---- | ---- | ---------------------- | ------------ | ------------- |
+| VGeneralBasicForm         | √    | √    |                        | √            | √             |
+| VSearchBox                | √    |      |                        |              | √             |
+| VInfiniteScrollList       |      | √    |                        | √            |               |
+| VDescriptions             | √    | √    | √                      | √            | √             |
+| VInputMobilecVerification |      | √    | √                      | √            |               |
+| VInputGraphicVerification |      | √    | √                      | √            |               |
+| VTreeTransfer             | √    | √    |                        | √            | √             |
+| VTabs                     | √    |      |                        |              | √             |
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
 
-webpack4兼容：
+webpack4 兼容：
 加入配置：module.exports = {
-  transpileDependencies: ['general-basic-form'],
+transpileDependencies: ['general-basic-form'],
 }
 
 示例:
@@ -34,7 +36,16 @@ app.use(ElementPlus)
 ```
 import { RGeneralBasicForm } from 'general-basic-form';
 ```
- <RGeneralBasicForm formItem={formItem} getList={getList} parametersType="data" noInputBlank></RGeneralBasicForm>
+
+<RGeneralBasicForm
+formItem={formItem}
+getList={getList}
+parametersType="data"
+noInputBlank
+formData={detail}
+fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
+
+> </RGeneralBasicForm>
 
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
@@ -53,7 +64,7 @@ import { RGeneralBasicForm } from 'general-basic-form';
         :afterReset="afterReset"
         v-model:loading="loading"
       />
-    
+
       <style lang="scss" scoped>
       :deep(.el-form-item) {
         margin-bottom: 16px;
@@ -63,7 +74,7 @@ import { RGeneralBasicForm } from 'general-basic-form';
       }
       </style>
 
-getList会传出默认的参数,首次请求时会有页数和分页大小,重置后会传出默认页数1
+getList 会传出默认的参数,首次请求时会有页数和分页大小,重置后会传出默认页数 1
 
     async getList(
        params = {
@@ -72,7 +83,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
        }
      ) {}
 
-表单数据校验需要拿到内部表单的ref
+表单数据校验需要拿到内部表单的 ref
 
     async getSmscode() {
       const VGeneralBasicFormRef = this.$refs['VGeneralBasicFormRef'] as any
@@ -97,7 +108,7 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       })
       return state
     },
-    
+
     setup写法：
     const VGeneralBasicFormRef = ref()
     const params = await new Promise<any>((resolve, reject) => {
@@ -113,16 +124,15 @@ getList会传出默认的参数,首次请求时会有页数和分页大小,重�
       )
     })
 
-
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
 
-parametersType类型介绍
+parametersType 类型介绍
 
-| parametersType形式 | 支持页面刷新 | 参数改变引起路由跳转 | 组件间共享数据 | 存储上限 | 浏览器兼容性 |
-| ------------------ | ------------ | -------------------- | -------------- | -------- | ------------ |
-| url                | 是           | 是                   | 是             | 中       | 高           |
-| data               | 否           | 否                   | 否             | 高       | 高           |
-| indexDB            | 是           | 否                   | 是             | 高       | 中           |
+| parametersType 形式 | 支持页面刷新 | 参数改变引起路由跳转 | 组件间共享数据 | 存储上限 | 浏览器兼容性 |
+| ------------------- | ------------ | -------------------- | -------------- | -------- | ------------ |
+| url                 | 是           | 是                   | 是             | 中       | 高           |
+| data                | 否           | 否                   | 否             | 高       | 高           |
+| indexDB             | 是           | 否                   | 是             | 高       | 中           |
 
 数据示例:
 
@@ -139,7 +149,7 @@ parametersType类型介绍
     pageSizeKey:"limit", //每页显示个数key
     defCurrentPage:1, //默认的页数
     defPageSize：10, //默认的每页显示个数
-    queryWhenReady:false,//初始化完成后自动触发查找数据函数，建议用这个this.$refs["VGeneralBasicFormRef"].handleQuery({ defaultPageFirst: false })
+    queryWhenReady:false,//初始化完成后自动触发查找数据函数
     formItem: [
     	{
           label: '',
@@ -158,23 +168,91 @@ parametersType类型介绍
           type: "input",
        	  setting: {
             placeholder: '请输入手机验证码',
-            style: 'width: 100%'
+            style: 'width: 100%',
+            required: true,
           },
+      fieldSetting: {
+        orientation: 'responsive',
+      },
           rules: [
             {
-              message: "请输入信息"
+              message: "请输入信息",
+                  required: true,
             },
             {
               pattern: /^\w+[\,\，\-\w' '#]+$/,
               message: "请输入正确的Invoice单号"
-            }
-          ],
-          template: {
-            suffix: () => {
-              return <svg-icon icon-class="baifenbi" />;
             },
+                    {
+          validator: (rule, value, callback) => {
+            callback();
           },
+        },
+          ],
+          //template: {
+          //  suffix: () => {
+          //    return <svg-icon icon-class="baifenbi" />;
+          //  },
+          //},
     	},
+          {
+            label: '天数-价格配置',
+            prop: 'prices',
+            type: 'form-list',
+            setting: {
+              placeholder: ['请输入天数', '请输入价格'],
+              required: true,
+              type: 'number',
+              ndim: 2, // 多维数组
+              columns: ['days', 'price'],
+            },
+            fieldSetting: {
+              className: 'col-span-2',
+            },
+            rules: [
+              {
+                validator: (rule, value, callback) => {
+                  console.log(value);
+                  for (let i = 0; i < value.length; i++) {
+                    const element = value[i];
+                    if (!Number(element.days) || !Number(element.price)) {
+                      callback(new Error('请输入数字'));
+                      return;
+                    }
+                  }
+                  callback();
+                },
+              },
+            ],
+          },
+           {
+              label: '护士在线增值服务内容',
+              prop: 'nursingCare',
+              type: 'form-list',
+              setting: {
+                placeholder: ['请输入服务内容'],
+                required: true,
+                ndim: 1, // 1维数组
+              },
+              fieldSetting: {
+                className: 'col-span-2',
+              },
+              rules: [
+                {
+                  validator: (rule, value, callback) => {
+                    console.log(value);
+                    for (let i = 0; i < value.length; i++) {
+                      const element = value[i];
+                      if (!element) {
+                        callback(new Error('请输入服务内容'));
+                        return;
+                      }
+                    }
+                    callback();
+                  },
+                },
+              ],
+            },
         {
           label: "二次工艺",
           prop: "spName",
@@ -186,7 +264,7 @@ parametersType类型介绍
             { value: "2", label: "绣花" },
           ],
         },
-        { 
+        {
           label: "创建时间",
           prop: "create_time",
           type: "date-picker",
@@ -361,112 +439,68 @@ parametersType类型介绍
           ],
         },
       ],
-    
+
       //rules为表单校验规则，每个组件都可以传入
-    
+
       //input支持template,支持以下几个属性：
       //prefix	输入框头部内容，只对 type="text"（默认） 有效
       //suffix	输入框尾部内容，只对 type="text" 有效
       //prepend	输入框前置内容，只对 type="text" 有效
       //append	输入框后置内容，只对 type="text" 有效
-      
+
       //divider支持template：
       //default
-支持组件type:
 
- /**
+支持组件 type:
 
-  \* @description: 输入框
+  /**
+   * @description: 输入框
+   * @return {*}
+   */
+  "input" = "input",
+  /**
+   * @description: 表单中的多维列表，可增减元素
+   * @return {*}
+   */
+  "form-list" = "form-list",
+  /**
+   * @description: 分割线
+   * @return {*}
+   */
+  "divider" = "divider",
+  /**
+   * @description: 选择器
+   * @return {*}
+   */
+  "select" = "select",
+  /**
+   * @description: 级联选择器
+   * @return {*}
+   */
+  "cascader" = "cascader",
+  /**
+   * @description: 日期选择器
+   * @return {*}
+   */
+  "date-picker" = "date-picker",
+  /**
+   * @description: 数字输入框
+   * @return {*}
+   */
+  "input-number" = "input-number",
+  /**
+   * @description: 单选框
+   * @return {*}
+   */
+  "radio" = "radio",
 
-  */
+  /**
+   * @description: 多选框
+   * @return {*}
+   */
+  "checkbox" = "checkbox",
 
- 'input' = 'input',
-
- /**
-
-  \* @description: 输入框/图像验证码
-
-  */
-
- 'input-graphic-verification' = 'input-graphic-verification',
-
- /**
-
-  \* @description: 输入框/手机验证码
-
-  */
-
- 'input-mobile-verification' = 'input-mobile-verification',
-
- /**
-
-  \* @description: 分割线
-
-  */
-
- 'divider' = 'divider',
-
- /**
-
-  \* @description: 选择器
-
-  */
-
- 'select' = 'select',
-
- /**
-
-  \* @description: 级联选择器
-
-  */
-
- 'cascader' = 'cascader',
-
- /**
-
-  \* @description: 日期选择器
-
-  */
-
- 'date-picker' = 'date-picker',
-
- /**
-
-  \* @description: 数字输入框
-
-  */
-
- 'input-number' = 'input-number',
-
- /**
-
-  \* @description: 单选框
-
-  */
-
- 'radio' = 'radio',
-
- /**
-
-  \* @description: 自定义元素，插槽组件
-
-  */
-
- 'form-item-slot'='form-item-slot',
-
- /**
-
-  \* @description: 多选框
-
-  */
-
- 'checkbox'='checkbox',
-
-
-
-# VInfiniteScrollList对虚拟滚动列表+接口的封装
-
-
+# VInfiniteScrollList 对虚拟滚动列表+接口的封装
 
 ![image-20231208165229296](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081652392.png)
 
@@ -483,6 +517,7 @@ import 'general-basic-form/style'
   :max="1"
  />
 ```
+
 ```
 移动端配合下拉刷新使用
 import { getOrderItem } from "../orderItem/functional"
@@ -493,6 +528,7 @@ import { getOrderItem } from "../orderItem/functional"
         :extra="getOrderItem" height="100%" infinite-scroll-distance="50"/>
     </t-pull-down-refresh>
 ```
+
 ```
 search：数据接口 (page: Number) => Promise<[]>
 id：数据key值（唯一和选择值）
@@ -522,7 +558,7 @@ height:默认272px String
  InfiniteScrollListRef?.value?.loading：加载中
 ```
 
-# VDescriptions对展示描述列表的封装
+# VDescriptions 对展示描述列表的封装
 
 ![image-20231208182455415](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081824708.png)
 
@@ -560,7 +596,7 @@ strict:Boolean //使用strict参数后，如果formData内的某个字段没有�
 descriptionsItemProps:a-descriptions-item|el-descriptions-item的配置
 ```
 
-# VInputMobilecVerification，VInputGraphicVerification表单里的图形验证码、手机验证码组件，可以单独引入
+# VInputMobilecVerification，VInputGraphicVerification 表单里的图形验证码、手机验证码组件，可以单独引入
 
 ```
 <VInputGraphicVerification :item="{同表单，可忽略label和rules字段}" :loading="loading"></VInputGraphicVerification>
@@ -598,8 +634,8 @@ VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
       'node-key': 'user_id', props: { label: 'user_name' }, 'default-expand-all': false
     }" transferTitleRight="白名单(不会被选中)" transferTitleLeft="普通名单" filterable 		:checkedKeys="checkedKeys">
 </VTreeTransfer>
-    
-import { VTreeTransfer } from 'general-basic-form';    
+
+import { VTreeTransfer } from 'general-basic-form';
 const VTreeTransferRef = ref([])
 ```
 
@@ -630,4 +666,3 @@ checkedKeys:[1,2] 选中的值
 获取选中的数组详情：
 VTreeTransferRef.value["selectedList"].map((item) => {}))
 ```
-
