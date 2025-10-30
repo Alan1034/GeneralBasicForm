@@ -1,6 +1,6 @@
 import { createContext, useState, Dispatch, useReducer, useEffect, useActionState, useMemo, useId } from "react";
 import type { ItemType } from "../types/basicFrom";
-import Input from "../components/RBasic/input";
+import { TypeCom } from "../components/comType";
 import { FormList } from "../components/CustomCom/form-list";
 import { Spinner } from "../components/ui/spinner"
 import {
@@ -194,15 +194,7 @@ export const BasicForm = (prop) => {
                 <FieldLabel htmlFor={id} >
                   {item.label}
                 </FieldLabel>
-                {
-                  /^input$/i.test(item.type) && (
-                    <Input
-                      id={id}
-                      coms={coms}
-                      item={item}
-                    />
-                  )
-                }
+                <TypeCom coms={coms} item={item} id={id} type={item.type}></TypeCom>
                 {
                   /^form-list$/i.test(item.type) && (
                     <FormList

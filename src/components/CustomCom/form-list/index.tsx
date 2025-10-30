@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, useId } from "react";
 import { X, Plus } from 'lucide-react';
-import Input from "../../RBasic/input";
+import { TypeCom } from "../../comType";
 import { FormContext } from "../../BasicForm";
 export const FormList = (props) => {
   const { coms, item = {}, id = useId() } = props
@@ -18,7 +18,7 @@ export const FormList = (props) => {
     for (let columnIndex = 0; columnIndex < x_list.length; columnIndex++) {
       const x = { key: "", value: "" }
       x.key = `${prop}[${rowIndex}][${columnIndex}]`
-      x.value = typeof value === "object" ? value?.[columns?.[columnIndex]] : value
+      x.value = typeof value === "object" ? value?.[columns?.[columnIndex]?.prop] : value
       newList.push(x)
     }
     return newList
@@ -34,9 +34,17 @@ export const FormList = (props) => {
     setList(newList)
     dispatchQueryParams({ data: { ...queryParams, [item.prop]: newList } })
   }
-  const changeItem = (rowIndex, columnIndex, e) => {
+  const changeItem = (props, e) => {
+    let value
+    if (typeof e?.target?.value === "string") {
+      value = e?.target?.value
+    } else {
+      value = e
+    }
+
+    const { rowIndex, columnIndex } = props
     const newList = [...list]
-    newList[rowIndex][columnIndex].value = e.target.value
+    newList[rowIndex][columnIndex].value = value
     setList(newList)
     setFormData()
   }
@@ -48,7 +56,7 @@ export const FormList = (props) => {
       newList = list.map(x => {
         const obj = {};
         x.forEach((y, index) => {
-          obj[columns[index]] = y.value
+          obj[columns[index]?.prop] = y.value
         })
         return obj
       })
@@ -85,20 +93,26 @@ export const FormList = (props) => {
           <div key={rowIndex} className={`flex gap-${gap} mb-${gap}`}>
             {
               ele.map((x, columnIndex) => {
-                const newItem = { ...item }
+                let newItem = { ...item }
+                const column = item?.setting?.columns?.[columnIndex]
+                if (column) {
+                  newItem = { ...column }
+                }
+                if (newItem.type === 'form-list') {
+                  newItem.type = "input"
+                }
                 newItem.setting = {
                   ...newItem.setting,
                   name: x.key,
-                  value: queryParams?.[item.prop]?.[rowIndex]?.[columns?.[columnIndex]] || x.value,
-                  onChange: changeItem.bind(this, rowIndex, columnIndex),
-                  placeholder: newItem.setting?.placeholder?.[columnIndex]
+                  value: queryParams?.[item.prop]?.[rowIndex]?.[columns?.[columnIndex]?.prop] || x.value,
+                  onChange: changeItem.bind(this, { rowIndex, columnIndex }),
+                  onValueChange: changeItem.bind(this, { rowIndex, columnIndex }),
+                }
+                if (newItem.type === "input") {
+                  delete newItem.setting.onValueChange
                 }
                 return (
-                  <Input
-                    key={x.key}
-                    id={x.key}
-                    coms={coms}
-                    item={newItem} />
+                  <TypeCom key={x.key} coms={coms} item={newItem} id={x.key} type={newItem.type}></TypeCom>
                 )
               })
             }
