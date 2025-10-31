@@ -18,7 +18,7 @@ export const FormList = (props) => {
     for (let columnIndex = 0; columnIndex < x_list.length; columnIndex++) {
       const x = { key: "", value: "" }
       x.key = `${prop}[${rowIndex}][${columnIndex}]`
-      x.value = typeof value === "object" ? value?.[columns?.[columnIndex]?.prop] : value
+      x.value = (typeof value === "object" ? value?.[columns?.[columnIndex]?.prop] : value) || ""
       newList.push(x)
     }
     return newList
@@ -32,7 +32,7 @@ export const FormList = (props) => {
     const newList = [...list]
     newList.splice(rowIndex, 1)
     setList(newList)
-    dispatchQueryParams({ data: { ...queryParams, [item.prop]: newList } })
+    setFormData(newList)
   }
   const changeItem = (props, e) => {
     let value
@@ -46,14 +46,14 @@ export const FormList = (props) => {
     const newList = [...list]
     newList[rowIndex][columnIndex].value = value
     setList(newList)
-    setFormData()
+    setFormData(newList)
   }
-  const setFormData = () => {
+  const setFormData = (innerNewList) => {
     let newList = []
     if (ndim === 1) {
-      newList = list.flat().map(x => x.value)
+      newList = innerNewList.flat().map(x => x.value)
     } else {
-      newList = list.map(x => {
+      newList = innerNewList.map(x => {
         const obj = {};
         x.forEach((y, index) => {
           obj[columns[index]?.prop] = y.value
@@ -104,7 +104,7 @@ export const FormList = (props) => {
                 newItem.setting = {
                   ...newItem.setting,
                   name: x.key,
-                  value: queryParams?.[item.prop]?.[rowIndex]?.[columns?.[columnIndex]?.prop] || x.value,
+                  value: x.value,
                   onChange: changeItem.bind(this, { rowIndex, columnIndex }),
                   onValueChange: changeItem.bind(this, { rowIndex, columnIndex }),
                 }
