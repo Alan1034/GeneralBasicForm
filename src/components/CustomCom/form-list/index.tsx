@@ -28,8 +28,11 @@ export const FormList = (props) => {
   const addItem = () => {
     setList([...list, [...newXList(list.length)]]);
   }
-  const removeItem = (rowIndex) => {
+  const removeItem = async (rowIndex) => {
     const newList = [...list]
+    if (item.removeItemAction) {
+      await item.removeItemAction(queryParams?.[item.prop], rowIndex)
+    }
     newList.splice(rowIndex, 1)
     setList(newList)
     setFormData(newList)

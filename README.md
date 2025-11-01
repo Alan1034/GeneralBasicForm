@@ -200,14 +200,44 @@ parametersType 类型介绍
             prop: 'prices',
             type: 'form-list',
             setting: {
-              placeholder: ['请输入天数', '请输入价格'],
-              required: true,
-              type: 'number',
-              ndim: 2, // 多维数组
-              columns: ['days', 'price'],
+              ndim: 3, // 多维数组，注意要和columns的长度相等，输出为对象数组
+              columns: [
+                  {
+                  prop: 'id',
+                  label: '套餐ID',
+                  type: 'input',
+                  setting: {
+                    placeholder: '请输入套餐ID',
+                    disabled: true,
+                    className: 'hidden',
+                  },
+                },
+                {
+                  prop: 'packageCode',
+                  label: '套餐名称',
+                  type: 'input',
+                  setting: {
+                    required: true,
+                    placeholder: '请输入套餐名称',
+                  },
+                },
+                  {
+                    prop: 'serviceType',
+                    label: '服务类型',
+                    type: 'select',
+                    option: [
+                      { label: '到家服务', value: 'home_service' },
+                      { label: '医院陪护', value: 'hospital_care' },
+                    ],
+                    setting: {
+                      placeholder: '请选择服务类型',
+                      required: true,
+                    },
+                  },
+              ],
             },
             fieldSetting: {
-              className: 'col-span-2',
+              className: 'col-span-4 overflow-auto',
             },
             rules: [
               {
@@ -224,6 +254,10 @@ parametersType 类型介绍
                 },
               },
             ],
+            removeItemAction: (item, index) => {
+              // 删除项会触发此函数
+              console.log(item, index);
+            },
           },
            {
               label: '护士在线增值服务内容',
@@ -232,7 +266,7 @@ parametersType 类型介绍
               setting: {
                 placeholder: ['请输入服务内容'],
                 required: true,
-                ndim: 1, // 1维数组
+                ndim: 1, // 1维数组，输出为字符串数组
               },
               fieldSetting: {
                 className: 'col-span-2',
@@ -453,51 +487,53 @@ parametersType 类型介绍
 
 支持组件 type:
 
-  /**
-   * @description: 输入框
-   * @return {*}
-   */
+/\*\*
+
+- @description: 输入框
+- @return {_}
+  _/
   "input" = "input",
-  /**
-   * @description: 表单中的多维列表，可增减元素
-   * @return {*}
-   */
+  /\*\*
+- @description: 表单中的多维列表，可增减元素
+- @return {_}
+  _/
   "form-list" = "form-list",
-  /**
-   * @description: 分割线
-   * @return {*}
-   */
+  /\*\*
+- @description: 分割线
+- @return {_}
+  _/
   "divider" = "divider",
-  /**
-   * @description: 选择器
-   * @return {*}
-   */
+  /\*\*
+- @description: 选择器
+- @return {_}
+  _/
   "select" = "select",
-  /**
-   * @description: 级联选择器
-   * @return {*}
-   */
+  /\*\*
+- @description: 级联选择器
+- @return {_}
+  _/
   "cascader" = "cascader",
-  /**
-   * @description: 日期选择器
-   * @return {*}
-   */
+  /\*\*
+- @description: 日期选择器
+- @return {_}
+  _/
   "date-picker" = "date-picker",
-  /**
-   * @description: 数字输入框
-   * @return {*}
-   */
+  /\*\*
+- @description: 数字输入框
+- @return {_}
+  _/
   "input-number" = "input-number",
-  /**
-   * @description: 单选框
-   * @return {*}
-   */
+  /\*\*
+- @description: 单选框
+- @return {_}
+  _/
   "radio" = "radio",
 
-  /**
-   * @description: 多选框
-   * @return {*}
-   */
+/\*\*
+
+- @description: 多选框
+- @return {_}
+  _/
   "checkbox" = "checkbox",
 
 # VInfiniteScrollList 对虚拟滚动列表+接口的封装

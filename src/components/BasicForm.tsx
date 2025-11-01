@@ -1,4 +1,4 @@
-import { createContext, useState, Dispatch, useReducer, useEffect, useActionState, useMemo, useId } from "react";
+import { createContext, useState, Dispatch, useReducer, useEffect, useMemo, useId } from "react";
 import type { ItemType } from "../types/basicFrom";
 import { TypeCom } from "../components/comType";
 import { FormList } from "../components/CustomCom/form-list";
@@ -14,6 +14,7 @@ import {
   FieldError,
 } from "./ui/field"
 import { HandleParamsData } from "network-spanner"
+
 interface FormContextType {
   queryParams: any,
   message: { [key: string]: { message?: string, [key: string]: any }[] },
@@ -95,6 +96,7 @@ export const BasicForm = (prop) => {
   const { Button } = coms
   const [formLoading, setFormLoading] = useState(false);
   const [inited, setInited] = useState(false);
+  const [message, setMessage] = useState({});
   const calculateQueryParams = (propsFormData) => {
 
     const rawFormData = { ...propsFormData }
@@ -119,8 +121,7 @@ export const BasicForm = (prop) => {
     })
     dispatchQueryParams({ data })
   }, [inited])
-  const submitQuery = async (prevState, formData) => {
-
+  const valid = async () => {
     // 读取表单数据
     let message = {}
     // for (const [key, value] of formData.entries()) {
@@ -164,12 +165,11 @@ export const BasicForm = (prop) => {
         }
       }
     }
-    if (Object.keys(message).length == 0) {
-      HandleParamsData.handleQuery({
-        queryParameter: { defaultPageFirst: !queryWhenReady }, vm: { ...props, }, queryParams
-      })
-    }
+    setMessage({ ...message })
     return { ...message }
+  }
+  const action = async (formData) => {
+    await valid()
   }
   const resetQuery = () => {
     HandleParamsData.resetQuery({
@@ -177,13 +177,29 @@ export const BasicForm = (prop) => {
       dispatchQueryParams
     })
   }
-  const [message, formAction, isPending] = useActionState(submitQuery, null);
-  useEffect(() => { setFormLoading(isPending) }, [isPending])
+
+
+  const formAction = async (formData) => {
+    // HandleParamsData.handleQuery({
+    //   queryParameter, vm: this
+    // })
+    // 读取表单数据
+
+    const resMessage = await valid()
+    if (Object.keys(resMessage).length == 0) {
+      setFormLoading(true)
+      await HandleParamsData.handleQuery({
+        queryParameter: { defaultPageFirst: !queryWhenReady }, vm: { ...props, }, queryParams
+      })
+      setFormLoading(false)
+    }
+  }
+
   useEffect(() => { setFormLoading(loading) }, [loading])
   useEffect(() => { dispatchQueryParams({ data: { ...queryParams, ...formData } }) }, [formData])
   return (
     <FormContext value={{ ...props, dispatchQueryParams, queryParams, message, formLoading }}>
-      <form action={formAction}>
+      <form action={action}>
         <FieldGroup {...fieldGroupSetting}>
           {formItem.map((item, index) => {
             const id = useId();
@@ -211,7 +227,7 @@ export const BasicForm = (prop) => {
           })}
           {children}
           <Field orientation="horizontal">
-            <Button disabled={formLoading} type="submit">{formLoading ? <Spinner /> : []}提交</Button>
+            <Button disabled={formLoading} formAction={formAction}>{formLoading ? <Spinner /> : []}提交</Button>
             <Button disabled={formLoading} variant="outline" type="button" onClick={resetQuery}>
               重置
             </Button>
