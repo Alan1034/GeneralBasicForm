@@ -1,17 +1,19 @@
 # GeneralBasicForm
 
-## 一个兼容 Vue2 、Vue3 和 React(未来实现)  的表单组件，支持typescript，vue2请使用@1版本，Vue3请使用@2版本
+## 一个兼容 Vue2 、Vue3 和 React(未来实现) 的表单组件，支持 typescript，vue2 请使用@1 版本，Vue3 请使用@2 版本，React19请使用@3 版本。
 
-| 组件\兼容性         | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） |
-| ------------------- | ---- | ---- | ---- | ---- | ---- |
-| VGeneralBasicForm    | √    | √    |     | √   | √   |
-| VSearchBox           | √    |      |      |  | √ |
-| VInfiniteScrollList | √ | √    |     | √   | √ |
-| VDescriptions       | √ | √    | √ | √   | √ |
-| VInputMobilecVerification | | √ | √ | √ |  |
-| VInputGraphicVerification | | √ | √ | √ |  |
-| VTreeTransfer | √ |  |  |  | √ |
-| VTabs | √ | | | | √ |
+| 组件\兼容性         | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） | React19 | shadcn/ui |
+| ------------------- | ---- | ---- | ---- | ---- | ---- | ------------------- | ------------------- |
+| VGeneralBasicForm    | √    | √    |     | √   | √   |    |    |
+| VSearchBox           | √    |      |      |  | √ |  |  |
+| VInfiniteScrollList |      | √    |     | √   |     |     |     |
+| VDescriptions       | √ | √    | √ | √   | √ |  |  |
+| VInputMobilecVerification | | √ | √ | √ |  |  |  |
+| VInputGraphicVerification | | √ | √ | √ |  |  |  |
+| VTreeTransfer | √ | √ |  | √ | √ |  |  |
+| VTabs | √ | | | | √ |  |  |
+| RGeneralBasicForm |  | | | |  | √ | √ |
+| RTabs |  | | | |  | √ | √ |
 
 示例:
 
