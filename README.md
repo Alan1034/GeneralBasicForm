@@ -13,6 +13,7 @@
 | VTreeTransfer | √ | √ |  | √ | √ |  |  |
 | VTabs | √ | | | | √ |  |  |
 | RGeneralBasicForm |  | | | |  | √ | √ |
+| RFormList | | | | | | √ | √ |
 | RTabs |  | | | |  | √ | √ |
 
 安装：npm i general-basic-form<br/>
