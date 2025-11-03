@@ -2,7 +2,7 @@
   "name": "general-basic-form",
   "version": "2.1.6",
   "description": "",
-  "main": "./dist/index.umd.cjs",
+  "main": "./src/index.ts",
   "type": "module",
   "scripts": {
     "build": "cross-env CURRENT_ENV=prod run-p type-check && run-p build-only",
@@ -58,31 +58,21 @@
   "peerDependencies": {
     "react": ">=19.0.0"
   },
-  "typings": "./dist/index.d.ts",
+  "typings": "./publish/index.d.ts",
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tabs": "^1.1.13",
     "@tailwindcss/vite": "^4.1.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "general-basic-indexdb": "^1.0.5",
     "lucide-react": "^0.547.0",
     "network-spanner": "1.2.22",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.16"
-  },
-  "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs"
-    },
-    "./style": "./dist/index.css"
-  },
-  "files": [
-    "/dist"
-  ]
+  }
 }

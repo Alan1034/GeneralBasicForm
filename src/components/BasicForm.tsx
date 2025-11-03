@@ -5,9 +5,10 @@ import { FormList } from "../components/CustomCom/form-list";
 import { Spinner } from "../components/ui/spinner"
 import {
   Field,
-  // FieldDescription,
+  FieldDescription,
   FieldGroup,
   FieldLabel,
+  // FieldContent,
   // FieldLegend,
   // FieldSeparator,
   // FieldSet,
@@ -220,7 +221,12 @@ export const BasicForm = (prop) => {
                     />
                   )
                 }
-
+                {item.description && item.description.length > 0 &&
+                  item.description.map((des, index) => {
+                    return (
+                      <FieldDescription key={index}>{des}</FieldDescription>
+                    )
+                  })}
                 <FieldError errors={message?.[item.prop] || []} ></FieldError>
               </Field>
             )

@@ -14,3 +14,12 @@ export const RGeneralBasicForm = GeneralBasicForm;
 
 import { BasicForm } from "./components/BasicForm";
 export const RBasicForm = BasicForm;
+
+import { FormList } from "./components/CustomCom/form-list";
+export const RFormList = FormList;
+
+import { Tabs } from "./components/CustomCom/R-tabs/R-tabs";
+export const RTabs = Tabs;
+
+import { BaseTabs } from "./components/CustomCom/R-tabs/R-base-tabs";
+export const RBaseTabs = BaseTabs;

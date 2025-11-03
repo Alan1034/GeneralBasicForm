@@ -2,18 +2,21 @@
 
 # GeneralBasicForm
 
-## 一个兼容 Vue2 、Vue3 和 React(未来实现) 的表单组件，支持 typescript，vue2 请使用@1 版本，Vue3 请使用@2 版本
+## 一个兼容 Vue2 、Vue3 和 React(未来实现) 的表单组件，支持 typescript，vue2 请使用@1 版本，Vue3 请使用@2 版本，React19请使用@3 版本。
 
-| 组件\兼容性               | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） |
-| ------------------------- | ---- | ---- | ---------------------- | ------------ | ------------- |
-| VGeneralBasicForm         | √    | √    |                        | √            | √             |
-| VSearchBox                | √    |      |                        |              | √             |
-| VInfiniteScrollList       |      | √    |                        | √            |               |
-| VDescriptions             | √    | √    | √                      | √            | √             |
-| VInputMobilecVerification |      | √    | √                      | √            |               |
-| VInputGraphicVerification |      | √    | √                      | √            |               |
-| VTreeTransfer             | √    | √    |                        | √            | √             |
-| VTabs                     | √    |      |                        |              | √             |
+| 组件\兼容性         | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） | React19 | shadcn/ui |
+| ------------------- | ---- | ---- | ---- | ---- | ---- | ------------------- | ------------------- |
+| VGeneralBasicForm    | √    | √    |     | √   | √   |    |    |
+| VSearchBox           | √    |      |      |  | √ |  |  |
+| VInfiniteScrollList |      | √    |     | √   |     |     |     |
+| VDescriptions       | √ | √    | √ | √   | √ |  |  |
+| VInputMobilecVerification | | √ | √ | √ |  |  |  |
+| VInputGraphicVerification | | √ | √ | √ |  |  |  |
+| VTreeTransfer | √ | √ |  | √ | √ |  |  |
+| VTabs | √ | | | | √ |  |  |
+| RGeneralBasicForm |  | | | |  | √ | √ |
+| RFormList | | | | | | √ | √ |
+| RTabs |  | | | |  | √ | √ |
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
@@ -34,7 +37,7 @@ app.use(ElementPlus)
 ```
 
 ```
-import { RGeneralBasicForm } from 'general-basic-form';
+import { RGeneralBasicForm,RBasicForm } from 'general-basic-form';
 ```
 
 <RGeneralBasicForm
@@ -47,6 +50,24 @@ fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
 
 > </RGeneralBasicForm>
 
+ <RBasicForm
+              formItem={formItem}
+              getList={getList}
+              parametersType="data"
+              noInputBlank
+              formData={detail}
+              fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
+              coms={{
+                Input,
+                Button,
+                Select,
+                SelectContent,
+                SelectItem,
+                SelectTrigger,
+                SelectValue,
+                SelectGroup,
+              }}
+            ></RBasicForm>
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
 在单纯作为表单的时候可以这样使用：
@@ -199,6 +220,10 @@ parametersType 类型介绍
             label: '天数-价格配置',
             prop: 'prices',
             type: 'form-list',
+            description: [
+              '段落1',
+              '段落2',
+            ],
             setting: {
               ndim: 3, // 多维数组，注意要和columns的长度相等，输出为对象数组
               columns: [
@@ -536,169 +561,3 @@ parametersType 类型介绍
   _/
   "checkbox" = "checkbox",
 
-# VInfiniteScrollList 对虚拟滚动列表+接口的封装
-
-![image-20231208165229296](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081652392.png)
-
-```
-import { VInfiniteScrollList } from 'general-basic-form'
-import 'general-basic-form/style'
-<VInfiniteScrollList
-  :search="search"
-  id="user_id"
-  name="name"
-  ref="InfiniteScrollListRef"
-  checkbox
-  :extra="extraRender"
-  :max="1"
- />
-```
-
-```
-移动端配合下拉刷新使用
-import { getOrderItem } from "../orderItem/functional"
-// getOrderItem为JSX函数，返回一个VUE组件
-
-<t-pull-down-refresh v-model="refreshing" @refresh="onRefresh" class="refresh-content">
-      <VInfiniteScrollList :search="loadData" :checkbox="false" id="cancelId" ref="InfiniteScrollListRef" checkbox
-        :extra="getOrderItem" height="100%" infinite-scroll-distance="50"/>
-    </t-pull-down-refresh>
-```
-
-```
-search：数据接口 (page: Number) => Promise<[]>
-id：数据key值（唯一和选择值）
-name：显示名字
-checkbox：是否有多选功能，不传的话就是单纯的虚拟滚动列表
-extra：同行额外显示的内容，(item: any) => VNode | String;
-//el-checkbox有固定高度，如果需要配置高度比较高，例如有换行的自定义extra，最好处理一下样式，例子：
-//:deep(.el-checkbox) {
-//  padding: 6px 16px !important;
-//  display: flex;
-//  align-items: baseline;
-//  height: auto;
-//}
-defaultSelection：包含数据key值的对象数组或者直接传入key值数组
-height:默认272px String
-```
-
-```
- defineExpose({ reset, loadList, selectInfo, list, ifbottom });
- InfiniteScrollListRef?.value?.reset()：重置列表内容
- InfiniteScrollListRef?.value?.lowReset()：重置列表内容，但保留已选择的选项
- InfiniteScrollListRef?.value?.loadList()：向下滚动列表内容，受到loading和ifbottom的影响
- InfiniteScrollListRef?.value?.refreshList()：刷新列表，滚动列表会对整个内容重新请求数据，已选择的内容会自动选择
- InfiniteScrollListRef?.value?.selectInfo：选择的内容
- InfiniteScrollListRef?.value?.list：列表的内容
- InfiniteScrollListRef?.value?.ifbottom：是否到底部
- InfiniteScrollListRef?.value?.loading：加载中
-```
-
-# VDescriptions 对展示描述列表的封装
-
-![image-20231208182455415](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202312081824708.png)
-
-```
-import { VDescriptions } from 'general-basic-form'
- <VDescriptions
-  :formData="props.formData"
-  :formItem="formItem"
-  componentType="Ant Design Vue"
-  ...其他el-descriptions的配置
- />
-```
-
-```
-formData:Object
-formItem:[ {
-      label: '受访人',
-      prop: 'contactors',
-      render: (scope: any) => {
-        const { $index, row = {} } = scope
-        const { contactors = [] } = row
-        const ele = (contactors.length > 0 ? <span>{contactors.map((item: any) => item.name).join("，")} </span> : null)
-        return ele
-      }
-    },
-    {
-      label: '拜访详情',
-      prop: 'detail',
-      descriptionsItemProps:{
-       'label-class-name': 'label-class-name'
-      }
-  }]
-componentType:"Ant Design Vue"|"Element Plus"（默认）
-strict:Boolean //使用strict参数后，如果formData内的某个字段没有值，对应的描述元素将不会展示（包括标签文字），但有render的字段仍然会展示
-descriptionsItemProps:a-descriptions-item|el-descriptions-item的配置
-```
-
-# VInputMobilecVerification，VInputGraphicVerification 表单里的图形验证码、手机验证码组件，可以单独引入
-
-```
-<VInputGraphicVerification :item="{同表单，可忽略label和rules字段}" :loading="loading"></VInputGraphicVerification>
-
-<VInputMobilecVerification :item="{同表单，可忽略label和rules字段}" componentType="Ant Design Vue" ref="VInputMobilecVerificationRef"></VInputMobilecVerification>
-```
-
-```
-componentType:"Ant Design Vue"|"Element Plus"（默认）
-```
-
-```
-此用法下必须提供：
-provide(/* 注入名 */ "queryParams", /* 表单值对象 */ queryParams);
-
-componentType为Ant Design Vue需要提供：
-import { Form } from 'ant-design-vue';
-provide(/* 注入名 */ "Form", /* Ant Design Vue Form实例，用于表单数据更新等 */ Form);
-
-可选：
-provide("size", size); // 同组件size
-provide("getList", getList); // 输入框回车触发
-
-调用发送短信验证码和重置的方法
-VInputMobilecVerificationRef.value.VerificationButtonRef.buttonClick()
-VInputMobilecVerificationRef.value.VerificationButtonRef.reset()
-```
-
-# VTreeTransfer 树形数据穿梭框
-
-![image-20250425183446375](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202504251834575.png)
-
-```
-<VTreeTransfer :dataSource="classmate" :treeAttributes="{
-      'node-key': 'user_id', props: { label: 'user_name' }, 'default-expand-all': false
-    }" transferTitleRight="白名单(不会被选中)" transferTitleLeft="普通名单" filterable 		:checkedKeys="checkedKeys">
-</VTreeTransfer>
-
-import { VTreeTransfer } from 'general-basic-form';
-const VTreeTransferRef = ref([])
-```
-
-```
-dataSource:[
-  {
-    label: 'Level one 1',
-    id:1,
-    children: [
-      {
-        label: 'Level two 1-1',
-        id:2,
-        children: [
-          {
-            label: 'Level three 1-1-1',
-            id:3,
-          },
-        ],
-      },
-    ],
-  },] 树状结构数据
-treeAttributes:{} 树形控件的属性，见https://element-plus.org/zh-CN/component/tree.html
-transferTitleLeft:"" 左标题
-transferTitleRight:"" 右标题
-filterable:false 是否显示搜索框
-checkedKeys:[1,2] 选中的值
-
-获取选中的数组详情：
-VTreeTransferRef.value["selectedList"].map((item) => {}))
-```
