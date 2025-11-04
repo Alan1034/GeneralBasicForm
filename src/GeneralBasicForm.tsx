@@ -4,6 +4,7 @@
 import { BasicForm } from "./components/BasicForm";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
+import { Checkbox } from "./components/ui/checkbox"
 import {
   Select,
   SelectContent,
@@ -23,6 +24,7 @@ export const GeneralBasicForm = (props) => {
       SelectTrigger,
       SelectValue,
       SelectGroup,
+      Checkbox,
     }}></BasicForm>
   );
 }

@@ -9,8 +9,8 @@ import {
   FieldGroup,
   FieldLabel,
   // FieldContent,
-  // FieldLegend,
-  // FieldSeparator,
+  FieldLegend,
+  FieldSeparator,
   // FieldSet,
   FieldError,
 } from "./ui/field"
@@ -185,7 +185,9 @@ export const BasicForm = (prop) => {
     //   queryParameter, vm: this
     // })
     // 读取表单数据
-
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(key, value)
+    // }
     const resMessage = await valid()
     if (Object.keys(resMessage).length == 0) {
       setFormLoading(true)
@@ -197,7 +199,7 @@ export const BasicForm = (prop) => {
   }
 
   useEffect(() => { setFormLoading(loading) }, [loading])
-  useEffect(() => { dispatchQueryParams({ data: { ...queryParams, ...formData } }) }, [formData])
+  useEffect(() => { dispatchQueryParams({ data: { ...queryParams, ...formData } }) }, [JSON.stringify(formData)])
   return (
     <FormContext value={{ ...props, dispatchQueryParams, queryParams, message, formLoading }}>
       <form action={action}>
@@ -208,6 +210,7 @@ export const BasicForm = (prop) => {
               <Field key={item.prop}
                 data-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
                 {...item.fieldSetting}>
+                {item.legend && <FieldLegend>{item.legend}</FieldLegend>}
                 <FieldLabel htmlFor={id} >
                   {item.label}
                 </FieldLabel>
@@ -228,6 +231,8 @@ export const BasicForm = (prop) => {
                     )
                   })}
                 <FieldError errors={message?.[item.prop] || []} ></FieldError>
+                {item.separator && <FieldSeparator>{item.separator}</FieldSeparator>}
+
               </Field>
             )
           })}

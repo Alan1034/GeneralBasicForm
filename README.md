@@ -172,28 +172,18 @@ parametersType 类型介绍
     defPageSize：10, //默认的每页显示个数
     queryWhenReady:false,//初始化完成后自动触发查找数据函数
     formItem: [
-    	{
-          label: '',
-          prop: 'bsName35',
-          type: 'divider',
-          setting: {
-          },
-          template: {
-            default: () => {
-              return "123123123";
-            },
-          },
-        },
+
         { label: "款式名称",
           prop: "bsName",
           type: "input",
+          legend: '这是一个可选的标题',
        	  setting: {
             placeholder: '请输入手机验证码',
             style: 'width: 100%',
             required: true,
           },
       fieldSetting: {
-        orientation: 'responsive',
+        orientation: 'responsive',//表单布局-响应式
       },
           rules: [
             {
@@ -210,6 +200,8 @@ parametersType 类型介绍
           },
         },
           ],
+          separator: true, //分割线
+
           //template: {
           //  suffix: () => {
           //    return <svg-icon icon-class="baifenbi" />;
@@ -224,6 +216,7 @@ parametersType 类型介绍
               '段落1',
               '段落2',
             ],
+            separator: "text", //文字分割线
             setting: {
               ndim: 3, // 多维数组，注意要和columns的长度相等，输出为对象数组
               columns: [
@@ -238,12 +231,13 @@ parametersType 类型介绍
                   },
                 },
                 {
-                  prop: 'packageCode',
+                  prop: 'days',
                   label: '套餐名称',
                   type: 'input',
                   setting: {
                     required: true,
                     placeholder: '请输入套餐名称',
+                    type: 'number'
                   },
                 },
                   {
@@ -262,7 +256,7 @@ parametersType 类型介绍
               ],
             },
             fieldSetting: {
-              className: 'col-span-4 overflow-auto',
+              className: 'col-span-4',
             },
             rules: [
               {
@@ -270,7 +264,7 @@ parametersType 类型介绍
                   console.log(value);
                   for (let i = 0; i < value.length; i++) {
                     const element = value[i];
-                    if (!Number(element.days) || !Number(element.price)) {
+                    if (!Number(element.days)) {
                       callback(new Error('请输入数字'));
                       return;
                     }
@@ -299,7 +293,6 @@ parametersType 类型介绍
               rules: [
                 {
                   validator: (rule, value, callback) => {
-                    console.log(value);
                     for (let i = 0; i < value.length; i++) {
                       const element = value[i];
                       if (!element) {
@@ -312,17 +305,21 @@ parametersType 类型介绍
                 },
               ],
             },
-        {
-          label: "二次工艺",
-          prop: "spName",
-          type: "select",
-          setting:{ multiple:true, //多选},
-          option: [
-            { value: "3", label: "满印" },
-            { value: "1", label: "区域印花" },
-            { value: "2", label: "绣花" },
-          ],
-        },
+         {
+           prop: 'level',
+           label: '等级',
+           type: 'select',
+           option: [
+             { label: 'Y3', value: 'Y3' },
+             { label: 'Y4', value: 'Y4' },
+             { label: 'Y5', value: 'Y5' },
+           ],
+           setting: {
+             placeholder: '请选择等级',
+             required: true,
+             multiple: true,
+           },
+         },
         {
           label: "创建时间",
           prop: "create_time",
@@ -330,20 +327,6 @@ parametersType 类型介绍
           setting: {
             "range-separator": "至",
           }
-        },
-        {
-          label: "二次工艺成本价格（人民币分）",
-          prop: "spCost",
-          type: "input-number",
-          "controls-position": "right",
-          min: 0,
-          rules: [
-            {
-              required: true,
-              message: "请输入二次工艺成本价格",
-              trigger: "blur",
-            },
-          ],
         },
         {
           label: '',
@@ -402,18 +385,24 @@ parametersType 类型介绍
             }
           ]
         },
-        {
-          label: '多选',
-          prop: 'is_multi',
-          type: 'checkbox',
-          setting: {
+            {
+            prop: 'level',
+            label: '多选',
+            legend: 标题',
+            type: 'checkbox',
+            gap: 3,
+            option: [
+              { label: 'Y3', value: 'Y3' },
+              { label: 'Y4', value: 'Y4' },
+              { label: 'Y5', value: 'Y5' },
+            ],
+            fieldSetting: {
+              className: 'col-span-4',
+            },
+            setting: {
+              placeholder: '请选择等级',
+            },
           },
-          option: [
-            { value: '是', label: 'true' },
-            { value: '否', label: 'false' }
-          ],
-          rules: []
-        },
         {
           label: '受访人',
           prop: 'contactors',
@@ -544,10 +533,7 @@ parametersType 类型介绍
   _/
   "date-picker" = "date-picker",
   /\*\*
-- @description: 数字输入框
-- @return {_}
-  _/
-  "input-number" = "input-number",
+
   /\*\*
 - @description: 单选框
 - @return {_}

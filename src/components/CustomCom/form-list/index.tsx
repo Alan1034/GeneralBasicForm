@@ -4,11 +4,11 @@ import { TypeCom } from "../../comType";
 import { FormContext } from "../../BasicForm";
 export const FormList = (props) => {
   const { coms, item = {}, id = useId() } = props
-  const { setting = {}, prop } = item
+  const { setting = {}, prop, gap = 3 } = item
   const { ndim = 1, columns = [] } = setting
   const { Button } = coms
   const x_list = []
-  const gap = 3
+
   for (let i = 0; i < ndim; i++) {
     x_list.push({})
   }

@@ -22,11 +22,6 @@ export enum FormType {
   //  */
   // 'input-mobile-verification' = 'input-mobile-verification',
   /**
-   * @description: 分割线
-   * @return {*}
-   */
-  "divider" = "divider",
-  /**
    * @description: 选择器
    * @return {*}
    */
@@ -41,11 +36,7 @@ export enum FormType {
    * @return {*}
    */
   "date-picker" = "date-picker",
-  /**
-   * @description: 数字输入框
-   * @return {*}
-   */
-  "input-number" = "input-number",
+
   /**
    * @description: 单选框
    * @return {*}
