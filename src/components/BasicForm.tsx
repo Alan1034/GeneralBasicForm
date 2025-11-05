@@ -78,6 +78,8 @@ export const BasicForm = (prop) => {
     // getList = () => { },
     formData = {},
     fieldGroupSetting = {},
+    footFieldSetting = {},
+    fieldLabelSetting = {},
     loading = false,
     // showSearch = true,
     // formOnly = false,
@@ -210,8 +212,10 @@ export const BasicForm = (prop) => {
               <Field key={item.prop}
                 data-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
                 {...item.fieldSetting}>
-                {item.legend && <FieldLegend>{item.legend}</FieldLegend>}
-                <FieldLabel htmlFor={id} >
+                {item.legend && <FieldLegend
+                  {...item.legend?.setting}
+                >{item.legend?.legend || item.legend}</FieldLegend>}
+                <FieldLabel htmlFor={id} {...fieldLabelSetting}>
                   {item.label}
                 </FieldLabel>
                 <TypeCom coms={coms} item={item} id={id} type={item.type}></TypeCom>
@@ -237,7 +241,7 @@ export const BasicForm = (prop) => {
             )
           })}
           {children}
-          <Field orientation="horizontal">
+          <Field orientation="horizontal" {...footFieldSetting}>
             <Button disabled={formLoading} formAction={formAction}>{formLoading ? <Spinner /> : []}提交</Button>
             <Button disabled={formLoading} variant="outline" type="button" onClick={resetQuery}>
               重置

@@ -6,10 +6,13 @@ const Checkbox = (props) => {
 
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
   const onCheckedChange = (checked) => {
-    if (checked === "") {
-      checked = 'indeterminate'
+    if (checked === true) {
+      dispatchQueryParams({ data: { ...queryParams, [item.prop]: checked } })
     }
-    dispatchQueryParams({ data: { ...queryParams, [item.prop]: checked } })
+    if (checked === false) {
+      dispatchQueryParams({ data: { ...queryParams, [item.prop]: checked } })
+    }
+
   }
 
   return (

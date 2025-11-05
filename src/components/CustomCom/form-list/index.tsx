@@ -2,14 +2,15 @@ import { useState, useContext, useEffect, useId } from "react";
 import { X, Plus } from 'lucide-react';
 import { TypeCom } from "../../comType";
 import { FormContext } from "../../BasicForm";
+import { Label } from "../../ui/label"
 export const FormList = (props) => {
   const { coms, item = {}, id = useId() } = props
   const { setting = {}, prop, gap = 3 } = item
-  const { ndim = 1, columns = [] } = setting
+  const { dim = 1, columns = [], heading = (dim != 1) } = setting
   const { Button } = coms
   const x_list = []
 
-  for (let i = 0; i < ndim; i++) {
+  for (let i = 0; i < dim; i++) {
     x_list.push({})
   }
   const { dispatchQueryParams, queryParams, formLoading, } = useContext(FormContext);
@@ -53,7 +54,7 @@ export const FormList = (props) => {
   }
   const setFormData = (innerNewList) => {
     let newList = []
-    if (ndim === 1) {
+    if (dim === 1) {
       newList = innerNewList.flat().map(x => x.value)
     } else {
       newList = innerNewList.map(x => {
@@ -90,10 +91,9 @@ export const FormList = (props) => {
       <div className={`flex gap-${gap} mb-${gap} justify-end`}>
         <Button onClick={addItem} disabled={formLoading}><Plus />添加{item.label}</Button>
       </div>
-
       {list.map((ele, rowIndex) => {
         return (
-          <div key={rowIndex} className={`flex gap-${gap} mb-${gap}`}>
+          <div key={rowIndex} className={`flex gap-${gap} mb-${gap} items-end`}>
             {
               ele.map((x, columnIndex) => {
                 let newItem = { ...item }
@@ -115,7 +115,11 @@ export const FormList = (props) => {
                   delete newItem.setting.onValueChange
                 }
                 return (
-                  <TypeCom key={x.key} coms={coms} item={newItem} id={x.key} type={newItem.type}></TypeCom>
+                  <div key={x.key} className={`w-full ${newItem?.setting?.className?.match(/hidden/i) ? "hidden" : ""}`}>
+                    {heading && (rowIndex === 0) ? <h3 className={`inline-block text-base`}  >{newItem.label}</h3> : []}
+                    <TypeCom className="w-full" coms={coms} item={newItem} id={x.key} type={newItem.type}></TypeCom>
+                  </div>
+
                 )
               })
             }

@@ -9,7 +9,7 @@ const Select = (props) => {
       // Button
 
     }
-   } = props
+  } = props
   const { setting } = item
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
   return (
@@ -22,7 +22,7 @@ const Select = (props) => {
       aria-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
       {...item.setting}
     >
-      <SelectTrigger id={id}>
+      <SelectTrigger id={id} className={`${item?.setting?.className}`}>
         <SelectValue placeholder={setting.placeholder} />
       </SelectTrigger>
       <SelectContent>

@@ -2,21 +2,21 @@
 
 # GeneralBasicForm
 
-## 一个兼容 Vue2 、Vue3 和 React(未来实现) 的表单组件，支持 typescript，vue2 请使用@1 版本，Vue3 请使用@2 版本，React19请使用@3 版本。
+## 一个兼容 Vue2 、Vue3 和 React(未来实现) 的表单组件，支持 typescript，vue2 请使用@1 版本，Vue3 请使用@2 版本，React19 请使用@3 版本。
 
-| 组件\兼容性         | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） | React19 | shadcn/ui |
-| ------------------- | ---- | ---- | ---- | ---- | ---- | ------------------- | ------------------- |
-| VGeneralBasicForm    | √    | √    |     | √   | √   |    |    |
-| VSearchBox           | √    |      |      |  | √ |  |  |
-| VInfiniteScrollList |      | √    |     | √   |     |     |     |
-| VDescriptions       | √ | √    | √ | √   | √ |  |  |
-| VInputMobilecVerification | | √ | √ | √ |  |  |  |
-| VInputGraphicVerification | | √ | √ | √ |  |  |  |
-| VTreeTransfer | √ | √ |  | √ | √ |  |  |
-| VTabs | √ | | | | √ |  |  |
-| RGeneralBasicForm |  | | | |  | √ | √ |
-| RFormList | | | | | | √ | √ |
-| RTabs |  | | | |  | √ | √ |
+| 组件\兼容性               | vue2 | vue3 | Ant Design Vue（next） | Element Plus | Element（ui） | React19 | shadcn/ui |
+| ------------------------- | ---- | ---- | ---------------------- | ------------ | ------------- | ------- | --------- |
+| VGeneralBasicForm         | √    | √    |                        | √            | √             |         |           |
+| VSearchBox                | √    |      |                        |              | √             |         |           |
+| VInfiniteScrollList       |      | √    |                        | √            |               |         |           |
+| VDescriptions             | √    | √    | √                      | √            | √             |         |           |
+| VInputMobilecVerification |      | √    | √                      | √            |               |         |           |
+| VInputGraphicVerification |      | √    | √                      | √            |               |         |           |
+| VTreeTransfer             | √    | √    |                        | √            | √             |         |           |
+| VTabs                     | √    |      |                        |              | √             |         |           |
+| RGeneralBasicForm         |      |      |                        |              |               | √       | √         |
+| RFormList                 |      |      |                        |              |               | √       | √         |
+| RTabs                     |      |      |                        |              |               | √       | √         |
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
@@ -31,43 +31,41 @@ transpileDependencies: ['general-basic-form'],
 因为兼容性问题，目前只能使用完整引入
 
 ```
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-app.use(ElementPlus)
-```
-
-```
 import { RGeneralBasicForm,RBasicForm } from 'general-basic-form';
 ```
 
+```
 <RGeneralBasicForm
-formItem={formItem}
-getList={getList}
-parametersType="data"
-noInputBlank
-formData={detail}
-fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
-
+  formItem={formItem}
+  getList={getList}
+  parametersType="data"
+  noInputBlank
+  formData={detail}
+  fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
 > </RGeneralBasicForm>
 
- <RBasicForm
-              formItem={formItem}
-              getList={getList}
-              parametersType="data"
-              noInputBlank
-              formData={detail}
-              fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
-              coms={{
-                Input,
-                Button,
-                Select,
-                SelectContent,
-                SelectItem,
-                SelectTrigger,
-                SelectValue,
-                SelectGroup,
-              }}
-            ></RBasicForm>
+<RBasicForm
+    formItem={formItem}
+    getList={getList}
+    parametersType="data"
+    noInputBlank
+    formData={detail}
+    fieldGroupSetting={{ className: 'grid grid-cols-4 gap-4' }}
+    footFieldSetting={{ className: 'col-start-1 col-span-4 col-end-3 mb-8' }}
+    fieldLabelSetting={{ className: "text-lg" }}
+    coms={{
+      Input,
+      Button,
+      Select,
+      SelectContent,
+      SelectItem,
+      SelectTrigger,
+      SelectValue,
+      SelectGroup,
+    }} >
+</RBasicForm>
+```
+
 ![image-20210903165502942](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202109031655830.png)
 
 在单纯作为表单的时候可以这样使用：
@@ -162,8 +160,9 @@ parametersType 类型介绍
     afterReset(); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
     parametersType:"url" // 见parametersType类型介绍
+    DBPrimaryKey: user_id // indexDB主键，配合indexDB使用
     loading:false // 加载动画
-    formData:{} // 注意，因为可能出现的性能问题在组件watch formData的变化时没有使用deep，所以有时候深度的修改会不生效，导致表单数据不完整
+    formData:{} // 表单数据不完整
     noInputBlank: true //校验input框不能仅输入空格
     //例子：formData.value.x=y ✘ | formData.value={...formData.value,x:y} ✔
     currentPageKey:"page", //当前页数key
@@ -171,6 +170,9 @@ parametersType 类型介绍
     defCurrentPage:1, //默认的页数
     defPageSize：10, //默认的每页显示个数
     queryWhenReady:false,//初始化完成后自动触发查找数据函数
+    footFieldSetting: {} // 表单底部按钮设置
+    fieldGroupSetting: {} // 表单分组设置
+    fieldLabelSetting: {} // 表单字段label设置
     formItem: [
 
         { label: "款式名称",
@@ -218,7 +220,8 @@ parametersType 类型介绍
             ],
             separator: "text", //文字分割线
             setting: {
-              ndim: 3, // 多维数组，注意要和columns的长度相等，输出为对象数组
+              heading:true, //是否显示标题
+              dim: 3, // 多维数组，注意要和columns的长度相等，输出为对象数组
               columns: [
                   {
                   prop: 'id',
@@ -251,12 +254,13 @@ parametersType 类型介绍
                     setting: {
                       placeholder: '请选择服务类型',
                       required: true,
+                      className: 'w-full',
                     },
                   },
               ],
             },
             fieldSetting: {
-              className: 'col-span-4',
+              className: 'col-span-2 col-start-2 mb-8',
             },
             rules: [
               {
@@ -285,7 +289,7 @@ parametersType 类型介绍
               setting: {
                 placeholder: ['请输入服务内容'],
                 required: true,
-                ndim: 1, // 1维数组，输出为字符串数组
+                dim: 1, // 1维数组，输出为字符串数组
               },
               fieldSetting: {
                 className: 'col-span-2',
@@ -328,44 +332,7 @@ parametersType 类型介绍
             "range-separator": "至",
           }
         },
-        {
-          label: '',
-          prop: 'bsName2',
-          type: 'input-graphic-verification',
-          setting: {
-            placeholder: '请输入图形验证码',
-            style: 'width: 100%'
-          },
-          rules: [
-            {
-              message: '请输入图形验证码',
-              trigger: 'blur'
-            }
-          ],
-          graphicSrc, // 请求图像的URL
-          getGraphic, // 重新请求图像的函数
-          key:Math.random(),  // 必传，图像更新后必须更新。如果URL会变化也可以用URL代替
-        },
-        {
-          label: '',
-          prop: 'bsName3',
-          type: 'input-mobile-verification',
-          inputSetting: {
-            placeholder: '请输入手机验证码',
-            style: 'width: 100%'
-          },
-    	  buttonSetting: {
-      		type: "text",
-      		style: 'text-align: end',
-    	  },
-          rules: [
-            {
-              message: '请输入手机验证码',
-              trigger: 'blur'
-            }
-          ],
-          getSmscode,// 获取验证码的回调函数,获取失败必须返回false,否则计时器不会重新计算
-        },
+
         {
           label: '是否必填',
           prop: 'is_optional',
@@ -389,7 +356,7 @@ parametersType 类型介绍
             prop: 'level',
             label: '多选',
             legend: 标题',
-            type: 'checkbox',
+            type: 'checkbox-list',
             gap: 3,
             option: [
               { label: 'Y3', value: 'Y3' },
@@ -403,6 +370,17 @@ parametersType 类型介绍
               placeholder: '请选择等级',
             },
           },
+              {
+      prop: 'test1',
+      label: 'test1(多选)',
+      type: 'checkbox',
+      fieldSetting: {
+        className: 'col-span-4',
+      },
+      setting: {
+        placeholder: '请选择套餐',
+      },
+    },
         {
           label: '受访人',
           prop: 'contactors',
@@ -513,11 +491,6 @@ parametersType 类型介绍
   _/
   "form-list" = "form-list",
   /\*\*
-- @description: 分割线
-- @return {_}
-  _/
-  "divider" = "divider",
-  /\*\*
 - @description: 选择器
 - @return {_}
   _/
@@ -532,18 +505,25 @@ parametersType 类型介绍
 - @return {_}
   _/
   "date-picker" = "date-picker",
-  /\*\*
 
-  /\*\*
+/\*\*
+
 - @description: 单选框
 - @return {_}
   _/
   "radio" = "radio",
-
-/\*\*
-
+  // /**
+  // _ @description: 自定义元素，插槽组件
+  // _ @return {_}
+  // _/
+  // "form-item-slot" = "form-item-slot",
+  /**
 - @description: 多选框
 - @return {_}
   _/
   "checkbox" = "checkbox",
-
+  /\*\*
+- @description: 多选框列表，输入输出都是字符串列表 ["value1", "value2", "value3"]
+- @return {_}
+  _/
+  "checkbox-list" = "checkbox-list",

@@ -1,6 +1,6 @@
 import Input from "./RBasic/input";
 import Select from "./RBasic/select";
-// import Checkbox from "../components/RBasic/checkbox";
+import Checkbox from "../components/RBasic/checkbox";
 import { CheckboxList } from "./CustomCom/checkbox-list";
 
 export const TypeCom = (props) => {
@@ -25,6 +25,15 @@ export const TypeCom = (props) => {
     )
   }
   if (/^checkbox$/i.test(type)) {
+    return (
+      <Checkbox
+        id={id}
+        coms={coms}
+        item={item}
+      />
+    )
+  }
+  if (/^checkbox-list$/i.test(type)) {
     return (
       <CheckboxList
         id={id}

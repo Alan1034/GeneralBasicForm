@@ -14,7 +14,7 @@ export const CheckboxList = (props) => {
   }, [JSON.stringify(queryParams)])
   const onCheckedChange = (props, checked) => {
     const { value } = props
-    const rawData = queryParams[item.prop]
+    const rawData = queryParams[item.prop] || []
     let newData = [...rawData]
     if (checked === true) {
       newData = [...rawData, value]

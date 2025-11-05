@@ -11,16 +11,6 @@ export enum FormType {
    * @return {*}
    */
   "form-list" = "form-list",
-  // /**
-  //  * @description: 输入框/图像验证码
-  //  * @return {*}
-  //  */
-  // 'input-graphic-verification' = 'input-graphic-verification',
-  // /**
-  //  * @description: 输入框/手机验证码
-  //  * @return {*}
-  //  */
-  // 'input-mobile-verification' = 'input-mobile-verification',
   /**
    * @description: 选择器
    * @return {*}
@@ -52,6 +42,11 @@ export enum FormType {
    * @return {*}
    */
   "checkbox" = "checkbox",
+  /**
+   * @description: 多选框列表，输入输出都是字符串列表 ["value1", "value2", "value3"]
+   * @return {*}
+   */
+  "checkbox-list" = "checkbox-list",
 }
 
 export interface ItemType {
