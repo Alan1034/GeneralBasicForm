@@ -7,7 +7,7 @@ export enum FormType {
    */
   "input" = "input",
   /**
-   * @description: 表单中的多维列表，可增减元素
+   * @description: 表单中的多维列表，可增减元素，内部可以使用的数据类型除自身form-list外同FormType
    * @return {*}
    */
   "form-list" = "form-list",
@@ -17,10 +17,15 @@ export enum FormType {
    */
   "select" = "select",
   /**
-   * @description: 级联选择器
+   * @description: 带搜索的二级菜单
    * @return {*}
    */
-  "cascader" = "cascader",
+  "command" = "command",
+  /**
+   * @description: 响应式下拉框+带搜索的二级菜单
+   * @return {*}
+   */
+  "combobox" = "combobox",
   /**
    * @description: 日期选择器
    * @return {*}

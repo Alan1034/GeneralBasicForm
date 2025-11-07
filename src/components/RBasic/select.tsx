@@ -2,7 +2,7 @@ import { useContext, useId } from 'react';
 
 import { FormContext } from '../BasicForm';
 const Select = (props) => {
-  const { item, id = useId(),
+  const { item = {}, id = useId(),
     coms: { Select, SelectTrigger,
       SelectValue, SelectContent,
       SelectGroup, SelectItem
@@ -10,7 +10,7 @@ const Select = (props) => {
 
     }
   } = props
-  const { setting } = item
+  const { setting = {} } = item
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
   return (
     <Select
@@ -20,10 +20,10 @@ const Select = (props) => {
       onChange={e => dispatchQueryParams({ data: { ...queryParams, [item.prop]: e.target.value } })}
       onValueChange={value => dispatchQueryParams({ data: { ...queryParams, [item.prop]: value } })}
       aria-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
-      {...item.setting}
+      {...setting}
     >
-      <SelectTrigger id={id} className={`${item?.setting?.className}`}>
-        <SelectValue placeholder={setting.placeholder} />
+      <SelectTrigger id={id} className={`${setting?.className}`}>
+        <SelectValue placeholder={setting?.placeholder} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

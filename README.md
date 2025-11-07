@@ -399,71 +399,76 @@ parametersType 类型介绍
         {
           label: "分类",
           prop: "分类",
-          type: "cascader",
-          setting:{},
+          type: "command",
+          setting:{
+            placeholder:"请输入分类",
+            empty:"搜索内容为空的提示",
+          },
           options: [
             {
-              value: "zhinan",
               label: "指南",
+              value: "guide",
+              separator:true, //分割线
               children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致",
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈",
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率",
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控",
-                    },
-                  ],
+              {
+                value: 'shejiyuanze',
+                label: '设计原则',
+                onSelect: (value) => {
+                  console.log('Selected', value);
                 },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航",
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航",
-                    },
-                  ],
-                },
+                shortcut: 'ctrl+z', //选项右侧的内容
+              },
+
               ],
             },
             {
-              value: "ziyuan",
               label: "资源",
+              value: "resource",
               children: [
                 {
                   value: "axure",
                   label: "Axure Components",
-                },
-                {
-                  value: "sketch",
-                  label: "Sketch Templates",
-                },
-                {
-                  value: "jiaohu",
-                  label: "组件交互文档",
-                },
+                }
               ],
             },
           ],
         },
+            {
+              label: '分类',
+              prop: 'expense_category_id',
+              type: 'combobox',
+              setting: {
+                placeholder: '请输入分类',
+                empty: '搜索内容为空的提示',
+              },
+              fieldSetting: {
+                className: fieldClassName,
+              },
+              options: [
+                {
+                  label: '指南',
+                  value: '指南',
+                  separator: true, //分割线
+                  children: [
+                    {
+                      value: 'shejiyuanze',
+                      label: '设计原则',
+                      shortcut: 'ctrl+z', //选项右侧的内容
+                    },
+                  ],
+                },
+                {
+                  label: '资源',
+                  value: 'resource',
+                  children: [
+                    {
+                      value: 'axure',
+                      label: 'Axure Components',
+                    },
+                  ],
+                },
+              ],
+            },
       ],
 
       //rules为表单校验规则，每个组件都可以传入
@@ -479,51 +484,58 @@ parametersType 类型介绍
 
 支持组件 type:
 
-/\*\*
-
-- @description: 输入框
-- @return {_}
-  _/
+ export enum FormType {
+  /**
+   * @description: 输入框
+   * @return {*}
+   */
   "input" = "input",
-  /\*\*
-- @description: 表单中的多维列表，可增减元素
-- @return {_}
-  _/
+  /**
+   * @description: 表单中的多维列表，可增减元素，内部可以使用的数据类型除自身form-list外同FormType
+   * @return {*}
+   */
   "form-list" = "form-list",
-  /\*\*
-- @description: 选择器
-- @return {_}
-  _/
+  /**
+   * @description: 选择器
+   * @return {*}
+   */
   "select" = "select",
-  /\*\*
-- @description: 级联选择器
-- @return {_}
-  _/
-  "cascader" = "cascader",
-  /\*\*
-- @description: 日期选择器
-- @return {_}
-  _/
+  /**
+   * @description: 带搜索的二级菜单
+   * @return {*}
+   */
+  "command" = "command",
+  /**
+   * @description: 响应式下拉框+带搜索的二级菜单
+   * @return {*}
+   */
+  "combobox" = "combobox",
+  /**
+   * @description: 日期选择器
+   * @return {*}
+   */
   "date-picker" = "date-picker",
 
-/\*\*
-
-- @description: 单选框
-- @return {_}
-  _/
+  /**
+   * @description: 单选框
+   * @return {*}
+   */
   "radio" = "radio",
   // /**
-  // _ @description: 自定义元素，插槽组件
-  // _ @return {_}
-  // _/
+  //  * @description: 自定义元素，插槽组件
+  //  * @return {*}
+  //  */
   // "form-item-slot" = "form-item-slot",
   /**
-- @description: 多选框
-- @return {_}
-  _/
+   * @description: 多选框
+   * @return {*}
+   */
   "checkbox" = "checkbox",
-  /\*\*
-- @description: 多选框列表，输入输出都是字符串列表 ["value1", "value2", "value3"]
-- @return {_}
-  _/
+  /**
+   * @description: 多选框列表，输入输出都是字符串列表 ["value1", "value2", "value3"]
+   * @return {*}
+   */
   "checkbox-list" = "checkbox-list",
+}
+
+
