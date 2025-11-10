@@ -36,10 +36,7 @@ const initialState: FormContextType = {
 
 export const FormContext = createContext(initialState);
 export const TasksDispatchContext = createContext(null);
-const reducer = (state, action) => {
-  const { data } = action;
-  return { ...data }
-}
+
 
 
 const defProps = {
@@ -75,7 +72,7 @@ export const BasicForm = (prop) => {
     formItem = [] as ItemType[],
     children,
     coms,
-    // getList = () => { },
+    onFormChange = () => { },
     formData = {},
     fieldGroupSetting = {},
     footFieldSetting = {},
@@ -100,6 +97,11 @@ export const BasicForm = (prop) => {
   const [formLoading, setFormLoading] = useState(false);
   const [inited, setInited] = useState(false);
   const [message, setMessage] = useState({});
+  const reducer = (state, action) => {
+    const { data } = action;
+    onFormChange({ ...data })
+    return { ...data }
+  }
   const calculateQueryParams = (propsFormData) => {
 
     const rawFormData = { ...propsFormData }

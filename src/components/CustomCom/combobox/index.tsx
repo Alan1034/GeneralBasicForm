@@ -1,6 +1,10 @@
 import { useContext, useId, useEffect, useState } from 'react';
 import Command from "../../RBasic/command";
-
+import {
+  DrawerTitle,
+  DrawerHeader,
+  DrawerDescription,
+} from "../../ui/drawer"
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 
 import { FormContext } from "../../BasicForm";
@@ -73,6 +77,10 @@ export const Combobox = (props) => {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
+        <DrawerHeader className="hidden">
+          <DrawerTitle></DrawerTitle>
+          <DrawerDescription></DrawerDescription>
+        </DrawerHeader>
         <div className="mt-4 border-t">
           <Command
             id={id}

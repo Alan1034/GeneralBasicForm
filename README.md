@@ -156,8 +156,8 @@ parametersType 类型介绍
 数据示例:
 
     showSearch: true, // 显示搜索条件
-    getList(); // 请求数据的函数
-    afterReset(); // 在重置按钮点击完后但还没重新请求时触发的的函数
+    getList(queryParams); // 请求数据的函数
+    afterReset(queryParams); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
     parametersType:"url" // 见parametersType类型介绍
     DBPrimaryKey: user_id // indexDB主键，配合indexDB使用
@@ -173,6 +173,7 @@ parametersType 类型介绍
     footFieldSetting: {} // 表单底部按钮设置
     fieldGroupSetting: {} // 表单分组设置
     fieldLabelSetting: {} // 表单字段label设置
+    onFormChange(queryParams):表单数据变化时触发的函数
     formItem: [
 
         { label: "款式名称",
