@@ -1,3 +1,14 @@
+/*
+ * @Author: 陈德立*******419287484@qq.com
+ * @Date: 2025-11-07 14:46:25
+ * @LastEditTime: 2025-11-10 09:48:47
+ * @LastEditors: 陈德立*******419287484@qq.com
+ * @Github: https://github.com/Alan1034
+ * @Description:Command文档：https://github.com/dip/cmdk
+ * @FilePath: /GeneralBasicForm/src/components/RBasic/command.tsx
+ * 
+ */
+
 import { useContext, useId, useEffect, useState } from 'react';
 import { FormContext } from '../BasicForm';
 const Command = (props) => {
