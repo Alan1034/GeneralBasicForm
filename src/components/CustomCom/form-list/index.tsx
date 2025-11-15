@@ -110,7 +110,7 @@ export const FormList = (props) => {
                   onChange: changeItem.bind(this, { rowIndex, columnIndex }),
                   onValueChange: changeItem.bind(this, { rowIndex, columnIndex }),
                 }
-                if (newItem.type === "input") {
+                if (["combobox", "input"].includes(newItem.type)) {
                   delete newItem.setting.onValueChange
                 }
                 return (

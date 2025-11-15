@@ -7,6 +7,11 @@ export enum FormType {
    */
   "input" = "input",
   /**
+   * @description: 复杂输入框，可自定义前后缀和大小
+   * @return {*}
+   */
+  "input-group" = "input-group",
+  /**
    * @description: 表单中的多维列表，可增减元素，内部可以使用的数据类型除自身form-list外同FormType
    * @return {*}
    */
@@ -22,7 +27,7 @@ export enum FormType {
    */
   "command" = "command",
   /**
-   * @description: 响应式下拉框+带搜索的二级菜单
+   * @description: 响应式下拉框+带搜索的二级菜单/多选
    * @return {*}
    */
   "combobox" = "combobox",

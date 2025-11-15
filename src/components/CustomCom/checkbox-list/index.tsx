@@ -4,6 +4,7 @@ import { FormContext } from "../../BasicForm";
 export const CheckboxList = (props) => {
   const { coms, item = {}, id = useId() } = props
   const { option = [], gap = 3 } = item
+  const { setting = {} } = item
 
   const { dispatchQueryParams, queryParams, } = useContext(FormContext);
   useEffect(() => {
@@ -22,7 +23,11 @@ export const CheckboxList = (props) => {
     if (checked === false) {
       newData = rawData.filter(item => item !== value)
     }
-    dispatchQueryParams({ data: { ...queryParams, [item.prop]: [...new Set([...newData])] } })
+    newData = [...new Set([...newData])]
+    if (setting.onChange) {
+      setting.onChange(newData)
+    }
+    dispatchQueryParams({ data: { ...queryParams, [item.prop]: newData } })
   }
   return (
     <div id={id}>

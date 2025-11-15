@@ -33,6 +33,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "./components/ui/popover"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "./components/ui/input-group"
+import {
+  NativeSelect,
+  NativeSelectOptGroup,
+  NativeSelectOption,
+} from "./components/ui/native-select"
 export const GeneralBasicForm = (props) => {
   return (
     <BasicForm  {...props} coms={{
@@ -59,6 +72,15 @@ export const GeneralBasicForm = (props) => {
       Popover,
       PopoverContent,
       PopoverTrigger,
+      InputGroup,
+      InputGroupAddon,
+      InputGroupButton,
+      InputGroupInput,
+      InputGroupText,
+      InputGroupTextarea,
+      NativeSelect,
+      NativeSelectOptGroup,
+      NativeSelectOption,
     }}></BasicForm>
   );
 }

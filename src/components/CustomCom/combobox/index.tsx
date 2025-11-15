@@ -1,10 +1,12 @@
 import { useContext, useId, useEffect, useState } from 'react';
 import Command from "../../RBasic/command";
+import { CheckboxList } from "../checkbox-list";
 import {
   DrawerTitle,
   DrawerHeader,
   DrawerDescription,
 } from "../../ui/drawer"
+import { Badge } from "../../ui/badge"
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 
 import { FormContext } from "../../BasicForm";
@@ -27,8 +29,10 @@ export const Combobox = (props) => {
   } = coms
   const {
     setting = {},
-
+    gap = 3
   } = item
+  // type: "command" | "checkbox-list"
+  const { type = "command" } = setting
   const { queryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
   const [valDict, setValDict] = useState({})
@@ -37,6 +41,9 @@ export const Combobox = (props) => {
     setOpen(false)
   }
   useEffect(() => {
+    if (!item.options) {
+      return
+    }
     const newDict = {}
     for (let i = 0; i < item.options?.length; i++) {
       for (let j = 0; j < item.options[i]?.children?.length; j++) {
@@ -44,26 +51,68 @@ export const Combobox = (props) => {
         item.options[i].children[j].onSelect = onSelect;
         const ele = item.options[i].children[j]
         newDict[ele.value] = ele.label
-
       }
     }
     setValDict({ ...newDict })
   }, [item.options])
-
-  if (isDesktop) {
+  useEffect(() => {
+    if (!item.option) {
+      return
+    }
+    const newDict = {}
+    for (let i = 0; i < item.option?.length; i++) {
+      const ele = item.option[i]
+      newDict[ele.value] = ele.label
+    }
+    setValDict({ ...newDict })
+  }, [item.option])
+  const startButton = () => {
+    let val
+    if (type === "command" && valDict[queryParams[item.prop]]) {
+      val = valDict[queryParams[item.prop]]
+    }
+    if (type === "checkbox-list" && queryParams[item.prop] && queryParams[item.prop].length > 0) {
+      val = queryParams[item.prop].map(item => {
+        return (
+          <Badge key={item} >{valDict[item]}</Badge>
+        )
+      })
+    }
     return (
-      <Popover open={open} onOpenChange={setOpen} >
-        <PopoverTrigger asChild>
-          <Button variant="outline" className="w-full justify-start ">
-            {valDict[queryParams[item.prop]] || valDict[setting?.value] || setting?.placeholder}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0" align="start">
-          <Command
+      <Button variant="outline" className="w-full justify-star" style={{ maxWidth: "200px",overflowX:"auto",overflowY:"hidden" }} >
+        {val || valDict[setting?.value] || setting?.placeholder}
+      </Button>
+    )
+  }
+  const content = () => {
+    if (type === "command") {
+      return (<Command
+        id={id}
+        coms={coms}
+        item={item}
+      />)
+    }
+    if (type === "checkbox-list") {
+      return (
+        <div className={`px-${gap} pt-${gap}`} style={{ minWidth: "200px" }} >
+          <CheckboxList
             id={id}
             coms={coms}
             item={item}
           />
+        </div>
+
+      )
+    }
+  }
+  if (isDesktop) {
+    return (
+      <Popover open={open} onOpenChange={setOpen} >
+        <PopoverTrigger asChild>
+          {startButton()}
+        </PopoverTrigger>
+        <PopoverContent className="w-[200px] p-0" align="start">
+          {content()}
         </PopoverContent>
       </Popover>
     )
@@ -72,9 +121,7 @@ export const Combobox = (props) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-full justify-start">
-          {valDict[queryParams[item.prop]] || valDict[setting?.value] || setting?.placeholder}
-        </Button>
+        {startButton()}
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="hidden">
@@ -82,11 +129,7 @@ export const Combobox = (props) => {
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <div className="mt-4 border-t">
-          <Command
-            id={id}
-            coms={coms}
-            item={item}
-          />
+          {content()}
         </div>
       </DrawerContent>
     </Drawer>
