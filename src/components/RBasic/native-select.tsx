@@ -11,6 +11,7 @@ const NativeSelect = (props) => {
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
   return (
     <NativeSelect
+      id={id}
       name={item.prop}
       value={queryParams[item.prop] || []}
       disabled={formLoading}
