@@ -79,7 +79,7 @@ export const Combobox = (props) => {
       })
     }
     return (
-      <Button variant="outline" className="w-full justify-star" style={{ maxWidth: "200px",overflowX:"auto",overflowY:"hidden" }} >
+      <Button variant="outline" className="w-full justify-star" style={{ maxWidth: "200px", overflowX: "auto", overflowY: "hidden" }} >
         {val || valDict[setting?.value] || setting?.placeholder}
       </Button>
     )
@@ -93,6 +93,7 @@ export const Combobox = (props) => {
       />)
     }
     if (type === "checkbox-list") {
+      delete item.setting.onValueChange
       return (
         <div className={`px-${gap} pt-${gap}`} style={{ minWidth: "200px" }} >
           <CheckboxList

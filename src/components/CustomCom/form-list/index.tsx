@@ -5,7 +5,8 @@ import { FormContext } from "../../BasicForm";
 export const FormList = (props) => {
   const { coms, item = {}, id = useId() } = props
   const { setting = {}, prop, gap = 3 } = item
-  const { dim = 1, columns = [], heading = (dim != 1) } = setting
+  // itemWidth: 'auto' | 'mean'
+  const { dim = 1, columns = [], heading = (dim != 1), itemWidth = 'auto' } = setting
   const { Button } = coms
   const x_list = []
 
@@ -85,6 +86,28 @@ export const FormList = (props) => {
     }
     setList(newList)
   }
+  let itemWidthClass = 'w-full'
+  let itemWidthStyle = {}
+  let listWidthClass = 'flex'
+  switch (itemWidth) {
+    case 'auto':
+      itemWidthClass = "w-full"
+      break;
+    case 'mean':
+      let count = 1
+      columns.forEach(column => {
+        if (!column.setting?.className?.match(/hidden/i)) {
+          count += 1
+        }
+        // count += 1
+      })
+      itemWidthClass = `flex-none`
+      itemWidthStyle = { width: `${(1 / count) * 100}%` }
+      break;
+
+    default:
+      break;
+  }
   return (
     <div id={id}>
       <div className={`flex gap-${gap} mb-${gap} justify-end`}>
@@ -92,7 +115,7 @@ export const FormList = (props) => {
       </div>
       {list.map((ele, rowIndex) => {
         return (
-          <div key={rowIndex} className={`flex gap-${gap} mb-${gap} items-end`}>
+          <div key={rowIndex} className={`${listWidthClass} gap-${gap} mb-${gap} items-end`}>
             {
               ele.map((x, columnIndex) => {
                 let newItem = { ...item }
@@ -110,11 +133,11 @@ export const FormList = (props) => {
                   onChange: changeItem.bind(this, { rowIndex, columnIndex }),
                   onValueChange: changeItem.bind(this, { rowIndex, columnIndex }),
                 }
-                if (["combobox", "input"].includes(newItem.type)) {
+                if (["input"].includes(newItem.type)) {
                   delete newItem.setting.onValueChange
                 }
                 return (
-                  <div key={x.key} className={`w-full ${newItem?.setting?.className?.match(/hidden/i) ? "hidden" : ""}`}>
+                  <div key={x.key} className={`${itemWidthClass} ${newItem?.setting?.className?.match(/hidden/i) ? "hidden" : ""}`} style={{ ...itemWidthStyle }}>
                     {heading && (rowIndex === 0) ? <h3 className={`inline-block text-base`}  >{newItem.label}</h3> : []}
                     <TypeCom className="w-full" coms={coms} item={newItem} id={x.key} type={newItem.type}></TypeCom>
                   </div>

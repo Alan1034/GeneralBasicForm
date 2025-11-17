@@ -57,6 +57,11 @@ export enum FormType {
    * @return {*}
    */
   "checkbox-list" = "checkbox-list",
+  /**
+   * @description: FieldDescription 描述
+   * @return {*}
+   */
+  "description" = "description",
 }
 
 export interface ItemType {

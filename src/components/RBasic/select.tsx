@@ -17,8 +17,18 @@ const Select = (props) => {
       name={item.prop}
       value={queryParams[item.prop] || ""}
       disabled={formLoading}
-      onChange={e => dispatchQueryParams({ data: { ...queryParams, [item.prop]: e.target.value } })}
-      onValueChange={value => dispatchQueryParams({ data: { ...queryParams, [item.prop]: value } })}
+      onChange={e => {
+        if (!e.target.value) {
+          return
+        }
+        dispatchQueryParams({ data: { ...queryParams, [item.prop]: e.target.value } })
+      }}
+      onValueChange={value => {
+        if (!value) {
+          return
+        }
+        dispatchQueryParams({ data: { ...queryParams, [item.prop]: value } })
+      }}
       aria-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
       {...setting}
     >

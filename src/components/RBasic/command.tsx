@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-11-07 14:46:25
- * @LastEditTime: 2025-11-10 09:48:47
+ * @LastEditTime: 2025-11-17 18:37:22
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description:Command文档：https://github.com/dip/cmdk
@@ -32,6 +32,9 @@ const Command = (props) => {
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
   const [valDict, setValDict] = useState({})
   useEffect(() => {
+    if (!options) {
+      return
+    }
     const newDict = {}
     for (let i = 0; i < options?.length; i++) {
       for (let j = 0; j < options[i]?.children?.length; j++) {
@@ -41,7 +44,7 @@ const Command = (props) => {
       }
     }
     setValDict({ ...newDict })
-  }, [options])
+  }, [JSON.stringify(options)])
   return (
     <Command
       id={id}
