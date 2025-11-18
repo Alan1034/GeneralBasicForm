@@ -1,4 +1,4 @@
-import { useContext, useId, useEffect, useState } from 'react';
+import { useContext, useId, useEffect, useState, useRef } from 'react';
 import Command from "../../RBasic/command";
 import { CheckboxList } from "../checkbox-list";
 import {
@@ -12,6 +12,7 @@ import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 import { FormContext } from "../../BasicForm";
 
 export const Combobox = (props) => {
+  const checkboxListRef = useRef(null);
   const { coms = {}, item = {
     options: [{
       label: "",
@@ -31,8 +32,10 @@ export const Combobox = (props) => {
     setting = {},
     gap = 3
   } = item
+
+  let { prop } = item
   // type: "command" | "checkbox-list"
-  const { type = "command" } = setting
+  const { type = "command", value } = setting
   const { queryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
   const [valDict, setValDict] = useState({})
@@ -71,15 +74,28 @@ export const Combobox = (props) => {
     if (type === "command" && valDict[queryParams[item.prop]]) {
       val = valDict[queryParams[item.prop]]
     }
-    if (type === "checkbox-list" && queryParams[item.prop] && queryParams[item.prop].length > 0) {
-      val = queryParams[item.prop].map(item => {
+
+    // console.log(checkboxListRef)
+    // console.log(checkboxListRef.current.checkedList())
+    let checkedList = []
+    if (queryParams[prop] && queryParams[prop].length > 0) {
+      checkedList = queryParams[prop]
+    }
+    if (value && value.length > 0) {
+      checkedList = value
+    }
+    if (checkboxListRef.current) {
+      checkedList = checkboxListRef.current.checkedList()
+    }
+    if (type === "checkbox-list" && checkedList && checkedList.length > 0) {
+      val = checkedList.map(item => {
         return (
           <Badge key={item} >{valDict[item]}</Badge>
         )
       })
     }
     return (
-      <Button variant="outline" className="w-full justify-star" style={{ maxWidth: "200px", overflowX: "auto", overflowY: "hidden" }} >
+      <Button variant="outline" className="w-full justify-center-safe" style={{ maxWidth: "200px", overflowX: "auto", overflowY: "hidden" }} >
         {val || valDict[setting?.value] || setting?.placeholder}
       </Button>
     )
@@ -97,6 +113,7 @@ export const Combobox = (props) => {
       return (
         <div className={`px-${gap} pt-${gap}`} style={{ minWidth: "200px" }} >
           <CheckboxList
+            ref={checkboxListRef}
             id={id}
             coms={coms}
             item={item}

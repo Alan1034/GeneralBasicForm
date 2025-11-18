@@ -65,7 +65,7 @@ export const FormList = (props) => {
         return obj
       })
     }
-    dispatchQueryParams({ data: { ...queryParams, [item.prop]: newList } })
+    dispatchQueryParams({ data: { ...queryParams, [item.prop]: [...newList] } })
   }
   useEffect(() => {
     setDefaultValue()
