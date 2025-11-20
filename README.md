@@ -266,6 +266,9 @@ parametersType 类型介绍
         heading: true, //是否显示标题
         dim: 4, // 多维数组，注意要和columns的长度相等，输出为对象数组
         itemWidth: 'mean',//itemWidth: 'auto' | 'mean' 自动宽度（满行） | 平均分配宽度
+        onChange: (value) => {
+          console.log(value);
+        },
         columns: [
           {
             prop: 'id',

@@ -6,7 +6,8 @@ export const FormList = (props) => {
   const { coms, item = {}, id = useId() } = props
   const { setting = {}, prop, gap = 3 } = item
   // itemWidth: 'auto' | 'mean'
-  const { dim = 1, columns = [], heading = (dim != 1), itemWidth = 'auto' } = setting
+  const { dim = 1, columns = [], heading = (dim != 1),
+    itemWidth = 'auto', onChange = () => { } } = setting
   const { Button } = coms
   const x_list = []
 
@@ -66,6 +67,7 @@ export const FormList = (props) => {
       })
     }
     dispatchQueryParams({ data: { ...queryParams, [item.prop]: [...newList] } })
+    onChange(newList)
   }
   useEffect(() => {
     setDefaultValue()
@@ -133,7 +135,7 @@ export const FormList = (props) => {
                   onChange: changeItem.bind(this, { rowIndex, columnIndex }),
                   onValueChange: changeItem.bind(this, { rowIndex, columnIndex }),
                 }
-                if (["input"].includes(newItem.type)) {
+                if (["input", "input-group"].includes(newItem.type)) {
                   delete newItem.setting.onValueChange
                 }
                 return (
