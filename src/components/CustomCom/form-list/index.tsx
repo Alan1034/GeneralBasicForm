@@ -139,7 +139,7 @@ export const FormList = (props) => {
                   delete newItem.setting.onValueChange
                 }
                 return (
-                  <div key={x.key} className={`${itemWidthClass} ${newItem?.setting?.className?.match(/hidden/i) ? "hidden" : ""}`} style={{ ...itemWidthStyle }}>
+                  <div key={x.key} className={`${itemWidthClass} ${newItem?.setting?.className?.match(/hidden/i) ? "hidden" : ""} flex flex-col`} style={{ ...itemWidthStyle }}>
                     {heading && (rowIndex === 0) ? <h3 className={`inline-block text-base`}  >{newItem.label}</h3> : []}
                     <TypeCom className="w-full" coms={coms} item={newItem} id={x.key} type={newItem.type}></TypeCom>
                   </div>
