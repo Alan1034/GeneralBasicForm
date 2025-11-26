@@ -548,6 +548,60 @@ parametersType 类型介绍
         },
       ],
     },
+    {
+      label: '树形选择',
+      prop: 'select_tree',
+      type: 'combobox',
+      setting: {
+        placeholder: '请输入分类',
+        empty: '搜索内容为空的提示',
+        type: 'rc-tree',
+        // checkable: true,
+        // selectable: false
+      },
+      fieldSetting: {
+        className: fieldClassName,
+      },
+      options: [
+        {
+          label: '指南',
+          value: '指南',
+          children: [
+            {
+              value: 'shejiyuanze',
+              label: '设计原则',
+              setting: {
+                icon: () => {
+                  return <div>ID</div>
+                }
+              },
+              children: [
+                {
+                  value: 'leaf',
+                  label: '叶子节点',
+                  shortcut: 'ctrl+z', //选项右侧的内容
+                },
+                {
+                  value: 'leaf1',
+                  label: '叶子节点1',
+                  shortcut: 'ctrl+z', //选项右侧的内容
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: '资源',
+          value: 'resource',
+          children: [
+            {
+              value: 'axure',
+              label: 'Axure Components',
+            },
+          ],
+        },
+      ],
+    },
   ]
 
       //rules为表单校验规则，每个组件都可以传入

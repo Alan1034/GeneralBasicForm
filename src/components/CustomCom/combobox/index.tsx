@@ -8,7 +8,7 @@ import {
 } from "../../ui/drawer"
 import { Badge } from "../../ui/badge"
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
-
+import { RcTree } from "../rc-tree"
 import { FormContext } from "../../BasicForm";
 
 export const Combobox = (props) => {
@@ -32,19 +32,23 @@ export const Combobox = (props) => {
     setting = {},
     gap = 3
   } = item
-
+  const width = 200
   let { prop } = item
-  // type: "command" | "checkbox-list"
+  // type: "command" | "checkbox-list" | "rc-tree"
   const { type = "command", value } = setting
   const { queryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
   const [valDict, setValDict] = useState({})
+  const [checkedList, setCheckedList] = useState([])
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const onSelect = (value) => {
     setOpen(false)
   }
   useEffect(() => {
     if (!item.options) {
+      return
+    }
+    if (type !== "command") {
       return
     }
     const newDict = {}
@@ -59,7 +63,31 @@ export const Combobox = (props) => {
     setValDict({ ...newDict })
   }, [item.options])
   useEffect(() => {
+    if (!item.options) {
+      return
+    }
+    if (type !== "rc-tree") {
+      return
+    }
+    const newDict = {}
+    const getDictValue = (options,) => {
+      options.forEach(ele => {
+        const { value, label, children } = ele
+        newDict[value] = label
+        if (children) {
+          getDictValue(children)
+        }
+      })
+
+    }
+    getDictValue(item.options)
+    setValDict({ ...newDict })
+  }, [item.options])
+  useEffect(() => {
     if (!item.option) {
+      return
+    }
+    if (type !== "checkbox-list") {
       return
     }
     const newDict = {}
@@ -69,23 +97,29 @@ export const Combobox = (props) => {
     }
     setValDict({ ...newDict })
   }, [item.option])
+  useEffect(() => {
+    // ✅ 可以在 Effect 中读取和写入 ref
+    if (queryParams[prop] && queryParams[prop].length > 0) {
+      setCheckedList(queryParams[prop])
+    }
+    if (value && value.length > 0) {
+      setCheckedList(value)
+    }
+    if (checkboxListRef?.current) {
+      setCheckedList(checkboxListRef.current.checkedList())
+    }
+  });
   const startButton = () => {
     let val
     if (type === "command" && valDict[queryParams[item.prop]]) {
       val = valDict[queryParams[item.prop]]
     }
-
-    // console.log(checkboxListRef)
-    // console.log(checkboxListRef.current.checkedList())
-    let checkedList = []
-    if (queryParams[prop] && queryParams[prop].length > 0) {
-      checkedList = queryParams[prop]
-    }
-    if (value && value.length > 0) {
-      checkedList = value
-    }
-    if (checkboxListRef.current) {
-      checkedList = checkboxListRef.current.checkedList()
+    if (type === "rc-tree" && valDict[queryParams[item.prop]]) {
+      val = queryParams[item.prop].map(item => {
+        return (
+          <Badge key={item} >{valDict[item]}</Badge>
+        )
+      })
     }
     if (type === "checkbox-list" && checkedList && checkedList.length > 0) {
       val = checkedList.map(item => {
@@ -108,10 +142,21 @@ export const Combobox = (props) => {
         item={item}
       />)
     }
+    if (type === "rc-tree") {
+      return (
+        <div className={`p-${gap}`} style={{ minWidth: `${width}px` }} >
+          <RcTree
+            id={id}
+            coms={coms}
+            item={item}
+          />
+        </div>
+      )
+    }
     if (type === "checkbox-list") {
       delete item.setting.onValueChange
       return (
-        <div className={`px-${gap} pt-${gap}`} style={{ minWidth: "200px" }} >
+        <div className={`px-${gap} pt-${gap}`} style={{ minWidth: `${width}px` }} >
           <CheckboxList
             ref={checkboxListRef}
             id={id}
@@ -129,7 +174,7 @@ export const Combobox = (props) => {
         <PopoverTrigger asChild>
           {startButton()}
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0" align="start">
+        <PopoverContent className={`w-[${width}px] p-0`} align="start">
           {content()}
         </PopoverContent>
       </Popover>
