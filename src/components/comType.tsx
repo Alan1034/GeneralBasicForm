@@ -1,4 +1,5 @@
 import Input from "./RBasic/input";
+import Textarea from "./RBasic/textarea";
 import Select from "./RBasic/select";
 import NativeSelect from "./RBasic/native-select";
 import Checkbox from "./RBasic/checkbox";
@@ -6,12 +7,22 @@ import { CheckboxList } from "./CustomCom/checkbox-list";
 import { Combobox } from "./CustomCom/combobox";
 import Command from "./RBasic/command";
 import InputGroup from "./RBasic/input-group";
+import Switch from "./RBasic/switch";
 export const TypeCom = (props) => {
   const { coms, item, id, type = "input" } = props;
 
   if (/^input$/i.test(type)) {
     return (
       <Input
+        id={id}
+        coms={coms}
+        item={item}
+      />
+    );
+  }
+  if (/^textarea$/i.test(type)) {
+    return (
+      <Textarea
         id={id}
         coms={coms}
         item={item}
@@ -39,6 +50,15 @@ export const TypeCom = (props) => {
   if (/^checkbox$/i.test(type)) {
     return (
       <Checkbox
+        id={id}
+        coms={coms}
+        item={item}
+      />
+    )
+  }
+  if (/^switch$/i.test(type)) {
+    return (
+      <Switch
         id={id}
         coms={coms}
         item={item}

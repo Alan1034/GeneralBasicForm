@@ -7,6 +7,11 @@ export enum FormType {
    */
   "input" = "input",
   /**
+   * @description: 文本区域
+   * @return {*}
+   */
+  "textarea" = "textarea",
+  /**
    * @description: 复杂输入框，可自定义前后缀和大小
    * @return {*}
    */
@@ -21,6 +26,11 @@ export enum FormType {
    * @return {*}
    */
   "select" = "select",
+  /**
+   * @description: 开关
+   * @return {*}
+   */
+  "switch" = "switch",
   /**
    * @description: 带搜索的二级菜单
    * @return {*}

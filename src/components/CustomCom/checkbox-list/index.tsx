@@ -10,9 +10,7 @@ export const CheckboxList = (props) => {
   const [checkedList, setCheckedList] = useState([]);
   useImperativeHandle(props.ref, () => {
     return {
-      checkedList: () => {
-        return checkedList
-      }
+      checkedList,
     }
   }, [checkedList])
   useEffect(() => {

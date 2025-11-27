@@ -46,6 +46,9 @@ import {
   NativeSelectOptGroup,
   NativeSelectOption,
 } from "./components/ui/native-select"
+import { Textarea } from "./components/ui/textarea"
+import { Switch } from "./components/ui/switch"
+
 export const GeneralBasicForm = (props) => {
   return (
     <BasicForm  {...props} coms={{
@@ -81,6 +84,8 @@ export const GeneralBasicForm = (props) => {
       NativeSelect,
       NativeSelectOptGroup,
       NativeSelectOption,
+      Textarea,
+      Switch,
     }}></BasicForm>
   );
 }

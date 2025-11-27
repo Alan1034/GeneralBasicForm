@@ -1,4 +1,4 @@
-import { createContext, useState, Dispatch, useReducer, useEffect, useMemo, useId } from "react";
+import { createContext, useState, Dispatch, useReducer, useEffect, useMemo, useId, useImperativeHandle } from "react";
 import type { ItemType } from "../types/basicFrom";
 import { TypeCom } from "../components/comType";
 import { FormList } from "../components/CustomCom/form-list";
@@ -79,7 +79,7 @@ export const BasicForm = (prop) => {
     fieldLabelSetting = {},
     loading = false,
     // showSearch = true,
-    // formOnly = false,
+    formOnly = false,
     // afterReset = () => { },
     // size,
     // labelWidth,
@@ -126,6 +126,11 @@ export const BasicForm = (prop) => {
     })
     dispatchQueryParams({ data })
   }, [inited])
+  useImperativeHandle(props.ref, () => {
+    return {
+      formAction
+    }
+  })
   const valid = async () => {
     // 读取表单数据
     let message = {}
@@ -243,12 +248,12 @@ export const BasicForm = (prop) => {
             )
           })}
           {children}
-          <Field orientation="horizontal" {...footFieldSetting}>
+          {formOnly ? [] : <Field orientation="horizontal" {...footFieldSetting}>
             <Button disabled={formLoading} formAction={formAction}>{formLoading ? <Spinner /> : []}提交</Button>
             <Button disabled={formLoading} variant="outline" type="button" onClick={resetQuery}>
               重置
             </Button>
-          </Field>
+          </Field>}
         </FieldGroup>
       </form>
     </FormContext>

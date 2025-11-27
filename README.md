@@ -70,28 +70,21 @@ import { RGeneralBasicForm,RBasicForm } from 'general-basic-form';
 
 在单纯作为表单的时候可以这样使用：
 
-    <VGeneralBasicForm
-        formOnly
-        :formItem="formItem"
-        size="small"
-        ref="VGeneralBasicFormRef"
-        :labelWidth="formLabelWidth"
-        :formData: {
-          // 外部传入的表单数据，用于回填
-        }
-        noUrlParameters
-        :afterReset="afterReset"
-        v-model:loading="loading"
-      />
+const RGeneralBasicFormRef = useRef(null);
 
-      <style lang="scss" scoped>
-      :deep(.el-form-item) {
-        margin-bottom: 16px;
-      }
-      :deep(.el-divider--horizontal) {
-        margin: 8px 0px;
-      }
-      </style>
+        <RGeneralBasicForm
+          formOnly
+          ref={RGeneralBasicFormRef}
+          className="py-4"
+          formItem={formItem}
+          getList={getList}
+          parametersType="data"
+          noInputBlank
+          formData={formData}
+          fieldGroupSetting={{ className: 'grid grid-cols-2 gap-4' }}
+        >
+          //自定义组件
+        </RGeneralBasicForm>
 
 getList 会传出默认的参数,首次请求时会有页数和分页大小,重置后会传出默认页数 1
 
@@ -104,44 +97,7 @@ getList 会传出默认的参数,首次请求时会有页数和分页大小,重�
 
 表单数据校验需要拿到内部表单的 ref
 
-    async getSmscode() {
-      const VGeneralBasicFormRef = this.$refs['VGeneralBasicFormRef'] as any
-      const state = await new Promise<boolean>((resolve, reject) => {
-        VGeneralBasicFormRef.$refs['queryFormRef']?.validateField(
-          'user_phone',
-          async (valid: boolean, props?: FormItemProp[] | undefined) => {
-            if (valid) {
-              const { user_phone } = VGeneralBasicFormRef['queryParams']
-              const res: any = await SmscodeList({ user_phone })
-              if (res) {
-                console.log(res)
-                resolve(true)
-              } else {
-                resolve(false)
-              }
-            } else {
-              resolve(false)
-            }
-          }
-        )
-      })
-      return state
-    },
-
-    setup写法：
-    const VGeneralBasicFormRef = ref()
-    const params = await new Promise<any>((resolve, reject) => {
-      VGeneralBasicFormRef.value.$refs['queryFormRef']?.validate(
-        async (valid: boolean, props?: FormItemProp[] | undefined) => {
-          if (valid) {
-            const params = VGeneralBasicFormRef.value['queryParams']
-            resolve(params)
-          } else {
-            reject()
-          }
-        }
-      )
-    })
+    RGeneralBasicFormRef.current.formAction(); // 触发表单校验和getList
 
 ![image-20211014191532067](https://raw.githubusercontent.com/Alan1034/PicturesServer/main/PicGo_imgs/202110141915657.png)
 
@@ -155,7 +111,7 @@ parametersType 类型介绍
 
 数据示例:
 
-    showSearch: true, // 显示搜索条件
+    formOnly:true // 只展示表单不展示按钮
     getList(queryParams); // 请求数据的函数
     afterReset(queryParams); // 在重置按钮点击完后但还没重新请求时触发的的函数
     formOnly:true // 只展示表单不展示按钮
@@ -185,6 +141,9 @@ parametersType 类型介绍
         placeholder: '请输入手机验证码',
         // style: 'width: 100%',
         required: true,
+        // type: 'number',
+        // min: 1,
+        // max: 100,
       },
       fieldSetting: {
         className: fieldClassName,
@@ -205,6 +164,17 @@ parametersType 类型介绍
         },
       ],
       separator: true, //分割线
+    },
+    {
+      label: "文本区域",
+      prop: "Textarea",
+      type: "textarea",
+      setting: {
+        placeholder: '请输入文本区域',
+      },
+      fieldSetting: {
+        className: fieldClassName,
+      }
     },
     {
       label: "复杂输入框",
@@ -264,10 +234,11 @@ parametersType 类型介绍
       separator: "text", //文字分割线
       setting: {
         heading: true, //是否显示标题
-        dim: 4, // 多维数组，注意要和columns的长度相等，输出为对象数组
+        dim: 5, // 多维数组，注意要和columns的长度相等，输出为对象数组
         itemWidth: 'mean',//itemWidth: 'auto' | 'mean' 自动宽度（满行） | 平均分配宽度
         onChange: (value) => {
           console.log(value);
+          setDetail({ ...detail, prices: value })
         },
         columns: [
           {
@@ -304,7 +275,38 @@ parametersType 类型介绍
               className: 'w-full',
             },
           },
-
+          {
+            label: '组合分类',
+            prop: 'expense_category_id',
+            type: 'combobox',
+            setting: {
+              placeholder: '请输入分类',
+            },
+            options: [
+              {
+                label: '指南',
+                value: '指南',
+                separator: true, //分割线
+                children: [
+                  {
+                    value: 'shejiyuanze',
+                    label: '设计原则',
+                    shortcut: 'ctrl+z', //选项右侧的内容
+                  },
+                ],
+              },
+              {
+                label: '资源',
+                value: 'resource',
+                children: [
+                  {
+                    value: 'axure',
+                    label: 'Axure Components',
+                  },
+                ],
+              },
+            ],
+          },
           {
             label: '组合分类-多选',
             prop: 'expense_multiple_checkbox_test',
@@ -312,9 +314,6 @@ parametersType 类型介绍
             setting: {
               placeholder: '请选择等级',
               type: 'checkbox-list',
-            },
-            fieldSetting: {
-              className: fieldClassName,
             },
             option: [
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj3', value: 'Y3' },
@@ -391,6 +390,16 @@ parametersType 类型介绍
         className: fieldClassName,
       },
     },
+    {
+      label: "开关",
+      prop: "switch_test",
+      type: "switch",
+      setting: {
+      },
+      fieldSetting: {
+        className: 'col-start-2 col-span-2 mb-8',
+      },
+    },
     // {
     //   label: "创建时间",
     //   prop: "create_time",
@@ -437,7 +446,7 @@ parametersType 类型介绍
         { label: 'Y5', value: 'Y5' },
       ],
       fieldSetting: {
-        className: fieldClassName,
+        className: 'col-start-2 col-span-2 mb-8',
       },
       setting: {
         placeholder: '请选择等级',
@@ -448,7 +457,7 @@ parametersType 类型介绍
       label: '选择框',
       type: 'checkbox',
       fieldSetting: {
-        className: fieldClassName,
+        className: 'col-start-4 col-span-2 mb-8',
       },
       setting: {
         placeholder: '请选择套餐',
@@ -624,6 +633,11 @@ export enum FormType {
    */
   "input" = "input",
   /**
+   * @description: 文本区域
+   * @return {*}
+   */
+  "textarea" = "textarea",
+  /**
    * @description: 复杂输入框，可自定义前后缀和大小
    * @return {*}
    */
@@ -638,6 +652,11 @@ export enum FormType {
    * @return {*}
    */
   "select" = "select",
+  /**
+   * @description: 开关
+   * @return {*}
+   */
+  "switch" = "switch",
   /**
    * @description: 带搜索的二级菜单
    * @return {*}
@@ -674,6 +693,9 @@ export enum FormType {
    * @return {*}
    */
   "checkbox-list" = "checkbox-list",
+  /**
+   * @description: FieldDescription 描述
+   * @return {*}
+   */
+  "description" = "description",
 }
-
-

@@ -106,7 +106,7 @@ export const Combobox = (props) => {
       setCheckedList(value)
     }
     if (checkboxListRef?.current) {
-      setCheckedList(checkboxListRef.current.checkedList())
+      setCheckedList(checkboxListRef.current.checkedList)
     }
   });
   const startButton = () => {
