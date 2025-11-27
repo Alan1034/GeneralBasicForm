@@ -565,6 +565,7 @@ parametersType 类型介绍
         placeholder: '请输入分类',
         empty: '搜索内容为空的提示',
         type: 'rc-tree',
+        width: `500px`,//控制组件宽度
         // checkable: true,
         // selectable: false
       },

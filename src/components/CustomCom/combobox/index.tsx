@@ -32,10 +32,9 @@ export const Combobox = (props) => {
     setting = {},
     gap = 3
   } = item
-  const width = 200
   let { prop } = item
   // type: "command" | "checkbox-list" | "rc-tree"
-  const { type = "command", value } = setting
+  const { type = "command", value, width = `200px` } = setting
   const { queryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
   const [valDict, setValDict] = useState({})
@@ -129,7 +128,7 @@ export const Combobox = (props) => {
       })
     }
     return (
-      <Button variant="outline" className="w-full justify-center-safe" style={{ maxWidth: "200px", overflowX: "auto", overflowY: "hidden" }} >
+      <Button variant="outline" className="w-full justify-center-safe" style={{ maxWidth: `${width}`, overflowX: "auto", overflowY: "hidden" }} >
         {val || valDict[setting?.value] || setting?.placeholder}
       </Button>
     )
@@ -144,7 +143,7 @@ export const Combobox = (props) => {
     }
     if (type === "rc-tree") {
       return (
-        <div className={`p-${gap}`} style={{ minWidth: `${width}px` }} >
+        <div className={`p-${gap}`} style={{ minWidth: `${width}` }} >
           <RcTree
             id={id}
             coms={coms}
@@ -156,7 +155,7 @@ export const Combobox = (props) => {
     if (type === "checkbox-list") {
       delete item.setting.onValueChange
       return (
-        <div className={`px-${gap} pt-${gap}`} style={{ minWidth: `${width}px` }} >
+        <div className={`px-${gap} pt-${gap}`} style={{ minWidth: `${width}` }} >
           <CheckboxList
             ref={checkboxListRef}
             id={id}
@@ -174,7 +173,7 @@ export const Combobox = (props) => {
         <PopoverTrigger asChild>
           {startButton()}
         </PopoverTrigger>
-        <PopoverContent className={`w-[${width}px] p-0`} align="start">
+        <PopoverContent className={`w-[${width}] p-0`} align="start">
           {content()}
         </PopoverContent>
       </Popover>
