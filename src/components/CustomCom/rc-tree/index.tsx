@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-11-26 17:06:42
- * @LastEditTime: 2025-11-26 18:55:02
+ * @LastEditTime: 2025-11-28 15:15:17
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: https://github.com/react-component/tree
@@ -61,7 +61,7 @@ export const RcTree = (props) => {
     )
   }
   return (
-    <Tree
+    options?.length ? (<Tree
       id={id}
       name={item.prop}
       value={queryParams[item.prop] || ""}
@@ -77,6 +77,8 @@ export const RcTree = (props) => {
       treeData={treeData(options)}
       {...setting}>
       {props.children}
-    </Tree>
+    </Tree>) : (
+      'loading tree'
+    )
   )
 }

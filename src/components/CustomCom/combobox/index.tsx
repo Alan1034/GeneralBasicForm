@@ -9,8 +9,20 @@ import {
 import { Badge } from "../../ui/badge"
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 import { RcTree } from "../rc-tree"
+import { ATree } from "../../RABasic/tree";
 import { FormContext } from "../../BasicForm";
 
+enum ComTypes {
+  "command" = "command",
+  "rc-tree" = "rc-tree",
+  "ant-tree" = "ant-tree",
+  "checkbox-list" = "checkbox-list",
+}
+enum ContainerTypes {
+  "Popover" = "Popover",
+  "Drawer" = "Drawer",
+  "Dialog" = "Dialog",
+}
 export const Combobox = (props) => {
   const checkboxListRef = useRef(null);
   const { coms = {}, item = {
@@ -27,14 +39,20 @@ export const Combobox = (props) => {
     Popover,
     PopoverContent,
     PopoverTrigger,
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
   } = coms
   const {
     setting = {},
+    container = "" as ContainerTypes,
     gap = 3
   } = item
   let { prop } = item
-  // type: "command" | "checkbox-list" | "rc-tree"
-  const { type = "command", value, width = `200px` } = setting
+  const { type = "command" as ComTypes, value, width = `200px` } = setting
   const { queryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
   const [valDict, setValDict] = useState({})
@@ -65,14 +83,23 @@ export const Combobox = (props) => {
     if (!item.options) {
       return
     }
-    if (type !== "rc-tree") {
+    if (!["rc-tree", 'ant-tree'].includes(type)) {
       return
     }
     const newDict = {}
     const getDictValue = (options,) => {
       options.forEach(ele => {
-        const { value, label, children } = ele
-        newDict[value] = label
+        const { value, label, key, title, children } = ele
+        if (value) {
+          newDict[value] = label
+        }
+        if (key) {
+          newDict[key] = title
+        }
+        const { fieldNames } = setting
+        if (fieldNames) {
+          newDict[ele[fieldNames.key]] = ele[fieldNames.title]
+        }
         if (children) {
           getDictValue(children)
         }
@@ -113,7 +140,7 @@ export const Combobox = (props) => {
     if (type === "command" && valDict[queryParams[item.prop]]) {
       val = valDict[queryParams[item.prop]]
     }
-    if (type === "rc-tree" && valDict[queryParams[item.prop]]) {
+    if (["rc-tree", 'ant-tree'].includes(type) && queryParams[item.prop]) {
       val = queryParams[item.prop].map(item => {
         return (
           <Badge key={item} >{valDict[item]}</Badge>
@@ -152,6 +179,17 @@ export const Combobox = (props) => {
         </div>
       )
     }
+    if (type === "ant-tree") {
+      return (
+        <div className={`p-${gap}`} style={{ minWidth: `${width}` }} >
+          <ATree
+            id={id}
+            coms={coms}
+            item={item}
+          />
+        </div>
+      )
+    }
     if (type === "checkbox-list") {
       delete item.setting.onValueChange
       return (
@@ -167,7 +205,23 @@ export const Combobox = (props) => {
       )
     }
   }
-  if (isDesktop) {
+  if (container === "Dialog") {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          {startButton()}
+        </DialogTrigger>
+        <DialogContent >
+          <DialogHeader className="hidden">
+            <DialogTitle></DialogTitle>
+            <DialogDescription></DialogDescription>
+          </DialogHeader>
+          {content()}
+        </DialogContent>
+      </Dialog>
+    )
+  }
+  if (isDesktop || container === "Popover") {
     return (
       <Popover open={open} onOpenChange={setOpen} >
         <PopoverTrigger asChild>
@@ -179,13 +233,12 @@ export const Combobox = (props) => {
       </Popover>
     )
   }
-
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         {startButton()}
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent hideWhenDetached={true} className="w-[${width}] p-0">
         <DrawerHeader className="hidden">
           <DrawerTitle></DrawerTitle>
           <DrawerDescription></DrawerDescription>

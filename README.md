@@ -463,7 +463,12 @@ parametersType 类型介绍
         placeholder: '请选择套餐',
       },
     },
-
+    // enum ComTypes {
+    //     "command" = "command",
+    //     "rc-tree" = "rc-tree",
+    //     "ant-tree" = "ant-tree",
+    //     "checkbox-list" = "checkbox-list",
+    //   }
     {
       label: "分类",
       prop: "分类",
@@ -564,7 +569,7 @@ parametersType 类型介绍
       setting: {
         placeholder: '请输入分类',
         empty: '搜索内容为空的提示',
-        type: 'rc-tree',
+        type: 'ant-tree',
         width: `500px`,//控制组件宽度
         // checkable: true,
         // selectable: false

@@ -48,7 +48,14 @@ import {
 } from "./components/ui/native-select"
 import { Textarea } from "./components/ui/textarea"
 import { Switch } from "./components/ui/switch"
-
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "./components/ui/dialog"
 export const GeneralBasicForm = (props) => {
   return (
     <BasicForm  {...props} coms={{
@@ -86,6 +93,12 @@ export const GeneralBasicForm = (props) => {
       NativeSelectOption,
       Textarea,
       Switch,
+      Dialog,
+      DialogTrigger,
+      DialogContent,
+      DialogDescription,
+      DialogHeader,
+      DialogTitle,
     }}></BasicForm>
   );
 }
