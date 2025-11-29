@@ -58,7 +58,7 @@ export const Combobox = (props) => {
   const [valDict, setValDict] = useState({})
   const [checkedList, setCheckedList] = useState([])
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const onSelect = (value) => {
+  const closeCombobox = (value) => {
     setOpen(false)
   }
   useEffect(() => {
@@ -72,7 +72,7 @@ export const Combobox = (props) => {
     for (let i = 0; i < item.options?.length; i++) {
       for (let j = 0; j < item.options[i]?.children?.length; j++) {
 
-        item.options[i].children[j].onSelect = onSelect;
+        item.options[i].children[j].onSelect = closeCombobox;
         const ele = item.options[i].children[j]
         newDict[ele.value] = ele.label
       }
@@ -100,13 +100,17 @@ export const Combobox = (props) => {
         if (fieldNames) {
           newDict[ele[fieldNames.key]] = ele[fieldNames.title]
         }
+
         if (children) {
           getDictValue(children)
         }
       })
-
     }
     getDictValue(item.options)
+    if (!item.setting) {
+      item.setting = {}
+    }
+    item.setting.closeCombobox = closeCombobox
     setValDict({ ...newDict })
   }, [item.options])
   useEffect(() => {
@@ -140,7 +144,7 @@ export const Combobox = (props) => {
     if (type === "command" && valDict[queryParams[item.prop]]) {
       val = valDict[queryParams[item.prop]]
     }
-    if (["rc-tree", 'ant-tree'].includes(type) && queryParams[item.prop]) {
+    if (["rc-tree", 'ant-tree'].includes(type) && queryParams[item.prop] && queryParams[item.prop] instanceof Array) {
       val = queryParams[item.prop].map(item => {
         return (
           <Badge key={item} >{valDict[item]}</Badge>
@@ -207,7 +211,7 @@ export const Combobox = (props) => {
   }
   if (container === "Dialog") {
     return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           {startButton()}
         </DialogTrigger>
@@ -216,7 +220,10 @@ export const Combobox = (props) => {
             <DialogTitle></DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
-          {content()}
+          <div className="overflow-y-auto" style={{ maxHeight: window.innerHeight / 3 * 2 }}>
+            {content()}
+          </div>
+
         </DialogContent>
       </Dialog>
     )

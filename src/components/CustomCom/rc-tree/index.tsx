@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-11-26 17:06:42
- * @LastEditTime: 2025-11-28 15:15:17
+ * @LastEditTime: 2025-11-29 10:30:02
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: https://github.com/react-component/tree
@@ -60,13 +60,16 @@ export const RcTree = (props) => {
       })
     )
   }
+  if (!(queryParams[item.prop] instanceof Array)) {
+    return []
+  }
   return (
     options?.length ? (<Tree
       id={id}
       name={item.prop}
-      value={queryParams[item.prop] || ""}
-      checkedKeys={queryParams[item.prop] || ""}
-      selectedKeys={queryParams[item.prop] || ""}
+      value={queryParams[item.prop] || []}
+      checkedKeys={queryParams[item.prop] || []}
+      selectedKeys={queryParams[item.prop] || []}
       disabled={formLoading}
       onCheck={(checkedKeys, e) => {
         dispatchQueryParams({ data: { ...queryParams, [item.prop]: checkedKeys } })
