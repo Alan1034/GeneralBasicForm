@@ -1,6 +1,6 @@
 import { useContext, useId, useEffect, useState, useImperativeHandle } from 'react';
 import Checkbox from "../../RBasic/checkbox";
-import { FormContext } from "../../BasicForm";
+import { FormContext } from "../../FormContext";
 export const CheckboxList = (props) => {
   const { coms, item = {}, id = useId() } = props
   const { option = [], gap = 3 } = item

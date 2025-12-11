@@ -12,7 +12,7 @@
 import { useContext, useId, useEffect } from 'react';
 import { Tree } from 'antd';
 import type { TreeDataNode, TreeProps } from 'antd';
-import { FormContext } from "../BasicForm";
+import { FormContext } from "../FormContext";
 
 export const ATree = (props) => {
   const { item = {}, id = useId() } = props

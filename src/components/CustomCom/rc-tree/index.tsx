@@ -12,7 +12,7 @@
 import { useContext, useId } from 'react';
 // import Tree, { TreeNode } from 'rc-tree';
 import Tree from 'rc-tree';
-import { FormContext } from "../../BasicForm";
+import { FormContext } from "../../FormContext";
 import "rc-tree/assets/index.css"
 export const RcTree = (props) => {
   const { item = {}, id = useId() } = props

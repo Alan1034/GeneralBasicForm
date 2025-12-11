@@ -16,7 +16,8 @@
 | VTabs                     | √    |      |                        |              | √             |         |           |
 | RGeneralBasicForm         |      |      |                        |              |               | √       | √         |
 | RFormList                 |      |      |                        |              |               | √       | √         |
-| RTabs                     |      |      |                        |              |               | √       | √         |
+| RBaseTabs                 |      |      |                        |              |               | √       | √         |
+| RBaseCombobox             |      |      |                        |              |               | √       | √         |
 
 安装：npm i general-basic-form<br/>
 install: npm i general-basic-form
@@ -131,7 +132,7 @@ parametersType 类型介绍
     fieldLabelSetting: {} // 表单字段label设置
     onFormChange(queryParams):表单数据变化时触发的函数
     formItem: [
-
+    
     {
       label: "普通输入框",
       prop: "bsName",
@@ -318,7 +319,7 @@ parametersType 类型介绍
             option: [
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj3', value: 'Y3' },
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj4', value: 'Y4' },
-
+    
             ],
           },
         ],
@@ -411,7 +412,7 @@ parametersType 类型介绍
     //     className: fieldClassName,
     //   },
     // },
-
+    
     // {
     //   label: '是否必填',
     //   prop: 'is_optional',
@@ -463,12 +464,18 @@ parametersType 类型介绍
         placeholder: '请选择套餐',
       },
     },
-    // enum ComTypes {
+    //  enum ComTypes {
     //     "command" = "command",
     //     "rc-tree" = "rc-tree",
     //     "ant-tree" = "ant-tree",
     //     "checkbox-list" = "checkbox-list",
     //   }
+    
+    // enum ContainerTypes {
+    //   "Popover" = "Popover",
+    //   "Drawer" = "Drawer",
+    //   "Dialog" = "Dialog",
+    // }
     {
       label: "分类",
       prop: "分类",
@@ -494,7 +501,7 @@ parametersType 类型介绍
               },
               shortcut: 'ctrl+z', //选项右侧的内容
             },
-
+    
           ],
         },
         {
@@ -553,12 +560,7 @@ parametersType 类型介绍
         {
           label: '资源',
           value: 'resource',
-          children: [
-            {
-              value: 'axure',
-              label: 'Axure Components',
-            },
-          ],
+    
         },
       ],
     },
@@ -570,10 +572,11 @@ parametersType 类型介绍
         placeholder: '请输入分类',
         empty: '搜索内容为空的提示',
         type: 'ant-tree',
-        width: `500px`,//控制组件宽度
+        width: `300px`,//控制组件宽度
         // checkable: true,
         // selectable: false
       },
+      container: "Dialog",
       fieldSetting: {
         className: fieldClassName,
       },
@@ -620,88 +623,150 @@ parametersType 类型介绍
   ]
 
       //rules为表单校验规则，每个组件都可以传入
-
+    
       //input支持template,支持以下几个属性：
       //prefix	输入框头部内容，只对 type="text"（默认） 有效
       //suffix	输入框尾部内容，只对 type="text" 有效
       //prepend	输入框前置内容，只对 type="text" 有效
       //append	输入框后置内容，只对 type="text" 有效
-
+    
       //divider支持template：
       //default
 
 支持组件 type:
 
 export enum FormType {
-  /**
-   * @description: 输入框
-   * @return {*}
-   */
+/\*\*
+
+- @description: 输入框
+- @return {_}
+  _/
   "input" = "input",
-  /**
-   * @description: 文本区域
-   * @return {*}
-   */
+  /\*\*
+- @description: 文本区域
+- @return {_}
+  _/
   "textarea" = "textarea",
-  /**
-   * @description: 复杂输入框，可自定义前后缀和大小
-   * @return {*}
-   */
+  /\*\*
+- @description: 复杂输入框，可自定义前后缀和大小
+- @return {_}
+  _/
   "input-group" = "input-group",
-  /**
-   * @description: 表单中的多维列表，可增减元素，内部可以使用的数据类型除自身form-list外同FormType
-   * @return {*}
-   */
+  /\*\*
+- @description: 表单中的多维列表，可增减元素，内部可以使用的数据类型除自身 form-list 外同 FormType
+- @return {_}
+  _/
   "form-list" = "form-list",
-  /**
-   * @description: 选择器
-   * @return {*}
-   */
+  /\*\*
+- @description: 选择器
+- @return {_}
+  _/
   "select" = "select",
-  /**
-   * @description: 开关
-   * @return {*}
-   */
+  /\*\*
+- @description: 开关
+- @return {_}
+  _/
   "switch" = "switch",
-  /**
-   * @description: 带搜索的二级菜单
-   * @return {*}
-   */
+  /\*\*
+- @description: 带搜索的二级菜单
+- @return {_}
+  _/
   "command" = "command",
-  /**
-   * @description: 响应式下拉框+带搜索的二级菜单/多选
-   * @return {*}
-   */
+  /\*\*
+- @description: 响应式下拉框+带搜索的二级菜单/多选
+- @return {_}
+  _/
   "combobox" = "combobox",
-  /**
-   * @description: 日期选择器
-   * @return {*}
-   */
+  /\*\*
+- @description: 日期选择器
+- @return {_}
+  _/
   "date-picker" = "date-picker",
 
-  /**
-   * @description: 单选框
-   * @return {*}
-   */
+/\*\*
+
+- @description: 单选框
+- @return {_}
+  _/
   "radio" = "radio",
   // /**
-  //  * @description: 自定义元素，插槽组件
-  //  * @return {*}
-  //  */
+  // _ @description: 自定义元素，插槽组件
+  // _ @return {_}
+  // _/
   // "form-item-slot" = "form-item-slot",
   /**
-   * @description: 多选框
-   * @return {*}
-   */
+- @description: 多选框
+- @return {_}
+  _/
   "checkbox" = "checkbox",
-  /**
-   * @description: 多选框列表，输入输出都是字符串列表 ["value1", "value2", "value3"]
-   * @return {*}
-   */
+  /\*\*
+- @description: 多选框列表，输入输出都是字符串列表 ["value1", "value2", "value3"]
+- @return {_}
+  _/
   "checkbox-list" = "checkbox-list",
-  /**
-   * @description: FieldDescription 描述
-   * @return {*}
-   */
+  /\*\*
+- @description: FieldDescription 描述
+- @return {_}
+  _/
   "description" = "description",
-}
+  }
+
+# RBaseTabs
+
+tab栏，支持parametersType
+
+```
+import { RBaseTabs } from 'general-basic-form';
+  const tabPanes = [
+    {
+      value: 'rewards',
+      label: '配置1',
+      render: (tabPane, index) => {
+        return <Rewards />;
+      },
+    }
+  ]
+<RBaseTabs tabPanes={tabPanes} parametersType="indexDB" DBPrimaryKey={auth.get.user().id}></RBaseTabs>;
+```
+
+
+
+# RBaseCombobox 单独使用
+
+多功能组合弹出框
+
+```
+import { RGeneralBasicForm, RBasicForm, RBaseCombobox } from 'general-basic-form';
+<RBaseCombobox
+  onFormChange={(params) => {
+    console.log('queryParams', params);
+  }}
+  value='resource'
+  item={{
+    options: [
+      {
+        label: '指南',
+        value: '指南',
+        separator: true, //分割线
+        children: [
+          {
+            value: 'shejiyuanze',
+            label: '设计原则',
+            shortcut: 'ctrl+z', //选项右侧的内容
+          },
+        ],
+      },
+      {
+        label: '资源',
+        value: 'resource',
+      },
+    ],
+    setting: {
+      placeholder: '请输入分类',
+      empty: '搜索内容为空的提示',
+    },
+    container: 'Dialog',
+  }}
+/>
+
+```

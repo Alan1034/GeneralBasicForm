@@ -10,7 +10,7 @@ import { Badge } from "../../ui/badge"
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 import { RcTree } from "../rc-tree"
 import { ATree } from "../../RABasic/tree";
-import { FormContext } from "../../BasicForm";
+import { FormContext } from "../../FormContext";
 
 enum ComTypes {
   "command" = "command",
@@ -70,15 +70,23 @@ export const Combobox = (props) => {
     }
     const newDict = {}
     for (let i = 0; i < item.options?.length; i++) {
-      for (let j = 0; j < item.options[i]?.children?.length; j++) {
+      if (item.options[i]?.children && item.options[i]?.children.length > 0) {
+        for (let j = 0; j < item.options[i]?.children?.length; j++) {
 
-        item.options[i].children[j].onSelect = closeCombobox;
-        const ele = item.options[i].children[j]
+          item.options[i].children[j].onSelect = closeCombobox;
+          const ele = item.options[i].children[j]
+          newDict[ele.value] = ele.label
+        }
+      } else {
+        item.options[i].onSelect = closeCombobox;
+        const ele = item.options[i]
         newDict[ele.value] = ele.label
+
       }
+
     }
     setValDict({ ...newDict })
-  }, [item.options])
+  }, [JSON.stringify(item.options)])
   useEffect(() => {
     if (!item.options) {
       return
@@ -112,7 +120,7 @@ export const Combobox = (props) => {
     }
     item.setting.closeCombobox = closeCombobox
     setValDict({ ...newDict })
-  }, [item.options])
+  }, [JSON.stringify(item.options)])
   useEffect(() => {
     if (!item.option) {
       return
@@ -126,7 +134,7 @@ export const Combobox = (props) => {
       newDict[ele.value] = ele.label
     }
     setValDict({ ...newDict })
-  }, [item.option])
+  }, [JSON.stringify(item.option)])
   useEffect(() => {
     // ✅ 可以在 Effect 中读取和写入 ref
     if (queryParams[prop] && queryParams[prop].length > 0) {

@@ -23,3 +23,9 @@ export const RTabs = Tabs;
 
 import { BaseTabs } from "./components/CustomCom/R-tabs/R-base-tabs";
 export const RBaseTabs = BaseTabs;
+
+import { Combobox } from "./components/CustomCom/combobox";
+export const RCombobox = Combobox;
+
+import { BaseCombobox } from "./components/CustomCom/combobox/R-base-combobox";
+export const RBaseCombobox = BaseCombobox;

@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useId } from "react";
 import { X, Plus } from 'lucide-react';
 import { TypeCom } from "../../comType";
-import { FormContext } from "../../BasicForm";
+import { FormContext } from "../../FormContext";
 export const FormList = (props) => {
   const { coms, item = {}, id = useId() } = props
   const { setting = {}, prop, gap = 3 } = item
