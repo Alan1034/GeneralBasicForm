@@ -31,25 +31,19 @@ import {
 
 import { Checkbox } from "../../ui/checkbox"
 import { FormProvider } from "../../FormContext";
-import { useRef, useImperativeHandle, useId, useEffect, useState } from 'react';
+import { useId, useEffect, useState } from 'react';
 export const BaseCombobox = (props) => {
   const { onFormChange = () => { }, loading = false, item = {}, value = '' } = props;
   const id = useId();
   item.prop = id;
-  const FormProviderRef = useRef(null);
-  useImperativeHandle(props.ref, () => {
-    return {
-      formAction: FormProviderRef?.current?.formAction,
-      queryParams: FormProviderRef?.current?.queryParams
-    }
-  })
+
   const [formData, setFormData] = useState({ [id]: value })
   useEffect(() => { setFormData({ [id]: value }) }, [value])
   return (
     <FormProvider
       loading={loading}
       formData={formData}
-      ref={FormProviderRef}
+      ref={props.ref}
       parametersType="data"
       onFormChange={(params) => {
         onFormChange(params[id]);
