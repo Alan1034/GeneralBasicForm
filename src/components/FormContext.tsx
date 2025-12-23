@@ -112,8 +112,10 @@ export const FormProvider = (prop) => {
     // 读取表单数据
     let message = {}
     // for (const [key, value] of formData.entries()) {
-    for (const [key, value] of Object.entries(queryParams)) {
-      const item = formItem.find((item) => item.prop === key)
+    for (let i = 0; i < formItem.length; i++) {
+      const item = formItem[i];
+      const key = item.prop
+      const value = queryParams[key]
       if (item && item.rules) {
         const newRules = HandleParamsData.getItemRules({
           item,
@@ -122,7 +124,6 @@ export const FormProvider = (prop) => {
 
         for (const rule of newRules) {
           try {
-
             if (rule.required && !value) {
               throw new Error(rule.message || `${item.label}不能为空`);
             }

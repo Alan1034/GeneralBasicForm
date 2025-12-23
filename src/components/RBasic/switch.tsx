@@ -10,7 +10,7 @@ const Switch = (props) => {
       <Switch
         id={id}
         name={item.prop}
-        value={queryParams[item.prop] || ""}
+        checked={queryParams[item.prop] || ""}
         disabled={formLoading}
         onCheckedChange={checked => dispatchQueryParams({ data: { ...queryParams, [item.prop]: checked } })}
         aria-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
