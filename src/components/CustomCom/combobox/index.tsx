@@ -152,8 +152,12 @@ export const Combobox = (props) => {
     if (type === "command" && valDict[queryParams[item.prop]]) {
       val = valDict[queryParams[item.prop]]
     }
-    if (["rc-tree", 'ant-tree'].includes(type) && queryParams[item.prop] && queryParams[item.prop] instanceof Array) {
-      val = queryParams[item.prop].map(item => {
+    if (["rc-tree", 'ant-tree'].includes(type) && queryParams[item.prop]) {
+      let rawVal = queryParams[item.prop]
+      if (!(queryParams[item.prop] instanceof Array)) {
+        rawVal = [queryParams[item.prop]]
+      }
+      val = rawVal.map(item => {
         return (
           <Badge key={item} >{valDict[item]}</Badge>
         )

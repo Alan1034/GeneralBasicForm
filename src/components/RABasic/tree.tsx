@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-11-28 11:45:15
- * @LastEditTime: 2025-11-29 16:39:37
+ * @LastEditTime: 2025-12-24 11:13:15
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: https://ant.design/components/tree-cn
@@ -24,7 +24,7 @@ export const ATree = (props) => {
   const { dispatchQueryParams, queryParams, formLoading, } = useContext(FormContext);
   useEffect(() => {
     if (!(queryParams[item.prop] instanceof Array)) {
-      console.error("Tree value must be an array，树的值必须为数组类型")
+      console.warn("Tree value must be an array，树的值必须为数组类型")
       dispatchQueryParams({ data: { ...queryParams, [item.prop]: [queryParams[item.prop]] } })
     }
   }, [queryParams[item.prop]])

@@ -78,7 +78,7 @@
     "cmdk": "^1.1.1",
     "general-basic-indexdb": "^1.0.5",
     "lucide-react": "^0.555.0",
-    "network-spanner": "1.2.23",
+    "network-spanner": "1.2.24",
     "rc-tree": "^5.13.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",

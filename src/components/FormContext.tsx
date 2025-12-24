@@ -96,6 +96,9 @@ export const FormProvider = (prop) => {
     calculateQueryParams
   );
   useMemo(() => {
+    if (!inited) {
+      return
+    }
     const data = HandleParamsData.initQueryParams({
       vm: props,
       dispatchQueryParams,
