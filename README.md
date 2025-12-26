@@ -131,6 +131,7 @@ parametersType 类型介绍
     fieldGroupSetting: {} // 表单分组设置
     fieldLabelSetting: {} // 表单字段label设置
     onFormChange(queryParams):表单数据变化时触发的函数
+    <!--formItem的fieldSetting加入gap-0以避免表单内元素间隔 -->
     formItem: [
     
     {
