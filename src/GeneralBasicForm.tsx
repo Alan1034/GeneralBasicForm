@@ -4,6 +4,8 @@ import { BasicForm } from "./components/BasicForm";
 import { Input } from "./components/ui/input";
 import { Button } from "./components/ui/button";
 import { Checkbox } from "./components/ui/checkbox"
+import { Calendar } from "./components/ui/calendar"
+import { Label } from "./components/ui/label"
 import {
   Select,
   SelectContent,
@@ -98,6 +100,8 @@ export const GeneralBasicForm = (props) => {
       DialogDescription,
       DialogHeader,
       DialogTitle,
+      Calendar,
+      Label,
     }}></BasicForm>
   );
 }

@@ -5,6 +5,7 @@ import NativeSelect from "./RBasic/native-select";
 import Checkbox from "./RBasic/checkbox";
 import { CheckboxList } from "./CustomCom/checkbox-list";
 import { Combobox } from "./CustomCom/combobox";
+import { DatePicker } from "./CustomCom/date-picker";
 import Command from "./RBasic/command";
 import InputGroup from "./RBasic/input-group";
 import Switch from "./RBasic/switch";
@@ -95,6 +96,15 @@ export const TypeCom = (props) => {
   if (/^input-group$/i.test(type)) {
     return (
       <InputGroup
+        id={id}
+        coms={coms}
+        item={item}
+      />
+    )
+  }
+  if (/^date-picker$/i.test(type)) {
+    return (
+      <DatePicker
         id={id}
         coms={coms}
         item={item}
