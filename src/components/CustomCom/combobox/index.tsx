@@ -157,16 +157,16 @@ export const Combobox = (props) => {
       if (!(queryParams[item.prop] instanceof Array)) {
         rawVal = [queryParams[item.prop]]
       }
-      val = rawVal.map(item => {
+      val = rawVal.map((item, index) => {
         return (
-          <Badge key={item} >{valDict[item]}</Badge>
+          <Badge key={item || index} >{valDict[item]}</Badge>
         )
       })
     }
     if (type === "checkbox-list" && checkedList && checkedList.length > 0) {
-      val = checkedList.map(item => {
+      val = checkedList.map((item, index) => {
         return (
-          <Badge key={item} >{valDict[item]}</Badge>
+          <Badge key={item || index} >{valDict[item]}</Badge>
         )
       })
     }

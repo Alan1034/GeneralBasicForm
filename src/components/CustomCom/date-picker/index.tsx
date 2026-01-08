@@ -1,5 +1,10 @@
-import { useState, useId } from "react"
+import { useState, useId, useContext } from "react"
 import { ChevronDownIcon } from "lucide-react"
+import { FormContext } from "../../FormContext";
+import { zhCN } from "react-day-picker/locale";
+const defSetting = {
+  locale: zhCN
+}
 
 export const DatePicker = (props) => {
   const { coms = {}, item = {}, id = useId() } = props
@@ -8,39 +13,65 @@ export const DatePicker = (props) => {
     Popover,
     PopoverContent,
     PopoverTrigger,
-    Label,
     Calendar,
   } = coms
+  const {
+    setting = {},
+    dataPickerType = 'day',
+  } = item
+
+  let settings = {
+    ...defSetting, ...setting
+  }
+  const { dispatchQueryParams, queryParams, formLoading, } = useContext(FormContext);
   const [open, setOpen] = useState(false)
-  const [date, setDate] = useState<Date | undefined>(undefined)
+  let dataLabel = settings.placeholder || "请选择日期"
+
+  if (dataPickerType === 'day') {
+    settings = {
+      ...settings,
+      mode: "single",
+      captionLayout: "dropdown",
+      selected: queryParams[item.prop] || undefined,
+      onSelect: (date) => {
+        dispatchQueryParams({ data: { ...queryParams, [item.prop]: date } })
+        setOpen(false)
+      }
+    }
+    dataLabel = queryParams[item.prop] ? queryParams[item.prop].toLocaleDateString() : dataLabel
+  }
+  if (dataPickerType === 'month') {
+    settings = {
+      ...settings,
+      captionLayout: "dropdown",
+      month: queryParams[item.prop] || undefined,
+      onMonthChange: (date) => {
+        dispatchQueryParams({ data: { ...queryParams, [item.prop]: date } })
+      }
+    }
+    dataLabel = queryParams[item.prop] ? (`${queryParams[item.prop].getFullYear()}/${queryParams[item.prop].getMonth() + 1}`) : dataLabel
+  }
 
   return (
     <div className="flex flex-col gap-3">
-      <Label htmlFor="date" className="px-1">
-        Date of birth
-      </Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            id="date"
-            className="w-48 justify-between font-normal"
+            id={id}
+            name={item.prop}
+            className="w-full justify-between font-normal"
+            disabled={formLoading}
           >
-            {date ? date.toLocaleDateString() : "Select date"}
+            {dataLabel}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
           <Calendar
-            id={id}
-            mode="single"
-            selected={date}
-            captionLayout="dropdown"
-            onSelect={(date) => {
-              setDate(date)
-              setOpen(false)
-            }}
+            disabled={formLoading}
 
+            {...settings}
           />
         </PopoverContent>
       </Popover>

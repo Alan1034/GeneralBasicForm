@@ -133,7 +133,7 @@ parametersType 类型介绍
     onFormChange(queryParams):表单数据变化时触发的函数
     <!--formItem的fieldSetting加入gap-0以避免表单内元素间隔 -->
     formItem: [
-    
+
     {
       label: "普通输入框",
       prop: "bsName",
@@ -320,7 +320,7 @@ parametersType 类型介绍
             option: [
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj3', value: 'Y3' },
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj4', value: 'Y4' },
-    
+
             ],
           },
         ],
@@ -332,6 +332,10 @@ parametersType 类型介绍
         {
           validator: (rule, value, callback) => {
             console.log(value);
+            if (!value) {
+              callback();
+              return;
+            }
             for (let i = 0; i < value.length; i++) {
               const element = value[i];
               if (!Number(element.days)) {
@@ -363,6 +367,10 @@ parametersType 类型介绍
       rules: [
         {
           validator: (rule, value, callback) => {
+            if (!value) {
+              callback();
+              return;
+            }
             for (let i = 0; i < value.length; i++) {
               const element = value[i];
               if (!element) {
@@ -402,18 +410,25 @@ parametersType 类型介绍
         className: 'col-start-2 col-span-2 mb-8',
       },
     },
-    // {
-    //   label: "创建时间",
-    //   prop: "create_time",
-    //   type: "date-picker",
-    //   setting: {
-    //     "range-separator": "至",
-    //   },
-    //   fieldSetting: {
-    //     className: fieldClassName,
-    //   },
-    // },
-    
+    {
+      label: "创建时间",
+      prop: "create_time",
+      type: "date-picker",
+      setting: {
+        placeholder: '请选择创建时间',
+      },
+      dataPickerType: "month",//day|month
+      fieldSetting: {
+        className: fieldClassName,
+      },
+      // rules: [
+      //   {
+      //     message: "请输入信息",
+      //     required: true,
+      //   }
+      // ],
+    },
+
     // {
     //   label: '是否必填',
     //   prop: 'is_optional',
@@ -471,7 +486,7 @@ parametersType 类型介绍
     //     "ant-tree" = "ant-tree",
     //     "checkbox-list" = "checkbox-list",
     //   }
-    
+
     // enum ContainerTypes {
     //   "Popover" = "Popover",
     //   "Drawer" = "Drawer",
@@ -502,7 +517,7 @@ parametersType 类型介绍
               },
               shortcut: 'ctrl+z', //选项右侧的内容
             },
-    
+
           ],
         },
         {
@@ -561,7 +576,7 @@ parametersType 类型介绍
         {
           label: '资源',
           value: 'resource',
-    
+
         },
       ],
     },
