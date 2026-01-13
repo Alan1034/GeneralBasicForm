@@ -29,3 +29,6 @@ export const RCombobox = Combobox;
 
 import { BaseCombobox } from "./components/CustomCom/combobox/R-base-combobox";
 export const RBaseCombobox = BaseCombobox;
+
+import { BaseDatePicker } from "./components/CustomCom/date-picker/R-base-date-picker";
+export const RBaseDatePicker = BaseDatePicker;

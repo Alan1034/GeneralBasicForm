@@ -752,7 +752,7 @@ import { RBaseTabs } from 'general-basic-form';
 多功能组合弹出框
 
 ```
-import { RGeneralBasicForm, RBasicForm, RBaseCombobox } from 'general-basic-form';
+import { RBaseCombobox } from 'general-basic-form';
 <RBaseCombobox
   onFormChange={(params) => {
     console.log('queryParams', params);
@@ -782,6 +782,27 @@ import { RGeneralBasicForm, RBasicForm, RBaseCombobox } from 'general-basic-form
       empty: '搜索内容为空的提示',
     },
     container: 'Dialog',
+  }}
+/>
+
+```
+# RBaseDatePicker 单独使用
+
+日期选择器
+
+```
+import { RBaseDatePicker } from 'general-basic-form';
+<RBaseDatePicker
+  onFormChange={(params) => {
+    console.log('queryParams', params);
+  }}
+  // ref={RBaseComboboxRef}
+  value={new Date()}
+  item={{
+    setting: {
+      placeholder: '请选择创建时间',
+    },
+    dataPickerType: "month",//day|month
   }}
 />
 
