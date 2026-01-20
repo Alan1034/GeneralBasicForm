@@ -416,6 +416,8 @@ parametersType 类型介绍
       type: "date-picker",
       setting: {
         placeholder: '请选择创建时间',
+        // timeZone: "Asia/Shanghai",
+        // locale: ,
       },
       dataPickerType: "month",//day|month
       fieldSetting: {
