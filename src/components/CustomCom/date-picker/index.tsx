@@ -2,6 +2,7 @@ import { useState, useId, useContext } from "react"
 import { ChevronDownIcon } from "lucide-react"
 import { FormContext } from "../../FormContext";
 import { zhCN } from "react-day-picker/locale";
+import './index.css'
 const defSetting = {
   locale: zhCN
 }
@@ -47,7 +48,8 @@ export const DatePicker = (props) => {
       month: queryParams[item.prop] || undefined,
       onMonthChange: (date) => {
         dispatchQueryParams({ data: { ...queryParams, [item.prop]: date } })
-      }
+      },
+      className: "general-basic-form-month-picker",
     }
     dataLabel = queryParams[item.prop] ? (`${queryParams[item.prop].getFullYear()}/${queryParams[item.prop].getMonth() + 1}`) : dataLabel
   }
