@@ -12,8 +12,14 @@
 import { GeneralBasicForm } from "./GeneralBasicForm";
 export const RGeneralBasicForm = GeneralBasicForm;
 
+import { GeneralBasic } from "./GeneralBasic";
+export const RGeneralBasic = GeneralBasic;
+
 import { BasicForm } from "./components/BasicForm";
 export const RBasicForm = BasicForm;
+
+import { Basic } from "./components/Basic";
+export const RBasic = Basic;
 
 import { FormList } from "./components/CustomCom/form-list";
 export const RFormList = FormList;
