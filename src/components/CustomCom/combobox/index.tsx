@@ -11,18 +11,7 @@ import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 import { RcTree } from "../rc-tree"
 import { ATree } from "../../RABasic/tree";
 import { FormContext } from "../../FormContext";
-
-enum ComTypes {
-  "command" = "command",
-  "rc-tree" = "rc-tree",
-  "ant-tree" = "ant-tree",
-  "checkbox-list" = "checkbox-list",
-}
-enum ContainerTypes {
-  "Popover" = "Popover",
-  "Drawer" = "Drawer",
-  "Dialog" = "Dialog",
-}
+import type { ComTypes, ContainerTypes } from "./comboboxTypes"
 export const Combobox = (props) => {
   const checkboxListRef = useRef(null);
   const { coms = {}, item = {
@@ -55,86 +44,67 @@ export const Combobox = (props) => {
   const { type = "command" as ComTypes, value, width = `200px` } = setting
   const { queryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
-  const [valDict, setValDict] = useState({})
   const [checkedList, setCheckedList] = useState([])
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const closeCombobox = (value) => {
     setOpen(false)
   }
-  useEffect(() => {
-    if (!item.options) {
-      return
-    }
-    if (type !== "command") {
-      return
-    }
-    const newDict = {}
-    for (let i = 0; i < item.options?.length; i++) {
-      if (item.options[i]?.children && item.options[i]?.children.length > 0) {
-        for (let j = 0; j < item.options[i]?.children?.length; j++) {
+  const valDict = {}
+  if (item.options) {
 
-          item.options[i].children[j].onSelect = closeCombobox;
-          const ele = item.options[i].children[j]
-          newDict[ele.value] = ele.label
+    if (type === "command") {
+      for (let i = 0; i < item.options?.length; i++) {
+        if (item.options[i]?.children && item.options[i]?.children.length > 0) {
+          for (let j = 0; j < item.options[i]?.children?.length; j++) {
+
+            item.options[i].children[j].onSelect = closeCombobox;
+            const ele = item.options[i].children[j]
+            valDict[ele.value] = ele.label
+          }
+        } else {
+          item.options[i].onSelect = closeCombobox;
+          const ele = item.options[i]
+          valDict[ele.value] = ele.label
+
         }
-      } else {
-        item.options[i].onSelect = closeCombobox;
-        const ele = item.options[i]
-        newDict[ele.value] = ele.label
 
       }
+    }
+    if (["rc-tree", 'ant-tree'].includes(type)) {
+      const getDictValue = (options,) => {
+        options.forEach(ele => {
+          const { value, label, key, title, children } = ele
+          if (value) {
+            valDict[value] = label
+          }
+          if (key) {
+            valDict[key] = title
+          }
+          const { fieldNames } = setting
+          if (fieldNames) {
+            valDict[ele[fieldNames.key]] = ele[fieldNames.title]
+          }
 
+          if (children) {
+            getDictValue(children)
+          }
+        })
+      }
+      getDictValue(item.options)
+      if (!item.setting) {
+        item.setting = {}
+      }
+      item.setting.closeCombobox = closeCombobox
     }
-    setValDict({ ...newDict })
-  }, [JSON.stringify(item.options)])
-  useEffect(() => {
-    if (!item.options) {
-      return
+    if (type === "checkbox-list") {
+      for (let i = 0; i < item.option?.length; i++) {
+        const ele = item.option[i]
+        valDict[ele.value] = ele.label
+      }
     }
-    if (!["rc-tree", 'ant-tree'].includes(type)) {
-      return
-    }
-    const newDict = {}
-    const getDictValue = (options,) => {
-      options.forEach(ele => {
-        const { value, label, key, title, children } = ele
-        if (value) {
-          newDict[value] = label
-        }
-        if (key) {
-          newDict[key] = title
-        }
-        const { fieldNames } = setting
-        if (fieldNames) {
-          newDict[ele[fieldNames.key]] = ele[fieldNames.title]
-        }
 
-        if (children) {
-          getDictValue(children)
-        }
-      })
-    }
-    getDictValue(item.options)
-    if (!item.setting) {
-      item.setting = {}
-    }
-    item.setting.closeCombobox = closeCombobox
-    setValDict({ ...newDict })
-  }, [JSON.stringify(item.options)])
-  useEffect(() => {
-    if (!item.option) {
-      return
-    }
-    if (type !== "checkbox-list") {
-      return
-    }
-    const newDict = {}
-    for (let i = 0; i < item.option?.length; i++) {
-      const ele = item.option[i]
-      newDict[ele.value] = ele.label
-    }
-    setValDict({ ...newDict })
-  }, [JSON.stringify(item.option)])
+  }
+
   useEffect(() => {
     // ✅ 可以在 Effect 中读取和写入 ref
     if (queryParams[prop] && queryParams[prop].length > 0) {

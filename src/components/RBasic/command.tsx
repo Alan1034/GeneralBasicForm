@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-11-07 14:46:25
- * @LastEditTime: 2025-12-11 17:01:33
+ * @LastEditTime: 2026-02-06 18:57:25
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description:Command文档：https://github.com/dip/cmdk
@@ -9,10 +9,8 @@
  * 
  */
 
-import { useContext, useId, useEffect, useState } from 'react';
+import { useContext, useId } from 'react';
 import { FormContext } from '../FormContext';
-
-
 const Command = (props) => {
   const { item = {}, id = useId(), coms: {
     Command,
@@ -32,28 +30,26 @@ const Command = (props) => {
     empty = "" } = item
 
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
-  const [valDict, setValDict] = useState({})
-  useEffect(() => {
-    if (!options) {
-      return
-    }
-    const newDict = {}
+
+  const valDict = {}
+  if (item.options) {
     for (let i = 0; i < options?.length; i++) {
       if (item.options[i]?.children && item.options[i]?.children.length > 0) {
         for (let j = 0; j < options[i]?.children?.length; j++) {
           const ele = options[i].children[j]
-          newDict[ele.value] = ele.label
+          valDict[ele.value] = ele.label
 
         }
       } else {
         const ele = item.options[i]
-        newDict[ele.value] = ele.label
+        valDict[ele.value] = ele.label
       }
     }
-    setValDict({ ...newDict })
-  }, [JSON.stringify(options)])
+  }
+
   const renderItem = (item) => {
     const { label, value, onSelect = () => { }, shortcut } = item;
+
     return (
       <CommandItem
         key={value}

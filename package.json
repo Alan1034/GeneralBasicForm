@@ -3,16 +3,19 @@
   "version": "3.0.0",
   "description": "",
   "main": "./dist/index.umd.cjs",
-  "type": "module",
   "scripts": {
     "build": "cross-env CURRENT_ENV=prod run-p type-check && run-p build-only",
     "test:e2e": "playwright test",
     "build-only": "vite build",
     "type-check": "tsc --noEmit -p tsconfig.json --composite false",
     "link": "tsx script/link.ts && yarn link && pnpm link",
-    "unlink": "tsx script/unlinkModule.ts && yarn unlink && pnpm unlink && run-p build",
-    "linkNode": "tsx script/linkNode.ts && yarn link && pnpm link && run-p dev",
-    "unlinkNode": "tsx script/unlinkNode.ts && yarn unlink && pnpm unlink && run-p buildts",
+    "plink": "tsx script/link.ts && pnpm link",
+    "unlink": "tsx script/unlinkModule.ts && yarn unlink && run-p build",
+    "punlink": "tsx script/unlinkModule.ts && pnpm unlink && run-p build",
+    "linkNode": "tsx script/linkNode.ts && yarn link && run-p dev",
+    "plinkNode": "tsx script/linkNode.ts && pnpm link && run-p dev",
+    "unlinkNode": "tsx script/unlinkNode.ts && yarn unlink && run-p buildts",
+    "punlinkNode": "tsx script/unlinkNode.ts && pnpm unlink && run-p buildts",
     "dev": "tsc -w -p .",
     "buildts": "rimraf dist && tsc -p .",
     "unlinkSetting": "tsx script/unlink.ts"
@@ -72,7 +75,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "^1.1.13",
     "@tailwindcss/vite": "^4.1.17",
-    "antd": "^6.0.0",
+    "antd": "^6.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -86,6 +89,7 @@
     "tailwindcss": "^4.1.17",
     "vaul": "^1.1.2"
   },
+  "type": "module",
   "module": "./dist/index.js",
   "exports": {
     ".": {
