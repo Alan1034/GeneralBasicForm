@@ -8,7 +8,7 @@
     "test:e2e": "playwright test",
     "build-only": "vite build",
     "type-check": "tsc --noEmit -p tsconfig.json --composite false",
-    "link": "tsx script/link.ts && yarn link && pnpm link",
+    "link": "tsx script/link.ts && yarn link",
     "plink": "tsx script/link.ts && pnpm link",
     "unlink": "tsx script/unlinkModule.ts && yarn unlink && run-p build",
     "punlink": "tsx script/unlinkModule.ts && pnpm unlink && run-p build",
