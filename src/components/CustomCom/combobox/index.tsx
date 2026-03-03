@@ -1,5 +1,6 @@
 import { useContext, useId, useEffect, useState, useRef } from 'react';
 import Command from "../../RBasic/command";
+import RCombobox from "../../RBasic/combobox";
 import { CheckboxList } from "../checkbox-list";
 import {
   DrawerTitle,
@@ -191,6 +192,12 @@ export const Combobox = (props) => {
       )
     }
   }
+  if (container === "Combobox") {
+    return (
+      <RCombobox {...props}>
+      </RCombobox>
+    )
+  }
   if (container === "Dialog") {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
@@ -222,12 +229,13 @@ export const Combobox = (props) => {
       </Popover>
     )
   }
+
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         {startButton()}
       </DrawerTrigger>
-      <DrawerContent hideWhenDetached={true} className="w-[${width}] p-0">
+      <DrawerContent hideWhenDetached={true} className={`w-[${width}] p-0`}>
         <DrawerHeader className="hidden">
           <DrawerTitle></DrawerTitle>
           <DrawerDescription></DrawerDescription>
