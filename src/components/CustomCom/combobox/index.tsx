@@ -8,10 +8,16 @@ import {
   DrawerDescription,
 } from "../../ui/drawer"
 import { Badge } from "../../ui/badge"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../../ui/hover-card"
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
 import { RcTree } from "../rc-tree"
 import { ATree } from "../../RABasic/tree";
 import { FormContext } from "../../FormContext";
+import { X } from 'lucide-react';
 import type { ComTypes, ContainerTypes } from "./comboboxTypes"
 export const Combobox = (props) => {
   const checkboxListRef = useRef(null);
@@ -39,11 +45,12 @@ export const Combobox = (props) => {
   const {
     setting = {},
     container = "" as ContainerTypes,
+    showClear = false,
     gap = 3
   } = item
   let { prop } = item
   const { type = "command" as ComTypes, value, width = `200px` } = setting
-  const { queryParams } = useContext(FormContext);
+  const { queryParams, formLoading, dispatchQueryParams } = useContext(FormContext);
   const [open, setOpen] = useState(false)
   const [checkedList, setCheckedList] = useState([])
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -98,8 +105,9 @@ export const Combobox = (props) => {
       item.setting.closeCombobox = closeCombobox
     }
     if (type === "checkbox-list") {
-      for (let i = 0; i < item.option?.length; i++) {
-        const ele = item.option[i]
+
+      for (let i = 0; i < item.options?.length; i++) {
+        const ele = item.options[i]
         valDict[ele.value] = ele.label
       }
     }
@@ -142,9 +150,19 @@ export const Combobox = (props) => {
       })
     }
     return (
-      <Button variant="outline" className="w-full justify-center-safe" style={{ maxWidth: `${width}`, overflowX: "auto", overflowY: "hidden" }} >
-        {val || valDict[setting?.value] || setting?.placeholder}
-      </Button>
+      <div className={`flex gap-${gap} mb-${gap} items-end`} style={{ maxWidth: `${width}` }} >
+        <Button variant="outline" className="w-full justify-center-safe" style={{ maxWidth: `${width}`, overflowX: "auto", overflowY: "hidden" }} >
+          {val || valDict[setting?.value] || setting?.placeholder}
+        </Button>
+        {showClear && <Button variant="outline" size="icon" className="rounded-full" disabled={formLoading} onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          dispatchQueryParams({ data: { ...queryParams, [item.prop]: null } })
+        }} >
+          <X color="red" />
+        </Button>}
+      </div>
+
     )
   }
   const content = () => {
@@ -196,6 +214,20 @@ export const Combobox = (props) => {
     return (
       <RCombobox {...props}>
       </RCombobox>
+    )
+  }
+  if (container === "HoverCard") {
+    return (
+      <HoverCard open={open} onOpenChange={setOpen}>
+        <HoverCardTrigger asChild>
+          {startButton()}
+        </HoverCardTrigger>
+        <HoverCardContent >
+          <div className="overflow-y-auto" style={{ maxHeight: window.innerHeight / 3 * 2 }}>
+            {content()}
+          </div>
+        </HoverCardContent>
+      </HoverCard>
     )
   }
   if (container === "Dialog") {

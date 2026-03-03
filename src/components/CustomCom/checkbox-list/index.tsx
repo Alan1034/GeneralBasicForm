@@ -3,7 +3,7 @@ import Checkbox from "../../RBasic/checkbox";
 import { FormContext } from "../../FormContext";
 export const CheckboxList = (props) => {
   const { coms, item = {}, id = useId() } = props
-  const { option = [], gap = 3 } = item
+  const { options = [], gap = 3 } = item
   const { setting = {}, prop = "" } = item
   const { value } = setting
   const { dispatchQueryParams, queryParams, } = useContext(FormContext);
@@ -46,7 +46,7 @@ export const CheckboxList = (props) => {
   return (
     <div id={id}>
       {
-        option.map((opt, index) => {
+        options.map((opt, index) => {
           const key = `${prop}-${opt.value}`
           const newItem = { ...item, ...opt, prop: key }
           newItem.setting = {

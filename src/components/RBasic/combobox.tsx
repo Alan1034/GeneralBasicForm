@@ -10,7 +10,9 @@ import {
 
 import { FormContext } from '../FormContext';
 const RCombobox = (props) => {
-  const { setting = {}, item, id = useId(), } = props
+  const { item, id = useId(), } = props
+  const { setting = {}, } = item
+
 
   const { dispatchQueryParams, queryParams, message, formLoading, } = useContext(FormContext);
   const onValueChange = (nextSelectedValue) => {

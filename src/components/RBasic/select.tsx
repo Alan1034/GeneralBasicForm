@@ -37,7 +37,7 @@ const Select = (props) => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {(item.option || []).map((dict, index) => {
+          {(item.options || []).map((dict, index) => {
             return <SelectItem key={dict.value} value={dict.value}>{dict.label}</SelectItem>
           })}
         </SelectGroup>

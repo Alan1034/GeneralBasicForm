@@ -267,7 +267,7 @@ parametersType 类型介绍
             prop: 'serviceType',
             label: '服务类型',
             type: 'select',
-            option: [
+            options: [
               { label: '到家服务', value: 'home_service' },
               { label: '医院陪护', value: 'hospital_care' },
             ],
@@ -317,7 +317,7 @@ parametersType 类型介绍
               placeholder: '请选择等级',
               type: 'checkbox-list',
             },
-            option: [
+            options: [
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj3', value: 'Y3' },
               { label: 'Yysyayayasuydsaiewqnkerwjrklwjlwerjwlejrlj4', value: 'Y4' },
 
@@ -387,7 +387,7 @@ parametersType 类型介绍
       prop: 'level1',
       label: '选择框',
       type: 'select',
-      option: [
+      options: [
         { label: 'Y3', value: 'Y3' },
         { label: 'Y4', value: 'Y4' },
         { label: 'Y5', value: 'Y5' },
@@ -438,7 +438,7 @@ parametersType 类型介绍
     //   setting: {
     //     disabled: true
     //   },
-    //   option: [
+    //   options: [
     //     { value: '是', label: 'true', border: true },
     //     { value: '否', label: 'false' }
     //   ],
@@ -459,7 +459,7 @@ parametersType 类型介绍
       legend: '标题',
       type: 'checkbox-list',
       gap: 3,
-      option: [
+      options: [
         { label: 'Y3', value: 'Y3' },
         { label: 'Y4', value: 'Y4' },
         { label: 'Y5', value: 'Y5' },
@@ -545,7 +545,7 @@ parametersType 类型介绍
       fieldSetting: {
         className: fieldClassName,
       },
-      option: [
+      options: [
         { label: 'Y3', value: 'Y3' },
         { label: 'Y4', value: 'Y4' },
         { label: 'Y5', value: 'Y5' },
@@ -784,6 +784,7 @@ import { RBaseCombobox } from 'general-basic-form';
       empty: '搜索内容为空的提示',
     },
     container: 'Dialog',
+    showClear: true,
   }}
 />
 

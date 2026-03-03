@@ -1,7 +1,6 @@
 /** @format */
 
 export const enum ComTypes {
-  "combobox" = "combobox",
   "command" = "command",
   "rc-tree" = "rc-tree",
   "ant-tree" = "ant-tree",
@@ -12,4 +11,5 @@ export const enum ContainerTypes {
   "Popover" = "Popover",
   "Drawer" = "Drawer",
   "Dialog" = "Dialog",
+  "HoverCard" = "HoverCard",
 }

@@ -19,7 +19,7 @@ const NativeSelect = (props) => {
       aria-invalid={message?.[item.prop] && message?.[item.prop].length > 0}
       {...setting}
     >
-      {(item.option || []).map((dict, index) => {
+      {(item.options || []).map((dict, index) => {
         return <NativeSelectOption key={dict.value} value={dict.value}>{dict.label}</NativeSelectOption>
       })}
     </NativeSelect>
