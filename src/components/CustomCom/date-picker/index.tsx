@@ -1,6 +1,7 @@
 import { useState, useId, useContext } from "react"
 import { ChevronDownIcon } from "lucide-react"
 import { FormContext } from "../../FormContext";
+import { format, subDays } from "date-fns"
 import { zhCN } from "react-day-picker/locale";
 import './index.css'
 
@@ -54,6 +55,33 @@ export const DatePicker = (props) => {
     }
     dataLabel = queryParams[item.prop] ? (`${queryParams[item.prop].getFullYear()}/${queryParams[item.prop].getMonth() + 1}`) : dataLabel
   }
+  if (dataPickerType === 'range') {
+    settings = {
+      ...settings,
+      format: "yyyy-MM-dd",
+      mode: "range",
+      selected: queryParams[item.prop] || {
+        from: subDays(new Date(), 30),
+        to: new Date(),
+      },
+      onSelect: (date) => {
+        dispatchQueryParams({ data: { ...queryParams, [item.prop]: date } })
+      },
+      numberOfMonths: 2
+
+    }
+
+    dataLabel = queryParams[item.prop]?.from ? (
+      queryParams[item.prop]?.to ? (
+        <>
+          {format(queryParams[item.prop].from, settings.format)} -{" "}
+          {format(queryParams[item.prop].to, settings.format)}
+        </>
+      ) : (
+        format(queryParams[item.prop].from, settings.format)
+      )
+    ) : dataLabel
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -70,7 +98,7 @@ export const DatePicker = (props) => {
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+        <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             disabled={formLoading}
 

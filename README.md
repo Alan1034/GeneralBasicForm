@@ -419,7 +419,7 @@ parametersType 类型介绍
         // timeZone: "Asia/Shanghai",
         // locale: ,
       },
-      dataPickerType: "month",//day|month
+      dataPickerType: "month",//day|month|range
       fieldSetting: {
         className: fieldClassName,
       },
@@ -490,9 +490,11 @@ parametersType 类型介绍
     //   }
 
     // enum ContainerTypes {
+    //   "Combobox" = "Combobox",
     //   "Popover" = "Popover",
     //   "Drawer" = "Drawer",
     //   "Dialog" = "Dialog",
+    //   "HoverCard" = "HoverCard",
     // }
     {
       label: "分类",

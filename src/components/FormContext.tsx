@@ -99,10 +99,12 @@ export const FormProvider = (prop) => {
     if (!inited) {
       return
     }
+    console.log(dispatchQueryParams, props)
     const data = HandleParamsData.initQueryParams({
       vm: props,
       dispatchQueryParams,
     })
+    console.log(data)
     dispatchQueryParams({ data })
   }, [inited])
   useImperativeHandle(props.ref, () => {
