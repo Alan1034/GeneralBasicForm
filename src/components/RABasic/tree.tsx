@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2025-11-28 11:45:15
- * @LastEditTime: 2025-12-24 11:13:15
+ * @LastEditTime: 2026-03-10 11:27:12
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: https://ant.design/components/tree-cn
@@ -11,8 +11,9 @@
 
 import { useContext, useId, useEffect } from 'react';
 import { Tree } from 'antd';
-import type { TreeDataNode, TreeProps } from 'antd';
+import type { TreeProps } from 'antd';
 import { FormContext } from "../FormContext";
+import { treeData } from "./utils";
 
 export const ATree = (props) => {
   const { item = {}, id = useId() } = props
@@ -28,24 +29,7 @@ export const ATree = (props) => {
       dispatchQueryParams({ data: { ...queryParams, [item.prop]: [queryParams[item.prop]] } })
     }
   }, [queryParams[item.prop]])
-  const treeData = (dataList = []): TreeDataNode[] => {
-    if (!dataList) return []
-    if (dataList.length === 0) {
-      return []
-    }
-    return (
-      dataList.map((item) => {
-        const { setting = {} } = item
-        return ({
-          ...item,
-          ...setting,
-          title: item.label || item.title,
-          key: item.value || item.key,
-          children: treeData(item.children),
-        })
-      })
-    )
-  }
+
   const onSelect: TreeProps['onSelect'] = (selectedKeys, info) => {
     dispatchQueryParams({ data: { ...queryParams, [item.prop]: selectedKeys } })
     if (closeCombobox) {

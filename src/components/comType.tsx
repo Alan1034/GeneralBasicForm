@@ -10,6 +10,7 @@ import Command from "./RBasic/command";
 import InputGroup from "./RBasic/input-group";
 import Switch from "./RBasic/switch";
 import { ASelect } from "./RABasic/select"
+import { ATreeSelect } from "./RABasic/tree-select"
 export const TypeCom = (props) => {
   const { coms, item, id, type = "input" } = props;
 
@@ -43,6 +44,15 @@ export const TypeCom = (props) => {
   if (/^a-select$/i.test(type)) {
     return (
       <ASelect
+        id={id}
+        coms={coms}
+        item={item}
+      />
+    )
+  }
+  if (/^a-tree-select$/i.test(type)) {
+    return (
+      <ATreeSelect
         id={id}
         coms={coms}
         item={item}
